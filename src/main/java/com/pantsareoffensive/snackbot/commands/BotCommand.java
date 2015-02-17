@@ -27,4 +27,18 @@ public abstract class BotCommand implements  IBotCommand {
 
     }
 
+    @Override
+    public void handleMessage(String channel, String sender, String login, String hostname, String message) {
+
+    }
+
+    @Override
+    public void reload() {
+
+    }
+
+    @Override
+    public void loadJson() {
+
+    }
 }
