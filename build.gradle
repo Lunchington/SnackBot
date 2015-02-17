@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 sourceCompatibility = 1.5
-version = '1.0'
+version = '0.01a'
 
 repositories {
     mavenCentral()
@@ -17,6 +17,7 @@ dependencies {
 }
 
 jar {
+    baseName="SnackBot"
     from configurations.compile.collect{ zipTree it}
     manifest.attributes "Main-Class" : "com.pantsareoffensive.snackbot.SnackBot"
 }
