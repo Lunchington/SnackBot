@@ -1,8 +1,7 @@
 package com.pantsareoffensive.snackbot;
 
 import com.pantsareoffensive.snackbot.Configuration.Config;
-import com.pantsareoffensive.snackbot.commands.BotCommand;
-import com.pantsareoffensive.snackbot.commands.Mojang;
+import com.pantsareoffensive.snackbot.commands.*;
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;
@@ -10,9 +9,19 @@ import java.util.List;
 
 public class Bot extends PircBot {
     public List<BotCommand> commands;
+    public ServerStatus cmdServerStatus;
+    public NonCommand nonCommand;
+
+    public static long coolDown = 10 * 1000;
+    public static long currentTime;
+    public static long lastAction;
+
 
     public Bot() {
         this.commands = new ArrayList<BotCommand>();
+
+        this.cmdServerStatus = new ServerStatus();
+        this.nonCommand = new NonCommand();
 
         this.setAutoNickChange(true);
         this.setVerbose(true);
@@ -23,6 +32,8 @@ public class Bot extends PircBot {
         this.setVersion(Config.VERSION);
 
         this.commands.add(new Mojang());
+        this.commands.add((cmdServerStatus));
+        this.commands.add(new OnlineUsers());
 
         try
         {
@@ -48,25 +59,53 @@ public class Bot extends PircBot {
 
     protected void onMessage(String target, String sender, String login, String hostname, String message)
     {
-        message = message.trim();
-        if (message.startsWith(Config.CATCH_CHAR))
-        {
-            message = message.substring(Config.CATCH_CHAR.length());
-            BotCommand cmd = getBotCmd(message);
-            if (cmd != null) {
-                if (message.length() == cmd.getCommandName().length()) {
-                    message = "";
-                } else {
-                    message = message.substring(cmd.getCommandName()
-                            .length() + 1);
+        currentTime = System.currentTimeMillis();
+        if (currentTime  - lastAction >= coolDown) {
+            message = message.trim();
+            if (message.startsWith(Config.CATCH_CHAR))
+            {
+                message = message.substring(Config.CATCH_CHAR.length());
+                BotCommand cmd = getBotCmd(message);
+                if (cmd != null) {
+                    if (message.length() == cmd.getCommandName().length()) {
+                        message = "";
+                    } else {
+                        message = message.substring(cmd.getCommandName()
+                                .length() + 1);
+                    }
+                    cmd.handleMessage(target, sender, login, hostname, message);
+                    lastAction = System.currentTimeMillis();
+                    currentTime = 0;
                 }
-                cmd.handleMessage(target, sender, login, hostname, message);
-                System.out.println("COMMAND FIRED: " + cmd.getCommandName());
-            }
 
+
+            }
+            else {
+                this.nonCommand.handleMessage(target, sender, message);
+            }
 
         }
 
+
+    }
+
+    @Override
+    protected void onPrivateMessage(String sender, String login, String hostname, String message)
+    {
+        if (message.startsWith("reloadall")) {
+            for (BotCommand command : this.commands) {
+                command.reload();
+            }
+            SnackBot.bot.sendMessage(sender,"All Reloaded");
+            return;
+        }
+
+        for (BotCommand command : this.commands) {
+            if (message.startsWith(command.getCommandName())) {
+                message = message.substring(command.getCommandName().length()).trim();
+                command.handlePrivateMessage( sender, login, hostname,message);
+            }
+        }
     }
 
     @Override

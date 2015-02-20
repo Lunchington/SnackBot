@@ -4,6 +4,7 @@ package com.pantsareoffensive.snackbot.commands;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
+import com.pantsareoffensive.snackbot.Utils.Utils;
 import org.jibble.pircbot.Colors;
 
 import java.lang.reflect.Type;
@@ -44,7 +45,7 @@ public class Mojang extends BotCommand {
 
 
         try {
-            json = BotCommand.readUrl(site);
+            json = Utils.readUrl(site);
             Type collectionType = new TypeToken<ArrayList<HashMap<String, String>>>(){}.getType();
             jsonObject = gson.fromJson(json,collectionType);
 
