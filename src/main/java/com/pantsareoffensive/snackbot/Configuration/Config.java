@@ -23,8 +23,9 @@ public class Config {
     public static String AUTHSERV;
     public static String AUTHPASSWORD;
     public static String NICKCOMPLETE;
+    public static int MESSAGECOUNT;
 
-    public static String COMMAND_TIMEOUT;
+    public static int COMMAND_TIMEOUT;
 
 
 
@@ -69,6 +70,8 @@ public class Config {
         prop.setProperty("authpassword", "password");
         prop.setProperty("nickcomplete", "false");
         prop.setProperty("cmdtimeout", "10");
+        prop.setProperty("messagecount", "1");
+
         try {
             output = new FileOutputStream(file);
             prop.store(new FileOutputStream(file), null);
@@ -103,8 +106,9 @@ public class Config {
         AUTHSERV = prop.getProperty("authserv");
         AUTHPASSWORD = prop.getProperty("authpassword");
         NICKCOMPLETE = prop.getProperty("nickcomplete");
-        COMMAND_TIMEOUT = prop.getProperty("cmdtimeout");
+        COMMAND_TIMEOUT = Integer.parseInt(prop.getProperty("cmdtimeout"));
 
+        MESSAGECOUNT = Integer.parseInt(prop.getProperty("messagecount"));
 
 
     }

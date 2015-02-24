@@ -12,10 +12,11 @@ public class Bot extends PircBot {
     public ServerStatus cmdServerStatus;
     public NonCommand nonCommand;
 
-    public static long coolDown = 10 * 1000;
+    public static long coolDown = Config.COMMAND_TIMEOUT * 1000;
     public static long currentTime;
     public static long lastAction;
 
+    public static int msgCnt= 0;
 
     public Bot() {
         this.commands = new ArrayList<BotCommand>();
@@ -60,6 +61,7 @@ public class Bot extends PircBot {
     protected void onMessage(String target, String sender, String login, String hostname, String message)
     {
         currentTime = System.currentTimeMillis();
+        SnackBot.msgQ.sendNewMsg();
         if (currentTime  - lastAction >= coolDown) {
             message = message.trim();
             if (message.startsWith(Config.CATCH_CHAR))
@@ -95,6 +97,7 @@ public class Bot extends PircBot {
         if (message.startsWith("reloadall")) {
             for (BotCommand command : this.commands) {
                 command.reload();
+                SnackBot.msgQ.loadJson();
             }
             SnackBot.bot.sendMessage(sender,"All Reloaded");
             return;
