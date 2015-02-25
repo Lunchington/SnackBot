@@ -1,6 +1,7 @@
 package com.pantsareoffensive.snackbot;
 
 import com.pantsareoffensive.snackbot.Configuration.Config;
+import com.pantsareoffensive.snackbot.Utils.Utils;
 import com.pantsareoffensive.snackbot.commands.*;
 import org.jibble.pircbot.PircBot;
 
@@ -61,34 +62,35 @@ public class Bot extends PircBot {
     protected void onMessage(String target, String sender, String login, String hostname, String message)
     {
         currentTime = System.currentTimeMillis();
-        SnackBot.msgQ.sendNewMsg();
-        if (currentTime  - lastAction >= coolDown) {
-            message = message.trim();
-            if (message.startsWith(Config.CATCH_CHAR))
-            {
-                message = message.substring(Config.CATCH_CHAR.length());
-                BotCommand cmd = getBotCmd(message);
-                if (cmd != null) {
-                    if (message.length() == cmd.getCommandName().length()) {
-                        message = "";
-                    } else {
-                        message = message.substring(cmd.getCommandName()
-                                .length() + 1);
+
+        if (!Utils.isBot(sender)) {
+            SnackBot.msgQ.sendNewMsg();
+
+
+            if (currentTime - lastAction >= coolDown) {
+                message = message.trim();
+                if (message.startsWith(Config.CATCH_CHAR)) {
+                    message = message.substring(Config.CATCH_CHAR.length());
+                    BotCommand cmd = getBotCmd(message);
+                    if (cmd != null) {
+                        if (message.length() == cmd.getCommandName().length()) {
+                            message = "";
+                        } else {
+                            message = message.substring(cmd.getCommandName()
+                                    .length() + 1);
+                        }
+                        cmd.handleMessage(target, sender, login, hostname, message);
+                        lastAction = System.currentTimeMillis();
+                        currentTime = 0;
                     }
-                    cmd.handleMessage(target, sender, login, hostname, message);
-                    lastAction = System.currentTimeMillis();
-                    currentTime = 0;
+
+
+                } else {
+                    this.nonCommand.handleMessage(target, sender, message);
                 }
 
-
             }
-            else {
-                this.nonCommand.handleMessage(target, sender, message);
-            }
-
         }
-
-
     }
 
     @Override
@@ -98,6 +100,7 @@ public class Bot extends PircBot {
             for (BotCommand command : this.commands) {
                 command.reload();
                 SnackBot.msgQ.loadJson();
+                SnackBot.config.load();
             }
             SnackBot.bot.sendMessage(sender,"All Reloaded");
             return;

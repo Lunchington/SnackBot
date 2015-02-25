@@ -6,10 +6,11 @@ import com.pantsareoffensive.snackbot.Utils.MessageQueue;
 public class SnackBot  {
     public static Bot bot;
     public static MessageQueue msgQ;
+    public static  Config config;
 
    public static void main(String[] args)
     {
-        new Config();
+        config = new Config();
         bot = new Bot();
         msgQ = new MessageQueue();
     }

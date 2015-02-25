@@ -41,7 +41,7 @@ public class Config {
             } else {
                 input = new FileInputStream(file);
                 prop.load(input);
-                init();
+                load();
 
             }
         } catch (IOException e) {
@@ -78,7 +78,7 @@ public class Config {
         } catch (IOException e) {
 
         } finally {
-            init();
+            load();
             if (output != null) {
                 try {
                     output.close();
@@ -91,7 +91,7 @@ public class Config {
 
     }
 
-    private void init() {
+    public void load() {
         BOT_NICK = prop.getProperty("nick");
         BOT_USER = prop.getProperty("user");
         BOT_REALNAME = prop.getProperty("realname");

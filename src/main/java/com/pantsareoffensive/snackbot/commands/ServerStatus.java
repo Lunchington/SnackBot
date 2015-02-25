@@ -26,8 +26,8 @@ public class ServerStatus extends BotCommand {
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         String _output = "Server Status: ";
         for (String key : this.servers.keySet()) {
-            boolean status = hostAvailabilityCheck((String) ((Map) this.servers.get(key)).get("host"), Integer.parseInt((String) ((Map) this.servers.get(key)).get("port")));
-            _output = _output + ((Map) this.servers.get(key)).get("name") + ": ";
+            boolean status = hostAvailabilityCheck(this.servers.get(key).get("host"), Integer.parseInt(this.servers.get(key).get("port")));
+            _output = _output + this.servers.get(key).get("name") + ": ";
             _output = _output + (status ? Colors.GREEN + "Up! " + Colors.NORMAL : Colors.RED + "Down! " + Colors.NORMAL);
         }
 

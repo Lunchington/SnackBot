@@ -23,6 +23,8 @@ public class OnlineUsers extends BotCommand {
 
         for (String key : SnackBot.bot.cmdServerStatus.servers.keySet()) {
             serverPlayers = "";
+            _output = "";
+
             String server = SnackBot.bot.cmdServerStatus.servers.get(key).get("host");
             String port = SnackBot.bot.cmdServerStatus.servers.get(key).get("port");
             String name = SnackBot.bot.cmdServerStatus.servers.get(key).get("name");
@@ -56,6 +58,8 @@ public class OnlineUsers extends BotCommand {
 
             if (!Utils.isEmpty(_output)) {
                 SnackBot.bot.sendMessage(target, _output);
+            } else {
+                SnackBot.bot.sendMessage(target, Colors.BOLD + name +  " is Down!");
             }
 
 

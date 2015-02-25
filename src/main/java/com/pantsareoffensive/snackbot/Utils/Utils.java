@@ -3,6 +3,7 @@ package com.pantsareoffensive.snackbot.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.pantsareoffensive.snackbot.SnackBot;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.scribe.builder.ServiceBuilder;
@@ -97,5 +98,18 @@ public class Utils {
 
     public static boolean isEmpty(String string) {
         return string == null || string.length() == 0;
+    }
+
+    public static boolean isBot(String sender) {
+
+        for (String key : SnackBot.bot.cmdServerStatus.servers.keySet())
+        {
+            if ((sender.equalsIgnoreCase(key)) || sender.toLowerCase().startsWith("tom")) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
