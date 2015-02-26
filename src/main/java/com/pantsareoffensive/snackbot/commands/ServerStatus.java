@@ -1,7 +1,6 @@
 package com.pantsareoffensive.snackbot.commands;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
 import org.jibble.pircbot.Colors;
 
@@ -9,25 +8,23 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.Socket;
-import java.util.Map;
 
 
 public class ServerStatus extends BotCommand {
 
-    public Map<String, Map<String, String>> servers;
+    public ServerInfo[] servers;
 
     public ServerStatus() {
         super("status");
     }
 
-
+    @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         String _output = "Server Status: ";
-        for (String key : this.servers.keySet()) {
-            boolean status = hostAvailabilityCheck(this.servers.get(key).get("host"), Integer.parseInt(this.servers.get(key).get("port")));
-            _output = _output + this.servers.get(key).get("name") + ": ";
+        for (ServerInfo s : this.servers) {
+            boolean status = hostAvailabilityCheck(s.host, Integer.parseInt(s.port));
+            _output = _output + s.name + " " + s.pack +": ";
             _output = _output + (status ? Colors.GREEN + "Up! " + Colors.NORMAL : Colors.RED + "Down! " + Colors.NORMAL);
         }
 
@@ -35,18 +32,17 @@ public class ServerStatus extends BotCommand {
 
     }
 
+    @Override
     public void loadJson() {
 
         try {
             Gson gson = new Gson();
             File file = new File("data/servers.json");
 
-            System.out.println(file.getAbsolutePath());
             Reader jsonFile = new FileReader(file);
 
-            Type type = new TypeToken<Map<String, Map<String, String>>>(){}.getType();
 
-            this.servers = gson.fromJson(jsonFile, type);
+            this.servers = gson.fromJson(jsonFile, ServerInfo[].class);
 
             jsonFile.close();
         } catch (Exception e) {
@@ -55,12 +51,19 @@ public class ServerStatus extends BotCommand {
         }
     }
 
-    public static boolean hostAvailabilityCheck(String _server, int _port) {
+    public boolean hostAvailabilityCheck(String _server, int _port) {
         try (Socket s = new Socket(_server, _port)) {
             return true;
         } catch (IOException ex) {
         /* ignore */
         }
         return false;
+    }
+
+    public class ServerInfo {
+        public String name;
+        public String pack;
+        public String host;
+        public String port;
     }
 }

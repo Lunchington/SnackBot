@@ -12,6 +12,8 @@ public class Bot extends PircBot {
     public List<BotCommand> commands;
     public ServerStatus cmdServerStatus;
     public NonCommand nonCommand;
+    public TwitchCommand twitch;
+
 
     public static long coolDown = Config.COMMAND_TIMEOUT * 1000;
     public static long currentTime;
@@ -24,6 +26,7 @@ public class Bot extends PircBot {
 
         this.cmdServerStatus = new ServerStatus();
         this.nonCommand = new NonCommand();
+        this.twitch = new TwitchCommand();
 
         this.setAutoNickChange(true);
         this.setVerbose(true);
@@ -36,6 +39,7 @@ public class Bot extends PircBot {
         this.commands.add(new Mojang());
         this.commands.add((cmdServerStatus));
         this.commands.add(new OnlineUsers());
+        this.commands.add(twitch);
 
         try
         {

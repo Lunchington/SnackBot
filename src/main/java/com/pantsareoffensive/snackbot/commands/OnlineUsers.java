@@ -16,21 +16,17 @@ public class OnlineUsers extends BotCommand {
     }
 
 
-
+    @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         String _output = "";
         String serverPlayers = "";
 
-        for (String key : SnackBot.bot.cmdServerStatus.servers.keySet()) {
+        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.servers) {
             serverPlayers = "";
             _output = "";
 
-            String server = SnackBot.bot.cmdServerStatus.servers.get(key).get("host");
-            String port = SnackBot.bot.cmdServerStatus.servers.get(key).get("port");
-            String name = SnackBot.bot.cmdServerStatus.servers.get(key).get("name");
-
             ServerList list = new ServerList();
-            list.setAddress(new InetSocketAddress(server,Integer.parseInt(port)));
+            list.setAddress(new InetSocketAddress(s.host,Integer.parseInt(s.port)));
 
             try {
                 ServerList.StatusResponse response = list.fetchData();
@@ -41,7 +37,7 @@ public class OnlineUsers extends BotCommand {
                         serverPlayers += player.getName() + " ";
                     }
                 }
-                _output = Colors.BOLD + name + ": " +Colors.NORMAL;
+                _output = Colors.BOLD + s.name + ": " +Colors.NORMAL;
 
                 if (response.getPlayers().getOnline() >0){
                     _output += Colors.BOLD;
@@ -59,7 +55,7 @@ public class OnlineUsers extends BotCommand {
             if (!Utils.isEmpty(_output)) {
                 SnackBot.bot.sendMessage(target, _output);
             } else {
-                SnackBot.bot.sendMessage(target, Colors.BOLD + name +  " is Down!");
+                SnackBot.bot.sendMessage(target, Colors.BOLD + s.name +  " is Down!");
             }
 
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
+import com.pantsareoffensive.snackbot.commands.ServerStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.scribe.builder.ServiceBuilder;
@@ -33,7 +34,7 @@ public class Utils {
     }
 
 
-    public static String readUrl(String urlString) throws Exception {
+    public static String readUrl(String urlString) throws IOException{
         BufferedReader reader = null;
         try {
             URL url = new URL(urlString);
@@ -102,9 +103,9 @@ public class Utils {
 
     public static boolean isBot(String sender) {
 
-        for (String key : SnackBot.bot.cmdServerStatus.servers.keySet())
+        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.servers)
         {
-            if ((sender.equalsIgnoreCase(key)) || sender.toLowerCase().startsWith("tom")) {
+            if ((sender.equalsIgnoreCase(s.name)) || sender.toLowerCase().startsWith("tom")) {
 
                 return true;
             }

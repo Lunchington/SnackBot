@@ -45,4 +45,12 @@ public abstract class BotCommand implements  IBotCommand {
 
     }
 
+    public static String[] splitWords (String string) {
+        String[] words = string.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].replaceAll("[^\\w]", "");
+        }
+        return words;
+    }
+
 }
