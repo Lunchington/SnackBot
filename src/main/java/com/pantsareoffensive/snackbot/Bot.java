@@ -19,10 +19,8 @@ public class Bot extends PircBot {
     public static long currentTime;
     public static long lastAction;
 
-    public static int msgCnt= 0;
-
     public Bot() {
-        this.commands = new ArrayList<BotCommand>();
+        this.commands = new ArrayList<>();
 
         this.cmdServerStatus = new ServerStatus();
         this.nonCommand = new NonCommand();
@@ -40,7 +38,7 @@ public class Bot extends PircBot {
         this.commands.add((cmdServerStatus));
         this.commands.add(new OnlineUsers());
         this.commands.add(twitch);
-
+        this.commands.add(new Insult());
         try
         {
             connect(Config.SERVER);

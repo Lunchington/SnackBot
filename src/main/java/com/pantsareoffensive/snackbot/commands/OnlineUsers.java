@@ -18,10 +18,10 @@ public class OnlineUsers extends BotCommand {
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        String _output = "";
-        String serverPlayers = "";
+        String _output;
+        String serverPlayers;
 
-        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.servers) {
+        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.getServers()) {
             serverPlayers = "";
             _output = "";
 

@@ -6,9 +6,14 @@ import com.pantsareoffensive.snackbot.SnackBot;
 import java.util.TimerTask;
 
 public class TimedMessage extends TimerTask {
-    public long time;
-    public String message;
-    public int count=0;
+    private long time;
+    private String message;
+    private int count=0;
+
+
+    public long getTime() { return this.time; }
+
+    public void addCount(int i) { this.time += i; }
 
     public TimedMessage() {
     }
@@ -21,4 +26,5 @@ public class TimedMessage extends TimerTask {
         }
 
     }
+
 }

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
 import com.pantsareoffensive.snackbot.Utils.Twitch;
-import com.pantsareoffensive.snackbot.Utils.TwitchResponse;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -13,14 +12,14 @@ import java.util.List;
 
 
 public class TwitchCommand extends BotCommand{
-    protected List<String> streamers;
-    String chan;
+    private List<String> streamers;
+    private String chan;
 
     private String jsonFile = "data/streamers.json";
 
     public TwitchCommand() {
         super("twitch");
-        streamers = new ArrayList<String>();
+        streamers = new ArrayList<>();
         loadJson();
     }
 
@@ -94,9 +93,7 @@ public class TwitchCommand extends BotCommand{
             writer.write(s);
             writer.close();
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
 

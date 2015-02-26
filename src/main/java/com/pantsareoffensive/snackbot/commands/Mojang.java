@@ -13,8 +13,8 @@ import java.util.HashMap;
 
 public class Mojang extends BotCommand {
 
-    ArrayList<HashMap<String, String>> jsonObject;
-    HashMap<String, String> shortNames = new HashMap<String, String>()  {};
+    private ArrayList<HashMap<String, String>> jsonObject;
+    private HashMap<String, String> shortNames = new HashMap<String, String>()  {};
 
 
     public Mojang() {

@@ -13,7 +13,11 @@ import java.net.Socket;
 
 public class ServerStatus extends BotCommand {
 
-    public ServerInfo[] servers;
+    private ServerInfo[] servers;
+
+    public ServerInfo[] getServers() {
+        return this.servers;
+    }
 
     public ServerStatus() {
         super("status");

@@ -1,22 +1,16 @@
 package com.pantsareoffensive.snackbot.commands;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
+
 import java.util.Random;
 
-/**
- * Created by Lunchbox on 2/20/2015.
- */
 public class Insult extends BotCommand {
-    public Insults insults;
+    private Insults insults;
 
     public Insult() {
         super("insult");
@@ -52,7 +46,7 @@ public class Insult extends BotCommand {
 
         String adj1 = insults.adj[r.nextInt(insults.adj.length)];
         String adj2 = adj1;
-        while(adj1 == adj2) {
+        while(adj1.equals(adj2)) {
             adj2 = insults.adj[r.nextInt(insults.adj.length)];
         }
 

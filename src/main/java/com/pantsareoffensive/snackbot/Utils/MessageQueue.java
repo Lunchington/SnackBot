@@ -8,9 +8,6 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.util.Timer;
 
-/**
- * Created by Lunchbox on 2/24/2015.
- */
 public class MessageQueue {
     public TimedMessage[] tMsg;
     public Timer timer;
@@ -35,13 +32,13 @@ public class MessageQueue {
         timer = new Timer();
 
         for(TimedMessage t: tMsg) {
-            timer.schedule(t, 0, t.time * 1000);
+            timer.schedule(t, 0, t.getTime() * 1000);
         }
     }
 
     public void sendNewMsg() {
         for(TimedMessage t: tMsg) {
-            t.count++;
+            t.addCount(1);
         }
     }
 }

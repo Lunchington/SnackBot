@@ -39,7 +39,7 @@ public class Utils {
         try {
             URL url = new URL(urlString);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             int read;
             char[] chars = new char[1024];
             while ((read = reader.read(chars)) != -1)
@@ -94,7 +94,7 @@ public class Utils {
         Type typeOfMap = new TypeToken<Map<String, String> >() {}.getType();
         Map<String, String> responseMap = gson.fromJson(response.getBody(), typeOfMap);
 
-        return (String)responseMap.get("id");
+        return responseMap.get("id");
     }
 
     public static boolean isEmpty(String string) {
@@ -103,7 +103,7 @@ public class Utils {
 
     public static boolean isBot(String sender) {
 
-        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.servers)
+        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.getServers())
         {
             if ((sender.equalsIgnoreCase(s.name)) || sender.toLowerCase().startsWith("tom")) {
 
