@@ -60,38 +60,3 @@ public class Twitch {
     }
 }
 
-class TwitchStream {
-    String _id;
-    String _game;
-    String _viewers;
-    String created_at;
-    String video_height;
-    String average_fps;
-    Map<String, String> _links;
-    Map <String, String> preview;
-    TwitchChannel channel;
-}
-
-class TwitchChannel {
-    Map<String, String> _links;
-    String background;
-    String banner;
-    String broadcaster_language;
-    String display_name;
-    String logo;
-    String mature;
-    String status;
-    String partner;
-    String url;
-    String video_banner;
-    String _id;
-    String name;
-    String created_at;
-    String updated_at;
-    String delay;
-    String followers;
-    String profile_banner;
-    String getProfile_banner_background_color;
-    String views;
-    String language;
-}

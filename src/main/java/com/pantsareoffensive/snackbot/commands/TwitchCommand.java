@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
 import com.pantsareoffensive.snackbot.Utils.Twitch;
+import com.pantsareoffensive.snackbot.Utils.TwitchResponse;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -39,8 +40,10 @@ public class TwitchCommand extends BotCommand{
         } else {
             if(streamers.size() > 0) {
                 for(String s:streamers) {
-                    if(Twitch.isChannelLive(s)) {
-                        output += " " + s;
+                    TwitchResponse response = Twitch.getTwitch(s);
+
+                    if(Twitch.isChannelLive(response)) {
+                        output += " " + s + " - " + response.stream.channel.url;
                     }
                 }
 
