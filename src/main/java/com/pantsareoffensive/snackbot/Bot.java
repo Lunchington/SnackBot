@@ -66,34 +66,37 @@ public class Bot extends PircBot {
     {
         currentTime = System.currentTimeMillis();
 
-        if (!Utils.isBot(sender)) {
-            SnackBot.msgQ.sendNewMsg();
+        if (Utils.isBot(sender)) {
+            message = message.replaceAll("\\<.*?>","");
+        }
+
+        SnackBot.msgQ.sendNewMsg();
 
 
-            if (currentTime - lastAction >= coolDown) {
-                message = message.trim();
-                if (message.startsWith(Config.CATCH_CHAR)) {
-                    message = message.substring(Config.CATCH_CHAR.length());
-                    BotCommand cmd = getBotCmd(message);
-                    if (cmd != null) {
-                        if (message.length() == cmd.getCommandName().length()) {
-                            message = "";
-                        } else {
-                            message = message.substring(cmd.getCommandName()
-                                    .length() + 1);
-                        }
-                        cmd.handleMessage(target, sender, login, hostname, message);
-                        lastAction = System.currentTimeMillis();
-                        currentTime = 0;
+        if (currentTime - lastAction >= coolDown) {
+            message = message.trim();
+            if (message.startsWith(Config.CATCH_CHAR)) {
+                message = message.substring(Config.CATCH_CHAR.length());
+                BotCommand cmd = getBotCmd(message);
+                if (cmd != null) {
+                    if (message.length() == cmd.getCommandName().length()) {
+                        message = "";
+                    } else {
+                        message = message.substring(cmd.getCommandName()
+                                .length() + 1);
                     }
-
-
-                } else {
-                    this.nonCommand.handleMessage(target, sender, message);
+                    cmd.handleMessage(target, sender, login, hostname, message);
+                    lastAction = System.currentTimeMillis();
+                    currentTime = 0;
                 }
 
+
+            } else {
+                this.nonCommand.handleMessage(target, sender, message);
             }
+
         }
+
     }
 
     @Override
