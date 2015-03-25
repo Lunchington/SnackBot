@@ -1,25 +1,14 @@
 package com.pantsareoffensive.snackbot.Utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.pantsareoffensive.snackbot.SnackBot;
 import com.pantsareoffensive.snackbot.commands.ServerStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.GoogleApi;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,22 +68,23 @@ public class Utils {
 
     public static String getShortUrl(String uri)
     {
-        Gson gson =  new GsonBuilder().create();
+        String tinyUrl = "";
+        String urlString = "http://tinyurl.com/api-create.php?url=" + uri;
 
-        OAuthService oAuthService = new ServiceBuilder()
-                .provider(GoogleApi.class).apiKey("anonymous")
-                .apiSecret("anonymous")
-                .scope("https://www.googleapis.com/auth/urlshortener").build();
+        try {
+            URL url = new URL(urlString);
 
-        OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST,"https://www.googleapis.com/urlshortener/v1/url");
-        oAuthRequest.addHeader("Content-Type", "application/json");
-        String json = "{\"longUrl\": \"" + uri + "\"}";
-        oAuthRequest.addPayload(json);
-        Response response = oAuthRequest.send();
-        Type typeOfMap = new TypeToken<Map<String, String> >() {}.getType();
-        Map<String, String> responseMap = gson.fromJson(response.getBody(), typeOfMap);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String str;
 
-        return responseMap.get("id");
+            while ((str = in.readLine()) != null) {
+                tinyUrl += str;
+            }
+            in.close();
+        }
+        catch (Exception e) {
+        }
+        return tinyUrl;
     }
 
     public static boolean isEmpty(String string) {
