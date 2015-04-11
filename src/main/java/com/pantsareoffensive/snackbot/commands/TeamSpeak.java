@@ -5,7 +5,9 @@ import org.jibble.pircbot.Colors;
 
 public class TeamSpeak extends BotCommand {
     public TeamSpeak() {
+
         super("ts");
+        this.setDesc("Show teamspeak info");
     }
 
     @Override

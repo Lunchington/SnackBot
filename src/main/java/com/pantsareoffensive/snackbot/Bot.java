@@ -40,6 +40,8 @@ public class Bot extends PircBot {
         this.commands.add(twitch);
         this.commands.add(new Insult());
         this.commands.add(new TeamSpeak());
+        this.commands.add(new Helper());
+
         try
         {
             connect(Config.SERVER);

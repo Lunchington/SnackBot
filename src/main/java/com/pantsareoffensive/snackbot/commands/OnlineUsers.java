@@ -12,7 +12,9 @@ import java.util.List;
 
 public class OnlineUsers extends BotCommand {
     public OnlineUsers() {
+
         super("online");
+        this.setDesc("Show users on servers");
     }
 
 

@@ -6,6 +6,7 @@ import com.pantsareoffensive.snackbot.Configuration.Config;
 public abstract class BotCommand implements  IBotCommand {
     private String name;
     protected String json;
+    private String desc;
 
 
     public BotCommand(String name) {
@@ -51,6 +52,14 @@ public abstract class BotCommand implements  IBotCommand {
             words[i] = words[i].replaceAll("[^\\w]", "");
         }
         return words;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return this.desc;
     }
 
 }

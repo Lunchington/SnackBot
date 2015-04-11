@@ -2,6 +2,7 @@ package com.pantsareoffensive.snackbot.commands;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pantsareoffensive.snackbot.Configuration.Config;
 import com.pantsareoffensive.snackbot.SnackBot;
 import com.pantsareoffensive.snackbot.Utils.Twitch;
 import com.pantsareoffensive.snackbot.Utils.TwitchResponse;
@@ -22,6 +23,7 @@ public class TwitchCommand extends BotCommand{
         super("twitch");
         streamers = new ArrayList<>();
         loadJson();
+        this.setDesc("show users streaming on twitch, use: " + Config.CATCH_CHAR + this.getCommandName() + " add <NAME> to add yourself to twitch");
     }
 
     @Override

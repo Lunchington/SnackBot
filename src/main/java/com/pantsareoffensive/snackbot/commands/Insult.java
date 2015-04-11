@@ -15,6 +15,7 @@ public class Insult extends BotCommand {
     public Insult() {
         super("insult");
         loadJson();
+        setDesc("get a fun description!");
     }
 
     @Override

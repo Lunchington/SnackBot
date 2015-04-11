@@ -21,6 +21,7 @@ public class ServerStatus extends BotCommand {
 
     public ServerStatus() {
         super("status");
+        this.setDesc("Show server Status");
     }
 
     @Override

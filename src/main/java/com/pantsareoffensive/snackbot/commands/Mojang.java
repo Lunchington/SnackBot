@@ -29,6 +29,7 @@ public class Mojang extends BotCommand {
         shortNames.put("sessionserver.mojang.com", "Session");
         shortNames.put("api.mojang.com", "Api");
         shortNames.put("textures.minecraft.net", "Textures");
+        this.setDesc("get status of Mojang servers");
 
     }
 
