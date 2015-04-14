@@ -13,7 +13,7 @@ public class Bot extends PircBot {
     public ServerStatus cmdServerStatus;
     public NonCommand nonCommand;
     public TwitchCommand twitch;
-
+    public  Insult insult;
 
     public static long coolDown = Config.COMMAND_TIMEOUT * 1000;
     public static long currentTime;
@@ -25,6 +25,7 @@ public class Bot extends PircBot {
         this.cmdServerStatus = new ServerStatus();
         this.nonCommand = new NonCommand();
         this.twitch = new TwitchCommand();
+        this.insult = new Insult();
 
         this.setAutoNickChange(true);
         this.setVerbose(true);
@@ -38,7 +39,7 @@ public class Bot extends PircBot {
         this.commands.add((cmdServerStatus));
         this.commands.add(new OnlineUsers());
         this.commands.add(twitch);
-        this.commands.add(new Insult());
+        this.commands.add(insult);
         this.commands.add(new TeamSpeak());
         this.commands.add(new Helper());
 

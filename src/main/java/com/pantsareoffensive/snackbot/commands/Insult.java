@@ -42,7 +42,7 @@ public class Insult extends BotCommand {
 
     }
 
-    private String getInsult() {
+    public String getInsult() {
         Random r = new Random();
 
         String adj1 = insults.adj[r.nextInt(insults.adj.length)];

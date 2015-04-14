@@ -8,6 +8,12 @@ public class NonCommand {
 
     public void handleMessage( String target, String sender, String args) {
         String str = args.trim();
+        if (sender.equalsIgnoreCase("tom")) {
+            if (str.contains(":(")) {
+                SnackBot.bot.sendMessage(target, "tom: dont be such a " + SnackBot.bot.insult.getInsult());
+                return;
+            }
+        }
 
         if (!Utils.stringContainsItemFromList(str, this.blacklist)) {
             String string = Utils.parseforHTML(str);
