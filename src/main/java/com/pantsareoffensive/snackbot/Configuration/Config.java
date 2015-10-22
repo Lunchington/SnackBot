@@ -18,7 +18,7 @@ public class Config {
     public static String BOT_REALNAME;
     public static String SERVER;
     public static String PORT;
-    public static String CHANNEL;
+    public static String[] CHANNEL;
     public static String VERSION;
     public static String AUTHSERV;
     public static String AUTHPASSWORD;
@@ -97,7 +97,8 @@ public class Config {
         BOT_REALNAME = prop.getProperty("realname");
         SERVER = prop.getProperty("server");
         PORT = prop.getProperty("port");
-        CHANNEL = prop.getProperty("channel");
+
+        CHANNEL = prop.getProperty("channel").split(",",-1);
 
         VERSION = prop.getProperty("version");
 

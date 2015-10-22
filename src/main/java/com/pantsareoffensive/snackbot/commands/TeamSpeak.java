@@ -13,7 +13,7 @@ public class TeamSpeak extends BotCommand {
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         String _output = "TeamSpeak info: ";
-       _output += "demethanskeep.org";
+       _output += "ts.breakfastcraft.com";
         _output += " password: wilson";
 
         SnackBot.bot.sendMessage(target, _output);

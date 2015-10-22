@@ -21,7 +21,7 @@ public class TimedMessage extends TimerTask {
     public void run() {
 
         if (count >= Config.MESSAGECOUNT) {
-            SnackBot.bot.sendMessage(Config.CHANNEL, message);
+            //SnackBot.bot.sendMessage(Config.CHANNEL, message);
             count = 0;
         }
 

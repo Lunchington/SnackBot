@@ -41,12 +41,16 @@ public class Bot extends PircBot {
         this.commands.add(twitch);
         this.commands.add(insult);
         this.commands.add(new TeamSpeak());
+        this.commands.add(new Discord());
+
         this.commands.add(new Helper());
+        this.commands.add(new WolframAlpha());
 
         try
         {
             connect(Config.SERVER);
-            joinChannel(Config.CHANNEL);
+            for(String s: Config.CHANNEL)
+                joinChannel(s);
         }
         catch (Exception e)
         {
@@ -128,7 +132,8 @@ public class Bot extends PircBot {
         while(!isConnected()) {
             try {
                 reconnect();
-                joinChannel(Config.CHANNEL);
+                for(String s: Config.CHANNEL)
+                    joinChannel(s);
             } catch (Exception e) {
                 e.getStackTrace();
             }

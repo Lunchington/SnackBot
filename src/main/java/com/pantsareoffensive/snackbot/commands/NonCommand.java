@@ -5,11 +5,12 @@ import com.pantsareoffensive.snackbot.Utils.Utils;
 
 public class NonCommand {
     private String[]  blacklist = { "goo.gl", "pastebin", "redd.it"};
+    private String[] tomcomplaints = { ":(", "that's rude", "abuse!"};
 
     public void handleMessage( String target, String sender, String args) {
         String str = args.trim();
         if (sender.equalsIgnoreCase("tom")) {
-            if (str.contains(":(")) {
+            if (Utils.stringContainsItemFromList(str, this.tomcomplaints)) {
                 SnackBot.bot.sendMessage(target, "tom: dont be such a " + SnackBot.bot.insult.getInsult());
                 return;
             }
