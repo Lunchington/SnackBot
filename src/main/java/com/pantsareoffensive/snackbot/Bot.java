@@ -44,7 +44,6 @@ public class Bot extends PircBot {
         this.commands.add(new Discord());
 
         this.commands.add(new Helper());
-        this.commands.add(new WolframAlpha());
 
         try
         {
