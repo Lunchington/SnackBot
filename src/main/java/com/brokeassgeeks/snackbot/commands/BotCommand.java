@@ -1,7 +1,7 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
 
-import com.pantsareoffensive.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.Configuration.Config;
 
 public abstract class BotCommand implements  IBotCommand {
     private String name;

@@ -1,10 +1,10 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.pantsareoffensive.snackbot.SnackBot;
-import com.pantsareoffensive.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.jibble.pircbot.Colors;
 
 import java.lang.reflect.Type;

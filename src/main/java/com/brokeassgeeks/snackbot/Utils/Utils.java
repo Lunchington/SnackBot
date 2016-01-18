@@ -1,7 +1,7 @@
-package com.pantsareoffensive.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Utils;
 
-import com.pantsareoffensive.snackbot.SnackBot;
-import com.pantsareoffensive.snackbot.commands.ServerStatus;
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.commands.ServerStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

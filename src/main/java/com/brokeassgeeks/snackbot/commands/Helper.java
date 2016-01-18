@@ -1,6 +1,6 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
-import com.pantsareoffensive.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.SnackBot;
 import org.jibble.pircbot.Colors;
 
 public class Helper extends BotCommand

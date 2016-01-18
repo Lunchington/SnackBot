@@ -1,4 +1,4 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
 import org.jibble.pircbot.PircBot;
 

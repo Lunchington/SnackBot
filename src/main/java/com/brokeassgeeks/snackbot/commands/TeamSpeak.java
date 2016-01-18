@@ -1,7 +1,6 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
-import com.pantsareoffensive.snackbot.SnackBot;
-import org.jibble.pircbot.Colors;
+import com.brokeassgeeks.snackbot.SnackBot;
 
 public class TeamSpeak extends BotCommand {
     public TeamSpeak() {

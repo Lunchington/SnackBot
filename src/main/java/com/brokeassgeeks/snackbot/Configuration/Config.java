@@ -1,4 +1,4 @@
-package com.pantsareoffensive.snackbot.Configuration;
+package com.brokeassgeeks.snackbot.Configuration;
 
 import java.io.*;
 import java.util.Properties;
@@ -24,6 +24,8 @@ public class Config {
     public static String AUTHPASSWORD;
     public static String NICKCOMPLETE;
     public static int MESSAGECOUNT;
+
+    public static String TIMEAPIKEY;
 
     public static int COMMAND_TIMEOUT;
 
@@ -110,6 +112,7 @@ public class Config {
         COMMAND_TIMEOUT = Integer.parseInt(prop.getProperty("cmdtimeout"));
 
         MESSAGECOUNT = Integer.parseInt(prop.getProperty("messagecount"));
+        TIMEAPIKEY = prop.getProperty("timedb_api");
 
 
     }

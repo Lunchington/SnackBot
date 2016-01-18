@@ -1,7 +1,7 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
 import com.google.gson.Gson;
-import com.pantsareoffensive.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.SnackBot;
 
 import java.io.File;
 import java.io.FileReader;

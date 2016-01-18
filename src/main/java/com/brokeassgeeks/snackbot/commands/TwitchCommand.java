@@ -1,11 +1,11 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.pantsareoffensive.snackbot.Configuration.Config;
-import com.pantsareoffensive.snackbot.SnackBot;
-import com.pantsareoffensive.snackbot.Utils.Twitch;
-import com.pantsareoffensive.snackbot.Utils.TwitchResponse;
+import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Twitch;
+import com.brokeassgeeks.snackbot.Utils.TwitchResponse;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -31,7 +31,7 @@ public class TwitchCommand extends BotCommand{
         this.chan = target;
         String output = "";
         if (args.length() > 0) {
-            String[] cmd = BotCommand.splitWords(args);
+            String[] cmd = splitWords(args);
             if( cmd[0].toLowerCase().equalsIgnoreCase("add")) {
                 if(cmd.length <2) {
                     SnackBot.bot.sendMessage(target, sender + " need to specify a channel to add");

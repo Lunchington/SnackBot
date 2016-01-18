@@ -12,18 +12,17 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.1'
     compile 'org.jsoup:jsoup:1.6.2'
     compile 'com.almworks.sqlite4java:sqlite4java:0.282'
-    compile 'org.scribe:scribe:1.3.5'
     compile 'pircbot:pircbot:1.5.0'
-    compile 'commons-codec:commons-codec:1.3'
-    compile 'org.apache.httpcomponents:httpclient:4.0.1'
-    compile 'org.apache.httpcomponents:httpcore:4.0.1'
-    compile 'commons-logging:commons-logging:1.2'
 
-
+    //compile 'org.scribe:scribe:1.3.5'
+    //compile 'commons-codec:commons-codec:1.3'
+    //compile 'org.apache.httpcomponents:httpclient:4.0.1'
+    //compile 'org.apache.httpcomponents:httpcore:4.0.1'
+    //compile 'commons-logging:commons-logging:1.2'
 }
 
 jar {
     baseName="SnackBot"
     from configurations.compile.collect{ zipTree it}
-    manifest.attributes "Main-Class" : "com.pantsareoffensive.snackbot.SnackBot"
+    manifest.attributes "Main-Class" : "com.brokeassgeeks.snackbot.SnackBot"
 }

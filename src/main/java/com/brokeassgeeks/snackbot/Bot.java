@@ -1,8 +1,9 @@
-package com.pantsareoffensive.snackbot;
+package com.brokeassgeeks.snackbot;
 
-import com.pantsareoffensive.snackbot.Configuration.Config;
-import com.pantsareoffensive.snackbot.Utils.Utils;
-import com.pantsareoffensive.snackbot.commands.*;
+import com.brokeassgeeks.snackbot.Utils.SeenDataBase;
+import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.commands.*;
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;
@@ -13,11 +14,12 @@ public class Bot extends PircBot {
     public ServerStatus cmdServerStatus;
     public NonCommand nonCommand;
     public TwitchCommand twitch;
-    public  Insult insult;
+    public Insult insult;
 
     public static long coolDown = Config.COMMAND_TIMEOUT * 1000;
     public static long currentTime;
     public static long lastAction;
+   // public static SeenDataBase seenDataBase = new SeenDataBase();
 
     public Bot() {
         this.commands = new ArrayList<>();
@@ -42,6 +44,7 @@ public class Bot extends PircBot {
         this.commands.add(insult);
         this.commands.add(new TeamSpeak());
         this.commands.add(new Discord());
+        this.commands.add(new Time());
 
         this.commands.add(new Helper());
 
@@ -76,9 +79,6 @@ public class Bot extends PircBot {
             message = message.replaceAll("\\<.*?>","");
         }
 
-        SnackBot.msgQ.sendNewMsg();
-
-
         if (currentTime - lastAction >= coolDown) {
             message = message.trim();
             if (message.startsWith(Config.CATCH_CHAR)) {
@@ -111,7 +111,6 @@ public class Bot extends PircBot {
         if (message.startsWith("reloadall")) {
             for (BotCommand command : this.commands) {
                 command.reload();
-                SnackBot.msgQ.loadJson();
                 SnackBot.config.load();
             }
             SnackBot.bot.sendMessage(sender,"All Reloaded");
@@ -137,6 +136,12 @@ public class Bot extends PircBot {
                 e.getStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onJoin(String channel, String sender, String login, String hostname) {
+
+
     }
 
 

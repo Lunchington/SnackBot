@@ -1,4 +1,4 @@
-package com.pantsareoffensive.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Utils;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
-import com.pantsareoffensive.snackbot.SnackBot;
-import com.pantsareoffensive.snackbot.Utils.ServerList;
-import com.pantsareoffensive.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.ServerList;
 import org.jibble.pircbot.Colors;
 
 import java.io.IOException;

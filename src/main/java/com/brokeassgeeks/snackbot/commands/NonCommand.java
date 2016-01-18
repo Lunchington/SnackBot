@@ -1,7 +1,7 @@
-package com.pantsareoffensive.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands;
 
-import com.pantsareoffensive.snackbot.SnackBot;
-import com.pantsareoffensive.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.SnackBot;
 
 public class NonCommand {
     private String[]  blacklist = { "goo.gl", "pastebin", "redd.it"};

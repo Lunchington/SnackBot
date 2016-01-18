@@ -1,4 +1,4 @@
-package com.pantsareoffensive.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Utils;
 
 import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
