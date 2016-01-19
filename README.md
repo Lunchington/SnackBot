@@ -1,0 +1,19 @@
+# SnackBot
+
+CREATE TABLE `messages` (
+	`id`	INTEGER NOT NULL UNIQUE,
+	`message`	TEXT NOT NULL,
+	PRIMARY KEY(id)
+)
+
+CREATE TABLE "nicks" (
+	`id`	INTEGER,
+	`nick`	TEXT UNIQUE
+)
+
+CREATE TABLE "seen" (
+	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`lastNick`	TEXT NOT NULL,
+	`hostname`	TEXT NOT NULL UNIQUE,
+	`time`	NUMERIC NOT NULL
+)
