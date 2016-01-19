@@ -1,14 +1,11 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.google.gson.Gson;
-import com.brokeassgeeks.snackbot.SnackBot;
-import org.jibble.pircbot.Colors;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
-import java.net.Socket;
 
 
 public class ServerStatus extends BotCommand {
@@ -26,15 +23,17 @@ public class ServerStatus extends BotCommand {
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        String _output = "Server Status: ";
+            super.sendMessage(target, String.format("<B>Server Status:<N> %s", getServerStatus()));
+    }
+
+    public String getServerStatus() {
+        String _output="";
+
         for (ServerInfo s : this.servers) {
-            boolean status = hostAvailabilityCheck(s.host, Integer.parseInt(s.port));
-            _output = _output + s.name + " " + s.pack +": ";
-            _output = _output + (status ? Colors.GREEN + "Up! " + Colors.NORMAL : Colors.RED + "Down! " + Colors.NORMAL);
+            _output += String.format("%s - %s: %s <N>",s.name,s.pack,(Utils.hostAvailabilityCheck(s.host, s.port) ? "<g>Up! " : "<r>Down! "));
         }
 
-            SnackBot.bot.sendMessage(target, _output);
-
+        return _output;
     }
 
     @Override
@@ -56,19 +55,12 @@ public class ServerStatus extends BotCommand {
         }
     }
 
-    public boolean hostAvailabilityCheck(String _server, int _port) {
-        try (Socket s = new Socket(_server, _port)) {
-            return true;
-        } catch (IOException ex) {
-        /* ignore */
-        }
-        return false;
-    }
+
 
     public class ServerInfo {
         public String name;
         public String pack;
         public String host;
-        public String port;
+        public int port;
     }
 }

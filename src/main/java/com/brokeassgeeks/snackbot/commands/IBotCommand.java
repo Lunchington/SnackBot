@@ -1,7 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import org.jibble.pircbot.PircBot;
-
 public interface IBotCommand {
 
     public String getCommandName();

@@ -2,6 +2,8 @@ package com.brokeassgeeks.snackbot.commands;
 
 
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 
 public abstract class BotCommand implements  IBotCommand {
     private String name;
@@ -46,6 +48,8 @@ public abstract class BotCommand implements  IBotCommand {
 
     }
 
+
+
     public static String[] splitWords (String string) {
         String[] words = string.split("\\s+");
         for (int i = 0; i < words.length; i++) {
@@ -62,4 +66,8 @@ public abstract class BotCommand implements  IBotCommand {
         return this.desc;
     }
 
+    public void sendMessage(String target, String message) {
+        SnackBot.bot.sendMessage(target, Utils.replaceTags(message));
+    }
 }
+

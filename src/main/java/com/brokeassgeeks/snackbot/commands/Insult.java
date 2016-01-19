@@ -1,7 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.google.gson.Gson;
-import com.brokeassgeeks.snackbot.SnackBot;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +19,7 @@ public class Insult extends BotCommand {
 
     @Override
     public void handleMessage(String channel, String sender, String login, String hostname, String message) {
-        SnackBot.bot.sendMessage(channel, String.format("%s you, %s",sender,getRandomInsult()) );
+        super.sendMessage(channel, String.format("<B>%s<N> you, %s",sender,getRandomInsult()) );
     }
 
     @Override

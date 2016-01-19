@@ -1,7 +1,6 @@
 package com.brokeassgeeks.snackbot.Utils;
 
 import com.almworks.sqlite4java.*;
-
 import java.io.File;
 
 public class SeenDataBase {

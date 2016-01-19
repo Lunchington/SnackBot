@@ -3,7 +3,6 @@ package com.brokeassgeeks.snackbot.commands;
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.SeenDataBase;
-import org.jibble.pircbot.Colors;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -23,20 +22,19 @@ public class Seen extends BotCommand{
                 if(SnackBot.bot.seenDataBase.isUserInDB(login+"@"+hostname) == 0) {
                     SnackBot.bot.seenDataBase.processNickRecord(login, hostname, args, System.currentTimeMillis() / 1000L);
                 }
-
-                SnackBot.bot.sendMessage(channel, Colors.NORMAL + Colors.BOLD + args + Colors.NORMAL + " is right here in the channel." + Colors.NORMAL);
+                super.sendMessage(channel, String.format("<B>%s<N> is right here!", args));
             } else {
 
                 SeenDataBase.UserDB userDB = SnackBot.bot.seenDataBase.getUserbyNick(args);
 
                 if (userDB != null) {
                     if (SnackBot.bot.isUserInChannel(channel, userDB.lastNick)) {
-                        String output = Colors.NORMAL + Colors.BOLD + args + Colors.NORMAL + " is right here in the channel." + Colors.NORMAL;
+                        String output = String.format("<B>%s<N> is right here! ", args);
 
                         if (!userDB.lastNick.equalsIgnoreCase(args))
-                            output += " Disguised as " + Colors.BOLD + userDB.lastNick + Colors.NORMAL;
+                            output += String.format("Disguised as <B>%s<N>",userDB.lastNick);
 
-                        SnackBot.bot.sendMessage(channel, output);
+                        super.sendMessage(channel, output);
                     } else {
                         Locale locale = Locale.getDefault();
                         TimeZone currentTimeZone = TimeZone.getDefault();
@@ -49,16 +47,16 @@ public class Seen extends BotCommand{
                         Date currentDate = new Date(userDB.timeSeen * 1000L);
 
 
-                        SnackBot.bot.sendMessage(channel, Colors.NORMAL + "I last saw " + Colors.BOLD + args + Colors.NORMAL + " on :" + formatter.format(currentDate) + Colors.NORMAL);
+                        super.sendMessage(channel, String.format("I last saw <B>%s<N> on: <B>%s<N>",args,formatter.format(currentDate)));
                     }
                 } else {
-                    SnackBot.bot.sendMessage(channel, Colors.NORMAL + "I have not seen " + Colors.BOLD + args + Colors.NORMAL);
+                    super.sendMessage(channel, String.format("I have not seen <B>%s<N>",args));
 
                 }
             }
 
         } else {
-            SnackBot.bot.sendMessage(channel, Colors.RED + "USAGE: " + Config.CATCH_CHAR + this.getCommandName() + "  <USER>" + Colors.NORMAL);
+            super.sendMessage(channel, String.format("<b>USAGE:<N> %s%s <USER>" ,Config.CATCH_CHAR,this.getCommandName()));
 
         }
     }

@@ -3,9 +3,7 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import org.jibble.pircbot.Colors;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class Mojang extends BotCommand {
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         loadJson();
-        SnackBot.bot.sendMessage(target, getStatus());
+        super.sendMessage(target, getStatus());
     }
 
     @Override
@@ -54,10 +52,6 @@ public class Mojang extends BotCommand {
             e.printStackTrace();
         }
 
-
-
-
-
     }
 
     private String getStatus() {
@@ -65,13 +59,12 @@ public class Mojang extends BotCommand {
 
         for (HashMap<String, String> g: jsonObject) {
             for (String key:g.keySet()) {
-                String color =  (g.get(key).toLowerCase().equals("green")) ? Colors.GREEN : Colors.RED ;
+                String color =  (g.get(key).toLowerCase().equals("green")) ? "<g>": "<r>" ;
 
-                output += color + getShortName(key) + Colors.NORMAL +" ";
+                output += String.format("%s <n>", color + getShortName(key));
 
             }
         }
-
         return output;
     }
 

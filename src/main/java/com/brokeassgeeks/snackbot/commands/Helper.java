@@ -1,7 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
-import org.jibble.pircbot.Colors;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 
 public class Helper extends BotCommand
 {
@@ -11,14 +11,17 @@ public class Helper extends BotCommand
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
+        super.sendMessage(target, String.format("<B>HELP: <N> %s", getHelp()));
+    }
+
+    public String getHelp() {
         String output = "";
         for (BotCommand b: SnackBot.bot.commands ) {
             if (b != this)
-                output += Colors.BOLD + b.getCommandName() + Colors.NORMAL + " - " + b.getDesc() + " ";
+                output += String.format("<b><B>%s<N> - %s ",b.getCommandName() , b.getDesc());
 
         }
-        SnackBot.bot.sendMessage(target,output);
-
+        return Utils.removeLastChar(output);
     }
 
 }

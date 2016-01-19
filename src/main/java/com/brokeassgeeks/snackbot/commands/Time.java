@@ -1,8 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.SnackBot;
-import org.jibble.pircbot.Colors;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -45,15 +42,15 @@ public class Time extends BotCommand{
                 time = getTimewithZone(newZone,offset);
 
             if (time == "ERROR") {
-                SnackBot.bot.sendMessage(channel, Colors.RED + "INVALID ZONE: " + Colors.BOLD + args+ Colors.NORMAL );
-                SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York",0) );
+                super.sendMessage(channel, String.format("<r>INVALID ZONE: <B>%s<N>", args));
+                super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
             }
             else
-                SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Time for " + args + ": "+ Colors.NORMAL + time );
+                super.sendMessage(channel,   String.format("<g>Time for %s: <N>%s",args ,time ));
 
         }
         else {
-            SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York",0) );
+            super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
         }
     }
 

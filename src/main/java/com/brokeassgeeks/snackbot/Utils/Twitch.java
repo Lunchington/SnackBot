@@ -2,9 +2,7 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
-
 
 public class Twitch {
 

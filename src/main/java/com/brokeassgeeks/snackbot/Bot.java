@@ -144,6 +144,12 @@ public class Bot extends PircBot {
     }
 
     @Override
+    public void onPart(String channel, String sender, String login, String hostname) {
+        seenDataBase.processUserSeenRecord(channel, sender, login,hostname, System.currentTimeMillis() / 1000L);
+    }
+
+
+    @Override
     public void onJoin(String channel, String sender, String login, String hostname) {
         seenDataBase.processUserSeenRecord(channel, sender,login, hostname, System.currentTimeMillis() / 1000L);
     }

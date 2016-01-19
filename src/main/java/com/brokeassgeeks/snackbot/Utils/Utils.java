@@ -2,17 +2,33 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.commands.ServerStatus;
+import org.jibble.pircbot.Colors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.*;
+import java.net.Socket;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+    public static HashMap<String, String> replaceMap = new HashMap<String, String>()  {{
+        put("<B>",Colors.BOLD);
+        put("<U>",Colors.UNDERLINE);
+        put("<N>",Colors.NORMAL);
+
+        put("<r>",Colors.RED);
+        put("<b>",Colors.BLUE);
+        put("<y",Colors.YELLOW);
+        put("<g>",Colors.GREEN);
+
+    }};
+
     public static boolean stringContainsItemFromList(String string, String[] items) {
         for (String s : items) {
             if (string.toLowerCase().contains(s.toLowerCase())) {
@@ -42,6 +58,18 @@ public class Utils {
 
     }
 
+    public static String removeLastChar(String str) {
+        return str.substring(0,str.length()-1);
+    }
+
+    public static  boolean hostAvailabilityCheck(String _server, int _port) {
+        try (Socket s = new Socket(_server, _port)) {
+            return true;
+        } catch (IOException ex) {
+        /* ignore */
+        }
+        return false;
+    }
     public static String parseforHTML(String str) {
         String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]";
         Pattern urlPattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
@@ -119,4 +147,14 @@ public class Utils {
 
         return result;
     }
+
+
+    public static String replaceTags(String string) {
+        String s = string;
+        for (String key:replaceMap.keySet()) {
+            s = s.replaceAll(key, replaceMap.get(key));
+        }
+        return s;
+    }
+
 }

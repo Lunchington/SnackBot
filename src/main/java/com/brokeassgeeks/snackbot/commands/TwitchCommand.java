@@ -3,7 +3,6 @@ package com.brokeassgeeks.snackbot.commands;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Twitch;
 import com.brokeassgeeks.snackbot.Utils.TwitchResponse;
 
@@ -34,7 +33,7 @@ public class TwitchCommand extends BotCommand{
             String[] cmd = splitWords(args);
             if( cmd[0].toLowerCase().equalsIgnoreCase("add")) {
                 if(cmd.length <2) {
-                    SnackBot.bot.sendMessage(target, sender + " need to specify a channel to add");
+                    super.sendMessage(target, String.format("<B>%s<N> need to specify a channel to add",sender));
                 } else {
                     addChannel(cmd[1]);
                 }
@@ -45,24 +44,20 @@ public class TwitchCommand extends BotCommand{
                     TwitchResponse response = Twitch.getTwitch(s);
 
                     if(Twitch.isChannelLive(response)) {
-                        output += " " + s + " - " + response.stream.channel.url;
+                        output += String.format("%s - %s",s,response.stream.channel.url);
                     }
                 }
 
                 if(output.length()>0) {
-                    SnackBot.bot.sendMessage(target, "Currently Streaming:" + output);
+                    super.sendMessage(target, String.format("<B>Currently Streaming:<N> <g>%s<N>",output));
 
                 } else {
-                    SnackBot.bot.sendMessage(target, "NO Streamers live!");
-
+                    super.sendMessage(target, "<B>NO Streamers live!<N>");
                 }
             } else {
-                SnackBot.bot.sendMessage(target, "NO Streamers added!");
+                super.sendMessage(target, "<B>NO Streamers added!<N>");
 
             }
-
-
-
 
         }
     }
@@ -108,20 +103,20 @@ public class TwitchCommand extends BotCommand{
     public void addChannel(String args) {
         if(Twitch.isvalidUser(args)) {
             if  (streamers.contains(args.toLowerCase())) {
-                SnackBot.bot.sendMessage(chan, "Channel: " + args + " is already in list!");
+                super.sendMessage(chan, String.format("<B>Channel:<N> %s is already in the list!",args));
             }
             else {
                 addStreamer(chan, args);
             }
 
         } else {
-            SnackBot.bot.sendMessage(chan, args + " is not a valid Twitch Channel");
+            super.sendMessage(chan, String.format("<B>Channel:<N> %s is not a valid channel",args));
 
         }
     }
     public void addStreamer(String target, String channel) {
         streamers.add(channel);
-        SnackBot.bot.sendMessage(target, "Channel: " + channel + " added!");
+        super.sendMessage(target, String.format("<B>Channel:<N> %s added!",channel));
 
         writeJson();
 

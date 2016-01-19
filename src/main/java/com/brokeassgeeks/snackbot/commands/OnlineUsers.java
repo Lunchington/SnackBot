@@ -3,7 +3,6 @@ package com.brokeassgeeks.snackbot.commands;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.ServerList;
-import org.jibble.pircbot.Colors;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -28,7 +27,7 @@ public class OnlineUsers extends BotCommand {
             _output = "";
 
             ServerList list = new ServerList();
-            list.setAddress(new InetSocketAddress(s.host,Integer.parseInt(s.port)));
+            list.setAddress(new InetSocketAddress(s.host,s.port));
 
             try {
                 ServerList.StatusResponse response = list.fetchData();
@@ -39,15 +38,15 @@ public class OnlineUsers extends BotCommand {
                         serverPlayers += player.getName() + " ";
                     }
                 }
-                _output = Colors.BOLD + s.name + ": " +Colors.NORMAL;
+                _output = String.format("<B>%s<N> - %s: ",s.name,response.getDescription());
 
                 if (response.getPlayers().getOnline() >0){
-                    _output += Colors.BOLD;
+                    _output += "<B>";
                 }
-                _output += response.getPlayers().getOnline() + Colors.NORMAL + "/" + response.getPlayers().getMax();
+                _output += String.format("%s<N>/%s", response.getPlayers().getOnline(),response.getPlayers().getMax());
 
                 if (!Utils.isEmpty(serverPlayers)) {
-                _output += Colors.BOLD + " Users Online: " +Colors.GREEN + serverPlayers + Colors.NORMAL;
+                _output += String.format("<B> Users Online: <N><g>%s<N>", serverPlayers);
             }
 
             } catch (IOException e) {
@@ -55,9 +54,9 @@ public class OnlineUsers extends BotCommand {
             }
 
             if (!Utils.isEmpty(_output)) {
-                SnackBot.bot.sendMessage(target, _output);
+                super.sendMessage(target, _output);
             } else {
-                SnackBot.bot.sendMessage(target, Colors.BOLD + s.name +  " is Down!");
+                super.sendMessage(target, String.format("<B>%s is down!<N>",s.name));
             }
 
 
