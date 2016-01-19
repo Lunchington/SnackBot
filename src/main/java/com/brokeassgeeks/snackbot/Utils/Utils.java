@@ -5,10 +5,10 @@ import com.brokeassgeeks.snackbot.commands.ServerStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,5 +102,21 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static String chooseRandomLine(File f) throws FileNotFoundException
+    {
+        String result = null;
+        Random rand = new Random();
+        int n = 0;
+        for(Scanner sc = new Scanner(f); sc.hasNext(); )
+        {
+            ++n;
+            String line = sc.nextLine();
+            if(rand.nextInt(n) == 0)
+                result = line;
+        }
+
+        return result;
     }
 }

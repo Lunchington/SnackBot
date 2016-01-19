@@ -11,7 +11,7 @@ public class NonCommand {
         String str = args.trim();
         if (sender.equalsIgnoreCase("tom")) {
             if (Utils.stringContainsItemFromList(str, this.tomcomplaints)) {
-                SnackBot.bot.sendMessage(target, "tom: dont be such a " + SnackBot.bot.insult.getInsult());
+                SnackBot.bot.sendMessage(target, "tom: dont be such a " + SnackBot.bot.insult.getRandomInsult());
                 return;
             }
         }

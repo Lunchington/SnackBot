@@ -1,10 +1,10 @@
 package com.brokeassgeeks.snackbot;
 
-import com.almworks.sqlite4java.SQLiteException;
 import com.brokeassgeeks.snackbot.Utils.SeenDataBase;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.*;
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.commands.fun.*;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
 
@@ -51,6 +51,7 @@ public class Bot extends PircBot {
 
         this.commands.add(new Helper());
         this.commands.add(new Seen());
+        this.commands.add(new EightBall());
 
         try
         {

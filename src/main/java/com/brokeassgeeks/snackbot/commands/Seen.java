@@ -20,6 +20,10 @@ public class Seen extends BotCommand{
     public void handleMessage(String channel, String sender, String login, String hostname, String args) {
         if (args.length() > 0) {
             if (SnackBot.bot.isUserInChannel(channel, args)) {
+                if(SnackBot.bot.seenDataBase.isUserInDB(login+"@"+hostname) == 0) {
+                    SnackBot.bot.seenDataBase.processNickRecord(login, hostname, args, System.currentTimeMillis() / 1000L);
+                }
+
                 SnackBot.bot.sendMessage(channel, Colors.NORMAL + Colors.BOLD + args + Colors.NORMAL + " is right here in the channel." + Colors.NORMAL);
             } else {
 

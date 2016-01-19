@@ -20,7 +20,7 @@ public class Insult extends BotCommand {
 
     @Override
     public void handleMessage(String channel, String sender, String login, String hostname, String message) {
-        SnackBot.bot.sendMessage(channel, String.format("%s you, %s",sender,getInsult()) );
+        SnackBot.bot.sendMessage(channel, String.format("%s you, %s",sender,getRandomInsult()) );
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Insult extends BotCommand {
 
     }
 
-    public String getInsult() {
+    public String getRandomInsult() {
         Random r = new Random();
 
         String adj1 = insults.adj[r.nextInt(insults.adj.length)];

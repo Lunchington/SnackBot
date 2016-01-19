@@ -1,6 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.almworks.sqlite4java.SQLiteConnection;
 import com.brokeassgeeks.snackbot.SnackBot;
 import org.jibble.pircbot.Colors;
 
@@ -10,7 +9,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Time extends BotCommand{
-    private SQLiteConnection _db;
 
     public Time() {
         super("time");
@@ -48,14 +46,14 @@ public class Time extends BotCommand{
 
             if (time == "ERROR") {
                 SnackBot.bot.sendMessage(channel, Colors.RED + "INVALID ZONE: " + Colors.BOLD + args+ Colors.NORMAL );
-                SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York") );
+                SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York",0) );
             }
             else
                 SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Time for " + args + ": "+ Colors.NORMAL + time );
 
         }
         else {
-            SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York") );
+            SnackBot.bot.sendMessage(channel,  Colors.GREEN + "Local Time: " + Colors.NORMAL + getTimewithZone("America/New_York",0) );
         }
     }
 
@@ -69,27 +67,8 @@ public class Time extends BotCommand{
         return "ERROR";
     }
 
-    public String getTimewithZone(String zone) {
-
-        Locale locale = Locale.getDefault();
-        TimeZone currentTimeZone = TimeZone.getDefault();
-
-        DateFormat formatter = DateFormat.getDateTimeInstance(
-                DateFormat.DEFAULT,
-                DateFormat.DEFAULT,
-                locale);
-        formatter.setTimeZone(currentTimeZone);
-
-        Date currentDate = new Date();
-        formatter.setTimeZone(TimeZone.getTimeZone(zone));
-
-        return formatter.format(currentDate);
-    }
-
-
     public String getTimewithZone(String zone, int off) {
         long hour = 3600 * 1000;
-        long offset = hour * off;
 
         Locale locale = Locale.getDefault();
         TimeZone currentTimeZone = TimeZone.getDefault();
@@ -102,7 +81,7 @@ public class Time extends BotCommand{
 
         Date currentDate = new Date();
         formatter.setTimeZone(TimeZone.getTimeZone(zone));
-        currentDate.setTime(currentDate.getTime() + offset);
+        currentDate.setTime(currentDate.getTime() + (off*hour));
 
         return formatter.format(currentDate);
     }
