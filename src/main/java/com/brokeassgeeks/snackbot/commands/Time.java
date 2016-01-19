@@ -1,19 +1,10 @@
 package com.brokeassgeeks.snackbot.commands;
 
-
 import com.almworks.sqlite4java.SQLiteConnection;
-import com.almworks.sqlite4java.SQLiteException;
-import com.almworks.sqlite4java.SQLiteStatement;
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.TimeResponse;
-import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.jibble.pircbot.Colors;
 
-import java.io.File;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;

@@ -1,10 +1,12 @@
 package com.brokeassgeeks.snackbot;
 
+import com.almworks.sqlite4java.SQLiteException;
 import com.brokeassgeeks.snackbot.Utils.SeenDataBase;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.*;
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import org.jibble.pircbot.PircBot;
+import org.jibble.pircbot.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +17,14 @@ public class Bot extends PircBot {
     public NonCommand nonCommand;
     public TwitchCommand twitch;
     public Insult insult;
+    public SeenDataBase seenDataBase;
 
     public static long coolDown = Config.COMMAND_TIMEOUT * 1000;
     public static long currentTime;
     public static long lastAction;
-   // public static SeenDataBase seenDataBase = new SeenDataBase();
 
     public Bot() {
+        this.seenDataBase =  new SeenDataBase();
         this.commands = new ArrayList<>();
 
         this.cmdServerStatus = new ServerStatus();
@@ -47,6 +50,7 @@ public class Bot extends PircBot {
         this.commands.add(new Time());
 
         this.commands.add(new Helper());
+        this.commands.add(new Seen());
 
         try
         {
@@ -140,8 +144,27 @@ public class Bot extends PircBot {
 
     @Override
     public void onJoin(String channel, String sender, String login, String hostname) {
+        seenDataBase.processUserSeenRecord(channel, sender,login, hostname, System.currentTimeMillis() / 1000L);
+    }
 
+    @Override
+    public void onNickChange(String oldNick, String login, String hostname, String newNick) {
+        seenDataBase.processNickRecord(login, hostname, newNick, System.currentTimeMillis() / 1000L);
 
+    }
+
+    @Override
+    public void onQuit(String nick, String login, String hostname, String reason) {
+        seenDataBase.processNickRecord(login, hostname, nick, System.currentTimeMillis() / 1000L);
+    }
+
+    public boolean isUserInChannel(String channel, String user) {
+        User[] users = SnackBot.bot.getUsers(channel);
+        for(User u: users) {
+            if(u.getNick().equalsIgnoreCase(user))
+                return true;
+        }
+        return false;
     }
 
 
