@@ -1,5 +1,10 @@
 package com.brokeassgeeks.snackbot.mcserver;
-
+/*
+    Derived from
+    Author: zh32
+    Edited by: Lunchington
+    URL: https://github.com/zh32/TeleportSigns/blob/development/src/main/java/de/zh32/teleportsigns/server/status/ServerListPing.java
+ */
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;

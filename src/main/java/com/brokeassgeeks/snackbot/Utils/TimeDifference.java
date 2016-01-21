@@ -1,5 +1,8 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+/*
+    From: http://stackoverflow.com/a/24781239
+ */
 
 import java.util.Date;
 
