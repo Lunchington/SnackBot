@@ -4,20 +4,6 @@ import com.almworks.sqlite4java.*;
 import java.io.File;
 
 public class SeenDataBase {
-    public class UserDB {
-        public UserDB(long id, String lastNick, String hostName, long timeSeen) {
-            this.id = id;
-            this.lastNick = lastNick;
-            this.hostName = hostName;
-            this.timeSeen = timeSeen;
-        }
-
-        public long id;
-        public String lastNick;
-        public String hostName;
-        public long timeSeen;
-    }
-
     File DBFILE = new File("db/database.db");
     SQLiteQueue queue = new SQLiteQueue(DBFILE);
 
@@ -27,9 +13,10 @@ public class SeenDataBase {
     }
 
     public UserDB getUserbyID(final long id) {
+        if (id <1)
+            return null;
 
         final String q = "SELECT * FROM seen WHERE id = ?";
-
         return queue.execute(new SQLiteJob<UserDB>() {
             @Override
             protected UserDB job(SQLiteConnection connection) throws Throwable {
@@ -38,25 +25,19 @@ public class SeenDataBase {
                 try {
                     if (st.step()) {
                         return new UserDB(st.columnInt(0), st.columnString(1), st.columnString(2), st.columnLong(3));
-                    }
-                    else
+                    } else
                         return null;
                 } finally {
                     st.dispose();
                 }
             }
         }).complete();
+
     }
 
-
     public UserDB getUserbyNick(String user) {
-        System.out.println(user);
-
         Long id = getUserIdbyNick(user);
-        if (id > 0)
-            return getUserbyID(id);
-        else
-            return null;
+        return getUserbyID(id);
     }
 
     public Long getUserIdbyNick(final String nick) {
@@ -113,12 +94,8 @@ public class SeenDataBase {
 
     }
 
-    public void processNickRecord(final String login, final String hostname, final String nick, final long time) {
-        processUserSeenRecord("",nick,login,hostname,time);
-    }
 
     public Long addNewUser(final String user, final String loginHost, final long time) {
-
         final String q = "INSERT INTO seen(lastNick, hostname, time) VALUES (? , ? , ?) ";
 
         return queue.execute(new SQLiteJob<Long>() {

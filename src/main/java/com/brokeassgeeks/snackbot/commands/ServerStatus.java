@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -10,9 +11,9 @@ import java.io.Reader;
 
 public class ServerStatus extends BotCommand {
 
-    private ServerInfo[] servers;
+    private MinecraftServer[] servers;
 
-    public ServerInfo[] getServers() {
+    public MinecraftServer[] getServers() {
         return this.servers;
     }
 
@@ -29,8 +30,8 @@ public class ServerStatus extends BotCommand {
     public String getServerStatus() {
         String _output="";
 
-        for (ServerInfo s : this.servers) {
-            _output += String.format("%s - %s: %s <N>",s.name,s.pack,(Utils.hostAvailabilityCheck(s.host, s.port) ? "<g>Up! " : "<r>Down! "));
+        for (MinecraftServer s : this.servers) {
+            _output += String.format("%s - %s: %s <N>",s.name,s.pack,(Utils.hostAvailabilityCheck(s.getHost()) ? "<g>Up! " : "<r>Down! "));
         }
 
         return _output;
@@ -46,7 +47,7 @@ public class ServerStatus extends BotCommand {
             Reader jsonFile = new FileReader(file);
 
 
-            this.servers = gson.fromJson(jsonFile, ServerInfo[].class);
+            this.servers = gson.fromJson(jsonFile, MinecraftServer[].class);
 
             jsonFile.close();
         } catch (Exception e) {
@@ -56,11 +57,4 @@ public class ServerStatus extends BotCommand {
     }
 
 
-
-    public class ServerInfo {
-        public String name;
-        public String pack;
-        public String host;
-        public int port;
-    }
 }

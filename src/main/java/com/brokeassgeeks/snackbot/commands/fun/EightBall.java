@@ -11,28 +11,27 @@ import java.io.FileNotFoundException;
 public class EightBall extends BotCommand {
     public EightBall() {
         super("8ball");
+        setDesc("Ask the magic 8ball a question");
     }
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        if (args.length() > 0) {
-            String s="";
-            try {
-                s = Utils.chooseRandomLine(new File("data/fun/8ball.txt"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            s = s.replaceAll("<g>", Colors.GREEN);
-            s = s.replaceAll("<r>", Colors.RED);
-            s = s.replaceAll("<y>", Colors.YELLOW);
-
-            SnackBot.bot.sendAction(target, "shakes the magic 8 ball... " + s);
-
-        } else {
+        if (args.length() == 0) {
             SnackBot.bot.sendMessage(target, "8ball <question>");
+            return;
         }
 
+
+        String s="";
+        try {
+            s = Utils.chooseRandomLine(new File("data/fun/8ball.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        s = s.replaceAll("<g>", Colors.GREEN);
+        s = s.replaceAll("<r>", Colors.RED);
+        s = s.replaceAll("<y>", Colors.YELLOW);
+
+        SnackBot.bot.sendAction(target, "shakes the magic 8 ball... " + s);
     }
-
-
 }

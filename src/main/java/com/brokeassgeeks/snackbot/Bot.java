@@ -156,13 +156,13 @@ public class Bot extends PircBot {
 
     @Override
     public void onNickChange(String oldNick, String login, String hostname, String newNick) {
-        seenDataBase.processNickRecord(login, hostname, newNick, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord("",login, hostname, newNick, System.currentTimeMillis() / 1000L);
 
     }
 
     @Override
     public void onQuit(String nick, String login, String hostname, String reason) {
-        seenDataBase.processNickRecord(login, hostname, nick, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord("", login, hostname, nick, System.currentTimeMillis() / 1000L);
     }
 
     public boolean isUserInChannel(String channel, String user) {

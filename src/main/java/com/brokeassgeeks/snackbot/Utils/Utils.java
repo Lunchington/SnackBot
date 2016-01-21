@@ -2,11 +2,13 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.commands.ServerStatus;
+import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import org.jibble.pircbot.Colors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
@@ -62,13 +64,16 @@ public class Utils {
         return str.substring(0,str.length()-1);
     }
 
-    public static  boolean hostAvailabilityCheck(String _server, int _port) {
-        try (Socket s = new Socket(_server, _port)) {
-            return true;
+    public static  boolean hostAvailabilityCheck(InetSocketAddress host) {
+        Socket s = new Socket();
+        try  {
+            s.connect(host,7000);
+
         } catch (IOException ex) {
-        /* ignore */
+            return false;
         }
-        return false;
+        return true;
+
     }
     public static String parseforHTML(String str) {
         String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]";
@@ -121,7 +126,7 @@ public class Utils {
 
     public static boolean isBot(String sender) {
 
-        for (ServerStatus.ServerInfo s : SnackBot.bot.cmdServerStatus.getServers())
+        for (MinecraftServer s : SnackBot.bot.cmdServerStatus.getServers())
         {
             if ((sender.equalsIgnoreCase(s.name)) || sender.toLowerCase().startsWith("tom")) {
 
@@ -155,6 +160,10 @@ public class Utils {
             s = s.replaceAll(key, replaceMap.get(key));
         }
         return s;
+    }
+
+    public boolean isUSerinMC(String user) {
+        return true;
     }
 
 }

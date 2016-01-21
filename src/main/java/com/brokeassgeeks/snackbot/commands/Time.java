@@ -14,44 +14,43 @@ public class Time extends BotCommand{
 
     @Override
     public void handleMessage(String channel, String sender, String login, String hostname, String args) {
+        if (args.length() == 0) {
+            super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
+            return;
+        }
+
         String time ="ERROR";
         String newZone="ERROR";
         int offset = 0;
+        String[] d = new String[0];
 
-        if (args.length() > 0) {
-            String[] d = new String[0];
-
-            if (args.contains("-")) {
-                d = args.split("\\-");
-                d[1] = "-" + d[1];
-            }else if (args.contains("+")) {
-                d = args.split("\\+");
-                d[1] = "+" + d[1];
-            }
-
-            if (d.length > 0) {
-                newZone = getTimeZoneProper(d[0]);
-                offset = Integer.parseInt(d[1]);
-
-            } else {
-                newZone= getTimeZoneProper(args);
-            }
-
-
-            if (newZone != "ERROR")
-                time = getTimewithZone(newZone,offset);
-
-            if (time == "ERROR") {
-                super.sendMessage(channel, String.format("<r>INVALID ZONE: <B>%s<N>", args));
-                super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
-            }
-            else
-                super.sendMessage(channel,   String.format("<g>Time for %s: <N>%s",args ,time ));
-
+        if (args.contains("-")) {
+            d = args.split("\\-");
+            d[1] = "-" + d[1];
+        }else if (args.contains("+")) {
+            d = args.split("\\+");
+            d[1] = "+" + d[1];
         }
-        else {
+
+        if (d.length > 0) {
+            newZone = getTimeZoneProper(d[0]);
+            offset = Integer.parseInt(d[1]);
+
+        } else {
+            newZone= getTimeZoneProper(args);
+        }
+
+
+        if (newZone != "ERROR")
+            time = getTimewithZone(newZone,offset);
+
+        if (time == "ERROR") {
+            super.sendMessage(channel, String.format("<r>INVALID ZONE: <B>%s<N>", args));
             super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
         }
+        else
+            super.sendMessage(channel,   String.format("<g>Time for %s: <N>%s",args ,time ));
+
     }
 
     public String getTimeZoneProper(String string) {
