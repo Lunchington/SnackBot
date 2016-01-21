@@ -4,6 +4,7 @@ import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.SeenDataBase;
 import com.brokeassgeeks.snackbot.Utils.UserDB;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -29,13 +30,13 @@ public class Seen extends BotCommand{
         }
 
         if (args.equalsIgnoreCase(SnackBot.bot.getNick())) {
-            super.sendMessage(channel, String.format("<B>%s<N>of course I am here.", sender));
+            super.sendMessage(channel, String.format("<B>%s<N> of course I am here.", sender));
             return;
         }
 
         if (SnackBot.bot.isUserInChannel(channel, args)) {
             if(SnackBot.bot.seenDataBase.isUserInDB(login+"@"+hostname) == 0) {
-                SnackBot.bot.seenDataBase.processUserSeenRecord(channel,login, hostname, args, System.currentTimeMillis() / 1000L);
+                SnackBot.bot.seenDataBase.processUserSeenRecord(channel,login, hostname, args, System.currentTimeMillis());
             }
             super.sendMessage(channel, String.format("<B>%s<N> is right here!", args));
             return;
@@ -50,17 +51,10 @@ public class Seen extends BotCommand{
                 String output = String.format("<B>%s<N> is right here! Disguised as <B>%s<N>", args, userDB.lastNick);
                 super.sendMessage(channel, output);
             } else {
-                Locale locale = Locale.getDefault();
-                TimeZone currentTimeZone = TimeZone.getDefault();
 
-                DateFormat formatter = DateFormat.getDateTimeInstance(
-                        DateFormat.DEFAULT,
-                        DateFormat.DEFAULT,
-                        locale);
-                formatter.setTimeZone(currentTimeZone);
-                Date currentDate = new Date(userDB.timeSeen * 1000L);
+                Date currentDate = new Date(userDB.timeSeen);
 
-                super.sendMessage(channel, String.format("I last saw <B>%s<N> on: <B>%s<N>",args,formatter.format(currentDate)));
+                super.sendMessage(channel, String.format("I last saw <B>%s<N> in %s on: <B>%s<N>",args,channel, Utils.getTime(currentDate)));
             }
         } else {
             super.sendMessage(channel, String.format("I have not seen <B>%s<N>",args));

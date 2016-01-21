@@ -18,7 +18,7 @@ public class Helper extends BotCommand
         String output = "";
         for (BotCommand b: SnackBot.bot.commands ) {
             if (b != this)
-                output += String.format("<b><B>%s<N> - %s ",b.getCommandName() , b.getDesc());
+                output += String.format("<b><B>%s<N> - %s ",b.name , b.desc);
 
         }
         return Utils.removeLastChar(output);

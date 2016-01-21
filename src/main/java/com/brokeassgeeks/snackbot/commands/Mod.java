@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
 import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
@@ -20,7 +21,7 @@ public class Mod extends BotCommand {
             super.sendMessage(channel, String.format("<b>USAGE:<N> %s <SERVER> <MOD>" , this.getFullCmd()));
             return;
         }
-        String[] cmd = splitWords(args);
+        String[] cmd = Utils.splitWords(args);
 
         MinecraftServer s = SnackBot.bot.cmdServerStatus.getServer(cmd[0]);
 

@@ -69,8 +69,11 @@ public class Bot extends PircBot {
 
     private BotCommand getBotCmd(String args)
     {
+        if(args.startsWith(Config.CATCH_CHAR))
+            args = args.substring(Config.CATCH_CHAR.length());
+
         for (BotCommand command : this.commands) {
-            if (args.toLowerCase().startsWith(command.getCommandName())) {
+            if (args.toLowerCase().startsWith(command.name)) {
                 return command;
             }
         }
@@ -80,35 +83,43 @@ public class Bot extends PircBot {
     protected void onMessage(String target, String sender, String login, String hostname, String message)
     {
         currentTime = System.currentTimeMillis();
+        message = message.trim();
 
         if (Utils.isBot(sender)) {
-            message = message.replaceAll("\\<.*?>","");
+            String bot = sender;
+            boolean update = false;
+
+            if (message.startsWith("<") && message.contains(">")) {
+                sender = message.substring(message.indexOf("<") + 1, message.indexOf(">"));
+                message = message.replaceAll("^<.*?>", "").trim();
+                update = true;
+            }
+
+            if (message.endsWith("the game") && !update) {
+                String arr[] = message.split(" ", 2);
+                sender =arr [0];
+                message = arr[1];
+                update = true;
+            }
+
+            if(update)
+                SnackBot.bot.cmdServerStatus.updateServerActivity(bot, sender, System.currentTimeMillis());
         }
 
         if (currentTime - lastAction >= coolDown) {
-            message = message.trim();
-            if (message.startsWith(Config.CATCH_CHAR)) {
-                message = message.substring(Config.CATCH_CHAR.length());
-                BotCommand cmd = getBotCmd(message);
-                if (cmd != null) {
-                    if (message.length() == cmd.getCommandName().length()) {
-                        message = "";
-                    } else {
-                        message = message.substring(cmd.getCommandName()
-                                .length() + 1);
-                    }
-                    cmd.handleMessage(target, sender, login, hostname, message);
-                    lastAction = System.currentTimeMillis();
-                    currentTime = 0;
-                }
-
-
-            } else {
+            if(!message.startsWith(Config.CATCH_CHAR)) {
                 this.nonCommand.handleMessage(target, sender, message);
+                return;
             }
 
+            BotCommand cmd = getBotCmd(message);
+            if (cmd != null) {
+                message = message.substring(cmd.name.length()+1).trim();
+                cmd.handleMessage(target, sender, login, hostname, message);
+                lastAction = System.currentTimeMillis();
+                currentTime = 0;
+            }
         }
-
     }
 
     @Override
@@ -124,8 +135,8 @@ public class Bot extends PircBot {
         }
 
         for (BotCommand command : this.commands) {
-            if (message.startsWith(command.getCommandName())) {
-                message = message.substring(command.getCommandName().length()).trim();
+            if (message.startsWith(command.name)) {
+                message = message.substring(command.name.length()).trim();
                 command.handlePrivateMessage( sender, login, hostname,message);
             }
         }
@@ -146,24 +157,24 @@ public class Bot extends PircBot {
 
     @Override
     public void onPart(String channel, String sender, String login, String hostname) {
-        seenDataBase.processUserSeenRecord(channel, sender, login,hostname, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord(channel, sender, login,hostname, System.currentTimeMillis());
     }
 
 
     @Override
     public void onJoin(String channel, String sender, String login, String hostname) {
-        seenDataBase.processUserSeenRecord(channel, sender,login, hostname, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord(channel, sender,login, hostname, System.currentTimeMillis());
     }
 
     @Override
     public void onNickChange(String oldNick, String login, String hostname, String newNick) {
-        seenDataBase.processUserSeenRecord("",login, hostname, newNick, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord("",newNick, login, hostname, System.currentTimeMillis() );
 
     }
 
     @Override
     public void onQuit(String nick, String login, String hostname, String reason) {
-        seenDataBase.processUserSeenRecord("", login, hostname, nick, System.currentTimeMillis() / 1000L);
+        seenDataBase.processUserSeenRecord("", nick,login, hostname, System.currentTimeMillis() );
     }
 
     public boolean isUserInChannel(String channel, String user) {

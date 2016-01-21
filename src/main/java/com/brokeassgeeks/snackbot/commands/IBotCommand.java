@@ -2,7 +2,6 @@ package com.brokeassgeeks.snackbot.commands;
 
 public interface IBotCommand {
 
-    public String getCommandName();
     public String getFullCmd();
 
     public void handlePrivateMessage(String sender, String login, String hostname, String message);

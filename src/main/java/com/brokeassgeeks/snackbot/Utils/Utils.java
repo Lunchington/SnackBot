@@ -11,9 +11,8 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -162,8 +161,36 @@ public class Utils {
         return s;
     }
 
-    public boolean isUSerinMC(String user) {
+    public boolean isUserinMC(String user) {
         return true;
     }
 
+    public static String[] splitWords (String string) {
+        string = string.toLowerCase();
+        String[] words = string.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].replaceAll("[^\\w]", "");
+        }
+        return words;
+    }
+
+    public static Date getTime(Long time) {
+        Locale locale = Locale.getDefault();
+        TimeZone currentTimeZone = TimeZone.getDefault();
+        Date currentDate = new Date(time);
+        return currentDate;
+    }
+
+    public  static String getTime(Date time) {
+        Locale locale = Locale.getDefault();
+        TimeZone currentTimeZone = TimeZone.getDefault();
+
+        DateFormat formatter = DateFormat.getDateTimeInstance(
+                DateFormat.DEFAULT,
+                DateFormat.LONG,
+                locale);
+        formatter.setTimeZone(currentTimeZone);
+
+        return formatter.format(time);
+    }
 }

@@ -1,5 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -18,8 +20,19 @@ public class Insult extends BotCommand {
     }
 
     @Override
-    public void handleMessage(String channel, String sender, String login, String hostname, String message) {
-        super.sendMessage(channel, String.format("<B>%s<N> you, %s",sender,getRandomInsult()) );
+    public void handleMessage(String channel, String sender, String login, String hostname, String args) {
+        String message =  "<B>%s<N> you, %s";
+        if (args.length() > 0) {
+            args = Utils.splitWords(args)[0];
+
+            if (SnackBot.bot.isUserInChannel(channel,args))
+                sender = args;
+            else
+                message = String.format("%s %s %s is not even here", message ,sender,args);
+
+        }
+
+        super.sendMessage(channel,String.format(message,sender,getRandomInsult()));
     }
 
     @Override
