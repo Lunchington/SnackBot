@@ -7,10 +7,26 @@ public class StatusResponse {
     public Players players;
     public Version version;
     public String favicon;
-    public Modinfo modinfo;
+    public Mods modinfo;
 
     public int modCount() {
         return modinfo.modList.size();
+    }
+    public String getModList() {
+        String output ="";
+
+        for (Mods.ModInfo s: modinfo.modList) {
+            output += s.modid + " ";
+        }
+        return output;
+    }
+
+    public Mods.ModInfo getMod(String name) {
+        for (Mods.ModInfo s: modinfo.modList) {
+            if (s.modid.equalsIgnoreCase(name))
+                return s;
+        }
+        return null;
     }
 
     public class Players {
@@ -30,11 +46,11 @@ public class StatusResponse {
         public String protocol;
     }
 
-    public class Modinfo {
+    public class Mods {
         public String type;
-        public List<ModList> modList;
+        public List<ModInfo> modList;
 
-        private class ModList {
+        public class ModInfo {
             public String modid;
             public String version;
 

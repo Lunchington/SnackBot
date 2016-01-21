@@ -36,6 +36,13 @@ public class ServerStatus extends BotCommand {
 
         return _output;
     }
+    public MinecraftServer getServer(String string) {
+        for (MinecraftServer s : this.servers) {
+            if (s.name.equalsIgnoreCase(string))
+                return s;
+        }
+        return null;
+    }
 
     @Override
     public void loadJson() {

@@ -19,7 +19,7 @@ public class Seen extends BotCommand{
     @Override
     public void handleMessage(String channel, String sender, String login, String hostname, String args) {
         if (args.length() == 0) {
-            super.sendMessage(channel, String.format("<b>USAGE:<N> %s%s <USER>" ,Config.CATCH_CHAR,this.getCommandName()));
+            super.sendMessage(channel, String.format("<b>USAGE:<N> %s <USER>" ,this.getFullCmd()));
             return;
         }
 

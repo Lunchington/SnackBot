@@ -15,10 +15,11 @@ public class ServerConnection {
 
     public ServerConnection(MinecraftServer server) {
         this.host = server.getHost();
+        this.timeout = 7000;
     }
 
     public StatusResponse getResponse() {
-        StatusResponse response= null;
+        StatusResponse response;
         try {
             this.connect();
             ServerQuery query = new ServerQuery(this);
