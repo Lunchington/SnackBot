@@ -18,7 +18,7 @@ public class Mod extends BotCommand {
     public void handleMessage(String channel, String sender, String login, String hostname, String args) {
 
         if (args.length() == 0) {
-            super.sendMessage(channel, String.format("<b>USAGE:<N> %s <SERVER> <MOD>" , this.getFullCmd()));
+            super.sendMessage(channel, String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>" , this.getFullCmd()));
             return;
         }
         String[] cmd = Utils.splitWords(args);
@@ -33,13 +33,13 @@ public class Mod extends BotCommand {
         StatusResponse response = new ServerConnection(s).getResponse();
 
         if (cmd.length ==1) {
-            super.sendMessage(channel, String.format("<B>Modlist for %s:<N> %s" , s.name, response.getModList()));
+            super.sendMessage(channel, String.format("<B><b>Modlist for %s:<N> %s" , s.getName(), response.getModList()));
         } else {
             StatusResponse.Mods.ModInfo mod = response.getMod(cmd[1]);
             if (mod == null) {
                 super.sendMessage(channel, String.format("<r>No such mod <B>%s<N><b> on %s" , cmd[1],cmd[0]));
             } else {
-                super.sendMessage(channel, String.format("<B>%s<N> is using version <B><b>%s<N> of <B><b>%s<N>" , s.name,mod.version,mod.modid));
+                super.sendMessage(channel, String.format("<B><b>%s<N> is using version <B><b>%s<N> of <B><b>%s<N>" , s.getName(),mod.getVersion(),mod.getModid()));
 
             }
 

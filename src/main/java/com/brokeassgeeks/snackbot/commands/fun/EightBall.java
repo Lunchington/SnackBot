@@ -3,7 +3,6 @@ package com.brokeassgeeks.snackbot.commands.fun;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.BotCommand;
-import org.jibble.pircbot.Colors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,10 +16,9 @@ public class EightBall extends BotCommand {
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
         if (args.length() == 0) {
-            SnackBot.bot.sendMessage(target, "8ball <question>");
+            super.sendMessage(target, String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>", getFullCmd()));
             return;
         }
-
 
         String s="";
         try {
@@ -29,6 +27,6 @@ public class EightBall extends BotCommand {
             e.printStackTrace();
         }
 
-        SnackBot.bot.sendAction(target, "shakes the magic 8 ball... " + Utils.replaceTags(s));
+        super.sendAction(target, String.format("shakes the magic 8 ball... %s",s));
     }
 }

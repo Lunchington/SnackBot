@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Bot;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.SnackBot;
 
@@ -19,8 +20,8 @@ public class NonCommand {
         if (!Utils.stringContainsItemFromList(str, this.blacklist)) {
             String string = Utils.parseforHTML(str);
             if (!Utils.isEmpty(string)) {
-                SnackBot.bot.currentTime = 0;
-                SnackBot.bot.lastAction = System.currentTimeMillis();
+                Bot.currentTime = 0;
+                Bot.lastAction = System.currentTimeMillis();
                 SnackBot.bot.sendMessage(target, string);
             }
         }

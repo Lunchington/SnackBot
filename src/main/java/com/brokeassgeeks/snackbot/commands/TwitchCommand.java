@@ -16,13 +16,12 @@ import java.util.List;
 
 public class TwitchCommand extends BotCommand{
     private List<String> streamers;
-    private String chan;
 
     public TwitchCommand() {
         super("twitch");
         streamers = new ArrayList<>();
         loadJson();
-        this.setDesc("show users streaming on twitch, use: " + this.getFullCmd() + " add <NAME> to add yourself to twitch");
+        this.setDesc("show users streaming on twitch, use: " + this.getFullCmd() + " add <NAME> to add a channel");
     }
 
     @Override
@@ -32,7 +31,7 @@ public class TwitchCommand extends BotCommand{
             String[] cmd = Utils.splitWords(args);
             if( cmd[0].equals("add")) {
                 if(cmd.length <2) {
-                    super.sendMessage(channel, String.format("<B>%s<N> need to specify a channel to add",sender));
+                    super.sendMessage(channel, String.format("<B><b>USAGE: %s add <channel>",getFullCmd()));
                 } else {
                     super.sendMessage(channel,addChannel(cmd[1]));
                 }
@@ -40,7 +39,7 @@ public class TwitchCommand extends BotCommand{
         } else {
 
             if (streamers.size() == 0) {
-                super.sendMessage(channel, "<B>NO Streamers added!<N>");
+                super.sendMessage(channel, "<B><b>NO Streamers added!<N>");
                 return;
             }
 
@@ -48,14 +47,14 @@ public class TwitchCommand extends BotCommand{
                 TwitchResponse response = Twitch.getTwitch(s);
 
                 if (Twitch.isChannelLive(response)) {
-                    output += String.format("%s - %s", s, response.stream.channel.url);
+                    output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
                 }
             }
 
             if (output.length() > 0)
-                super.sendMessage(channel, String.format("<B>Currently Streaming:<N> <g>%s<N>", output));
+                super.sendMessage(channel, String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
             else
-                super.sendMessage(channel, "<B>NO Streamers live!<N>");
+                super.sendMessage(channel, "<B><b>NO Streamers live!<N>");
 
         }
     }
@@ -95,27 +94,24 @@ public class TwitchCommand extends BotCommand{
         }  catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public String addChannel(String args) {
         if(Twitch.isvalidUser(args)) {
             if  (streamers.contains(args.toLowerCase())) {
-                return String.format("<B>Channel:<N> %s is already in the list!",args);
+                return String.format("<B><b>Channel:<N> %s is already in the list!",args);
             }
             else {
-                return addStreamer(chan, args);
+                return addStreamer(args);
             }
 
         } else {
-            return String.format("<B>Channel:<N> %s is not a valid channel",args);
-
+            return String.format("<B><b>Channel:<N> %s is not a valid channel",args);
         }
     }
-    public String  addStreamer(String target, String channel) {
+    public String  addStreamer(String channel) {
         streamers.add(channel);
         writeJson();
-        return  String.format("<B>Channel:<N> %s added!",channel);
+        return  String.format("<B><b>Channel:<N> %s added!",channel);
     }
 }

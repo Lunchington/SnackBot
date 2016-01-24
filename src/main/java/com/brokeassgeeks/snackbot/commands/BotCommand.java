@@ -44,15 +44,15 @@ public abstract class BotCommand implements  IBotCommand {
     }
 
 
-
-
-
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
     public void sendMessage(String target, String message) {
         SnackBot.bot.sendMessage(target, Utils.replaceTags(message));
+    }
+    public void sendAction(String target, String message) {
+        SnackBot.bot.sendAction(target, Utils.replaceTags(message));
     }
 }
 

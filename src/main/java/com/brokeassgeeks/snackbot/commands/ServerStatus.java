@@ -7,11 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
 
 public class ServerStatus extends BotCommand {
 
@@ -29,25 +24,22 @@ public class ServerStatus extends BotCommand {
     @Override
     public void handleMessage(String channel, String sender, String login, String hostname, String args) {
         if (args.length() == 0) {
-            super.sendMessage(channel, String.format("<B>Server Status:<N> %s", getServerStatus()));
+            super.sendMessage(channel, String.format("<B><b>Server Status:<N> %s", getServerStatus()));
             writeJson();
             return;
         }
 
         MinecraftServer server = getServer(args);
         if (sender != null) {
-            String user = server.lastactivity.user;
-
-            long time = server.lastactivity.time;
+            String user = server.getLastactivity().getUser();
+            long time = server.getLastactivity().getTime();
             long now = System.currentTimeMillis();
 
-            String _output=String.format("There is no activity for %s",server.name);
+            String _output=String.format("There is no activity for <B><b>%s",server.getName());
 
             if (time != 0) {
                 TimeDifference diff = new TimeDifference(Utils.getTime(now), Utils.getTime(time));
-                String s = diff.getDifferenceString();
-
-                _output =  String.format("<b>Last activity on <B>%s<N> was <B>%s<N> by <B>%s<B>",server.name,diff.getDifferenceString(),user);
+                _output =  String.format("Last activity on <B>%s<N> was <B><b>%s<N> by <B><b>%s<B>",server.getName(),diff.getDifferenceString(),user);
             }
             super.sendMessage(channel,_output);
 
@@ -58,14 +50,14 @@ public class ServerStatus extends BotCommand {
         String _output="";
 
         for (MinecraftServer s : this.servers) {
-            _output += String.format("%s - %s: %s <N>",s.name,s.pack,(Utils.hostAvailabilityCheck(s.getHost()) ? "<g>Up! " : "<r>Down! "));
+            _output += String.format("<B><b>%s<N> - %s: %s <N>",s.getName(),s.getPack(),(Utils.hostAvailabilityCheck(s.getHost()) ? "<g>Up! " : "<r>Down! "));
         }
 
         return _output;
     }
     public MinecraftServer getServer(String string) {
         for (MinecraftServer s : this.servers) {
-            if (s.name.equalsIgnoreCase(string))
+            if (s.getName().equalsIgnoreCase(string))
                 return s;
         }
         return null;
@@ -118,9 +110,9 @@ public class ServerStatus extends BotCommand {
     public void updateServerActivity(String server, String sender, long time) {
         for (int i = 0; i < this.servers.length; i++)
         {
-            if(this.servers[i].name.equalsIgnoreCase(server)) {
-                this.servers[i].lastactivity.time = time;
-                this.servers[i].lastactivity.user = sender;
+            if(this.servers[i].getName().equalsIgnoreCase(server)) {
+                this.servers[i].getLastactivity().setTime(time);
+                this.servers[i].getLastactivity().setUser(sender);
             }
         }
         writeJson();

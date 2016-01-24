@@ -31,7 +31,6 @@ public class Insult extends BotCommand {
                 message = String.format("%s %s %s is not even here", message ,sender,args);
 
         }
-
         super.sendMessage(channel,String.format(message,sender,getRandomInsult()));
     }
 

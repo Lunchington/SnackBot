@@ -127,7 +127,7 @@ public class Utils {
 
         for (MinecraftServer s : SnackBot.bot.cmdServerStatus.getServers())
         {
-            if ((sender.equalsIgnoreCase(s.name)) || sender.toLowerCase().startsWith("tom")) {
+            if ((sender.equalsIgnoreCase(s.getName())) || sender.toLowerCase().startsWith("tom")) {
 
                 return true;
             }
@@ -156,13 +156,10 @@ public class Utils {
     public static String replaceTags(String string) {
         String s = string;
         for (String key:replaceMap.keySet()) {
-            s = s.replaceAll(key, replaceMap.get(key));
+            if (s.contains(key))
+                s = s.replaceAll(key, replaceMap.get(key));
         }
         return s;
-    }
-
-    public boolean isUserinMC(String user) {
-        return true;
     }
 
     public static String[] splitWords (String string) {

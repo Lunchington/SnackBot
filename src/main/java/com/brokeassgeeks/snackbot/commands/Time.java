@@ -46,10 +46,10 @@ public class Time extends BotCommand{
 
         if (time == "ERROR") {
             super.sendMessage(channel, String.format("<r>INVALID ZONE: <B>%s<N>", args));
-            super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
+            super.sendMessage(channel, String.format("<B><b>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
         }
         else
-            super.sendMessage(channel,   String.format("<g>Time for %s: <N>%s",args ,time ));
+            super.sendMessage(channel,   String.format("<B><b>Time for %s: <N>%s",args ,time ));
 
     }
 
@@ -80,13 +80,6 @@ public class Time extends BotCommand{
         currentDate.setTime(currentDate.getTime() + (off*hour));
 
         return formatter.format(currentDate);
-    }
-
-
-    @Override
-    public void loadJson() {
-
-
     }
 
 }

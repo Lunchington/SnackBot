@@ -11,7 +11,7 @@ public class Helper extends BotCommand
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        super.sendMessage(target, String.format("<B>HELP: <N> %s", getHelp()));
+        super.sendMessage(target, String.format("<B><b>HELP: <N> %s", getHelp()));
     }
 
     public String getHelp() {
@@ -21,7 +21,7 @@ public class Helper extends BotCommand
                 output += String.format("<b><B>%s<N> - %s ",b.name , b.desc);
 
         }
-        return Utils.removeLastChar(output);
+        return output;
     }
 
 }

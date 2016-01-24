@@ -82,8 +82,8 @@ public class SeenDataBase {
         long userRecord = isUserInDB(loginHost);
         if (userRecord > 0) {
             UserDB currentUser = getUserbyID(userRecord);
-            if (!nick.equalsIgnoreCase(currentUser.lastNick)) {
-                addNewNickbyID(currentUser.id,nick);
+            if (!nick.equalsIgnoreCase(currentUser.getLastNick())) {
+                addNewNickbyID(currentUser.getId(),nick);
             }
             upDateUserbyID(userRecord,nick,hostname, time);
         } else

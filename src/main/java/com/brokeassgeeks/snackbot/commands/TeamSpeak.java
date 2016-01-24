@@ -9,7 +9,7 @@ public class TeamSpeak extends BotCommand {
 
     @Override
     public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        super.sendMessage(target, "<B>TeamSpeak info: <N>ts.breakfastcraft.com password: wilson");
+        super.sendMessage(target, "<B><b>TeamSpeak info: <N>ts.breakfastcraft.com password: wilson");
 
     }
 }

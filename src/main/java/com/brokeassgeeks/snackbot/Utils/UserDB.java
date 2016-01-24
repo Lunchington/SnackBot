@@ -1,7 +1,15 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import lombok.Data;
 
+@Data
 public class UserDB {
+
+    private long id;
+    private String lastNick;
+    private String hostName;
+    private long timeSeen;
+
     public UserDB(long id, String lastNick, String hostName, long timeSeen) {
         this.id = id;
         this.lastNick = lastNick;
@@ -9,8 +17,5 @@ public class UserDB {
         this.timeSeen = timeSeen;
     }
 
-    public long id;
-    public String lastNick;
-    public String hostName;
-    public long timeSeen;
+
 }

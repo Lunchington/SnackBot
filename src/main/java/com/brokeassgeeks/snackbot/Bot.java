@@ -53,6 +53,7 @@ public class Bot extends PircBot {
         this.commands.add(new Seen());
         this.commands.add(new EightBall());
         this.commands.add(new Mod());
+        this.commands.add(new Fortune());
 
         try
         {

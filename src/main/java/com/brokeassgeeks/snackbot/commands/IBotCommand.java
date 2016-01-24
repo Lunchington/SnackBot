@@ -2,12 +2,12 @@ package com.brokeassgeeks.snackbot.commands;
 
 public interface IBotCommand {
 
-    public String getFullCmd();
+    String getFullCmd();
 
-    public void handlePrivateMessage(String sender, String login, String hostname, String message);
-    public abstract void handleMessage(String channel, String sender, String login, String hostname, String message);
+    void handlePrivateMessage(String sender, String login, String hostname, String message);
+    void handleMessage(String channel, String sender, String login, String hostname, String message);
 
-    public void reload();
-    public void loadJson();
+    void reload();
+    void loadJson();
 
 }
