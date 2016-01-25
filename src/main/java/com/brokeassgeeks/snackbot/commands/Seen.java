@@ -4,7 +4,6 @@ import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Seen.UserDB;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.pircbotx.User;
-import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -24,7 +23,6 @@ public class Seen extends Command{
     public void run() {
         if (!(event instanceof MessageEvent))
             return;
-        String out;
         User user = event.getUser();
         String sender = user.getNick();
 
@@ -36,12 +34,12 @@ public class Seen extends Command{
         String target = args[1];
 
         if (sender.equalsIgnoreCase(target)) {
-            super.respond(String.format("<B><b>[%s]<N> you need too look in the mirror.", sender));
+            super.respond(String.format("<B><b>%s<N> you need too look in the mirror.", sender));
             return;
         }
 
         if (target.equalsIgnoreCase(event.getBot().getNick())) {
-            super.respond(String.format("<B><b>[%s]<N> of course I am here.", sender));
+            super.respond(String.format("<B><b>%s<N> of course I am here.", sender));
             return;
         }
 

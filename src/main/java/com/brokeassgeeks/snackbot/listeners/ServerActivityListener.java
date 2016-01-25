@@ -1,7 +1,7 @@
 package com.brokeassgeeks.snackbot.listeners;
 
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.mcserver.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;

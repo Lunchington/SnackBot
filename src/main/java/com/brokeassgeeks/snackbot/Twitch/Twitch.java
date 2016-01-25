@@ -24,24 +24,9 @@ public class Twitch {
         return isvalid;
 
     }
-    public static boolean isChannelLive(String channelName) {
-        TwitchResponse reponse = null;
-        try {
-            reponse = getTwitch(channelName);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return isChannelLive(reponse);
-    }
 
     public static boolean isChannelLive(TwitchResponse response) {
-            if (response.getStream() != null) {
-                return true;
-            }
-
-        return false;
+        return response.getStream() != null;
     }
 
     public static TwitchResponse getTwitch(String channel) {

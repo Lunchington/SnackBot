@@ -3,7 +3,6 @@ package com.brokeassgeeks.snackbot.commands.fun;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.Command;
-import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -27,11 +26,9 @@ public class EightBall extends Command {
     public void run() {
         if (!(event instanceof MessageEvent))
             return;
-        String out = "";
 
         if (args.length == 1) {
-            out = String.format("<B><b>USAGE:<N> %s <QUESTION>", args[0]);
-            ((MessageEvent)event).getChannel().send().message(Utils.replaceTags(out));
+            super.respond(String.format("<B><b>USAGE:<N> %s <QUESTION>", args[0]));
             return;
         }
 
@@ -42,8 +39,7 @@ public class EightBall extends Command {
             e.printStackTrace();
         }
 
-        out = String.format("shakes the magic 8 ball... %s",s);
-
+        String out = String.format("shakes the magic 8 ball... %s",s);
         ((MessageEvent)event).getChannel().send().action(Utils.replaceTags(out));
     }
 }

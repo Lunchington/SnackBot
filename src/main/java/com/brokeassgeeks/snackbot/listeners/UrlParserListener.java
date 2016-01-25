@@ -72,6 +72,7 @@ public class UrlParserListener extends ListenerAdapter {
             in.close();
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
         return tinyUrl;
     }

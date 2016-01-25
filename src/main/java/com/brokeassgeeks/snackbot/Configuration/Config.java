@@ -43,8 +43,9 @@ public class Config {
         if (!config.exists()) {
             logger.log(Level.SEVERE, "Cannot load file creating...");
             try {
-                config.createNewFile();
-                setDefaults();
+                final boolean newFile = config.createNewFile();
+                if (newFile)
+                    setDefaults();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Cannot create config ...", e);
             }
@@ -100,8 +101,7 @@ public class Config {
                 .setRealName(BOT_REALNAME)
                 .setLogin(BOT_USER)
                 .setVersion(VERSION)
-                .setServerHostname(HOSTNAME)
-                .setServerPort(Integer.parseInt(PORT));
+                .addServer(HOSTNAME,Integer.parseInt(PORT));
 
         for (String s : CHANNELS) {
             b.addAutoJoinChannel(s);
@@ -112,7 +112,7 @@ public class Config {
 
     public void save() {
 
-        FileOutputStream out = null;
+        FileOutputStream out;
         try {
             out = new FileOutputStream(new File(configFile));
             prop.store(out,null);

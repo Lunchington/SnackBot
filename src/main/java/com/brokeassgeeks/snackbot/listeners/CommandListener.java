@@ -3,11 +3,7 @@ package com.brokeassgeeks.snackbot.listeners;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import org.pircbotx.User;
-import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.MessageEvent;
-import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,10 +22,6 @@ public class CommandListener extends ListenerAdapter{
     @Override
     public void onGenericMessage(final GenericMessageEvent event) throws Exception {
 
-        if (!canUseCommand(event.getUser())) {
-            return;
-        }
-
         if(!event.getMessage().startsWith(Config.CATCH_CHAR)) {
             return;
         }
@@ -47,16 +39,12 @@ public class CommandListener extends ListenerAdapter{
                 e.printStackTrace();
                 continue;
             }
-
             args[0] = args[0].replaceAll(Config.CATCH_CHAR,"");
             if (command.getTriggers().contains(args[0].toLowerCase())) {
+                logger.info("Executing Command: " + command.getClass().getCanonicalName());
                 threadPool.submit(command);
             }
 
         }
-    }
-
-    private boolean canUseCommand(User user) {
-        return true;
     }
 }

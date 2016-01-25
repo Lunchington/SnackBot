@@ -5,7 +5,6 @@ import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
 import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
-import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 

@@ -23,7 +23,6 @@ public class ServerStatus extends Command {
     public void run() {
         if (!(event instanceof MessageEvent))
             return;
-        String out= "";
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>Server Status:<N> %s", getServerStatus()));
@@ -35,7 +34,7 @@ public class ServerStatus extends Command {
         long time = server.getLastactivity().getTime();
         long now = System.currentTimeMillis();
 
-        out=String.format("There is no activity for <B><b>%s",server.getName());
+        String out=String.format("There is no activity for <B><b>%s",server.getName());
 
         if (time != 0) {
             TimeDifference diff = new TimeDifference(Utils.getTime(now), Utils.getTime(time));

@@ -4,8 +4,6 @@ package com.brokeassgeeks.snackbot.commands;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import org.pircbotx.hooks.Event;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.lang.reflect.Type;

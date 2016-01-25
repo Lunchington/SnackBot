@@ -21,7 +21,7 @@ public class TimeDifference {
 
         float diff=curdate.getTime() - olddate.getTime();
         if (diff >= 0) {
-            int yearDiff = Math.round( ( diff/ (365l*2592000000f))>=1?( diff/ (365l*2592000000f)):0);
+            int yearDiff = Math.round( ( diff/ (365L*2592000000f))>=1?( diff/ (365L*2592000000f)):0);
             if (yearDiff > 0) {
                 years = yearDiff;
                 setDifferenceString(years + (years == 1 ? " year" : " years") + " ago");

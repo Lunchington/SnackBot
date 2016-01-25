@@ -1,6 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -10,7 +9,6 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +24,7 @@ public class TwitchCommand extends Command{
         triggers.add("twitch");
         triggers.add("streamers");
         triggers.add("streams");
+        loadJson();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class TwitchCommand extends Command{
                 for (String s : streamers) {
                     TwitchResponse response = Twitch.getTwitch(s);
 
-                    if (Twitch.isChannelLive(response)) {
+                    if (response != null && Twitch.isChannelLive(response)) {
                         output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
                     }
                 }

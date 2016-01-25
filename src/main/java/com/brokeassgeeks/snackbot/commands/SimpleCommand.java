@@ -2,7 +2,6 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.google.gson.Gson;
 import lombok.Getter;
-import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;

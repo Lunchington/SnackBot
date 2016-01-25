@@ -2,8 +2,6 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.pircbotx.Colors;
 
 import java.io.*;
@@ -12,8 +10,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -56,10 +52,6 @@ public class Utils {
                 reader.close();
         }
 
-    }
-
-    public static String removeLastChar(String str) {
-        return str.substring(0,str.length()-1);
     }
 
     public static  boolean hostAvailabilityCheck(InetSocketAddress host) {
@@ -115,20 +107,9 @@ public class Utils {
         return s;
     }
 
-    public static String[] splitWords (String string) {
-        string = string.toLowerCase();
-        String[] words = string.split("\\s+");
-        for (int i = 0; i < words.length; i++) {
-            words[i] = words[i].replaceAll("[^\\w]", "");
-        }
-        return words;
-    }
 
     public static Date getTime(Long time) {
-        Locale locale = Locale.getDefault();
-        TimeZone currentTimeZone = TimeZone.getDefault();
-        Date currentDate = new Date(time);
-        return currentDate;
+        return new Date(time);
     }
 
     public  static String getTime(Date time) {

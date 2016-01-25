@@ -18,7 +18,7 @@ public class CommandManager {
     }
 
     private CommandManager() {
-        commands = new ArrayList<Class<?>>();
+        commands = new ArrayList<>();
     }
 
     public void addCommand(Class<?> command) {

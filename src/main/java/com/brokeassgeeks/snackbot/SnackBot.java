@@ -2,12 +2,12 @@ package com.brokeassgeeks.snackbot;
 
 
 import com.brokeassgeeks.snackbot.Seen.SeenDataBase;
-import com.brokeassgeeks.snackbot.Twitch.Twitch;
 import com.brokeassgeeks.snackbot.commands.*;
 import com.brokeassgeeks.snackbot.commands.fun.EightBall;
 import com.brokeassgeeks.snackbot.commands.fun.Fortune;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.mcserver.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.commands.fun.Insult;
 import com.brokeassgeeks.snackbot.listeners.CommandListener;
 import com.brokeassgeeks.snackbot.listeners.UrlParserListener;
 import com.brokeassgeeks.snackbot.listeners.ServerActivityListener;
@@ -55,6 +55,7 @@ public class SnackBot {
         CommandManager.getInstance().addCommand(Time.class);
         CommandManager.getInstance().addCommand(Seen.class);
         CommandManager.getInstance().addCommand(TwitchCommand.class);
+        CommandManager.getInstance().addCommand(Insult.class);
 
         servers = MinecraftServerUtils.loadServers();
 

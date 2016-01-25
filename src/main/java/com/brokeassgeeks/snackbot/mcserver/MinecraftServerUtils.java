@@ -1,6 +1,5 @@
-package com.brokeassgeeks.snackbot.Utils;
+package com.brokeassgeeks.snackbot.mcserver;
 
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
