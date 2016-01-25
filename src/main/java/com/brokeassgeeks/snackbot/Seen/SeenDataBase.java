@@ -1,9 +1,13 @@
 package com.brokeassgeeks.snackbot.Seen;
 
 import com.almworks.sqlite4java.*;
+import com.brokeassgeeks.snackbot.SnackBot;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.pircbotx.User;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeenDataBase {
     File DBFILE = new File("db/database.db");
@@ -26,7 +30,7 @@ public class SeenDataBase {
                 st.bind(1, id);
                 try {
                     if (st.step()) {
-                        return new UserDB(st.columnInt(0), st.columnString(1), st.columnString(2), st.columnLong(3));
+                        return new UserDB(st.columnInt(0), st.columnString(1),st.columnString(2), st.columnString(3), st.columnLong(4));
                     } else
                         return null;
                 } finally {
@@ -43,7 +47,7 @@ public class SeenDataBase {
     }
 
     public Long getUserIdbyNick(final String nick) {
-        final String q = "SELECT id FROM nicks WHERE nick = ? COLLATE NOCASE";
+        final String q = "SELECT id FROM seen WHERE lastNick LIKE ? COLLATE NOCASE";
         return queue.execute(new SQLiteJob<Long>() {
             @Override
             protected Long job(SQLiteConnection connection) throws Throwable {
@@ -60,15 +64,17 @@ public class SeenDataBase {
         }).complete();
     }
 
-    public Long upDateUserbyID(final long id, final String nick, final String hostname, final long time) {
-        final String q = "UPDATE seen SET lastNick = ?, time = ? WHERE id = ?";
+    public Long upDateUserbyID(final long id, final User user, final long time) {
+        final String q = "UPDATE seen SET lastNick = ?, hostname =?, login = ?, time = ? WHERE id = ?";
         return queue.execute(new SQLiteJob<Long>() {
             @Override
             protected Long job(SQLiteConnection connection) throws Throwable {
                 SQLiteStatement st = connection.prepare(q);
-                st.bind(1, nick);
-                st.bind(2, time);
-                st.bind(3, id);
+                st.bind(1, user.getNick());
+                st.bind(2, user.getHostname());
+                st.bind(3, user.getLogin());
+                st.bind(4, time);
+                st.bind(5, id);
                 st.step();
                 st.dispose();
                 return connection.getLastInsertId();
@@ -78,35 +84,30 @@ public class SeenDataBase {
     }
 
 
-    public void processUserSeenRecord(User user, final long time) {
+    public void processUserSeenRecord(final User user, final long time) {
 
-        final String loginHost = user.getLogin() + "@" + user.getHostname();
-        long userRecord = isUserInDB(loginHost);
+        long userRecord = isUserInDB(user);
         if (userRecord > 0) {
-            UserDB currentUser = getUserbyID(userRecord);
-            if (!user.getNick().equalsIgnoreCase(currentUser.getLastNick())) {
-                addNewNickbyID(currentUser.getId(),user.getNick());
-            }
-            upDateUserbyID(userRecord,user.getNick(),user.getHostname(), time);
+            upDateUserbyID(userRecord,user, time);
         } else
         {
-            Long newID = addNewUser(user.getNick(),loginHost,time);
-            addNewNickbyID(newID,user.getNick());
+            addNewUser(user,time);
         }
 
     }
 
 
-    public Long addNewUser(final String user, final String loginHost, final long time) {
-        final String q = "INSERT INTO seen(lastNick, hostname, time) VALUES (? , ? , ?) ";
+    public Long addNewUser(final User user, final long time) {
+        final String q = "INSERT INTO seen(lastNick, login, hostname, time) VALUES (? , ?, ? , ?) ";
 
         return queue.execute(new SQLiteJob<Long>() {
             @Override
             protected Long job(SQLiteConnection connection) throws Throwable {
                 SQLiteStatement st = connection.prepare(q);
-                st.bind(1, user);
-                st.bind(2, loginHost);
-                st.bind(3, time);
+                st.bind(1, user.getNick());
+                st.bind(2, user.getLogin());
+                st.bind(3, user.getHostname());
+                st.bind(4, time);
                 st.step();
                 st.dispose();
 
@@ -116,30 +117,35 @@ public class SeenDataBase {
 
     }
 
-    public Long addNewNickbyID(final long id, final String nick) {
-        final String q = "INSERT OR IGNORE INTO nicks(id, nick) VALUES (? , ?) ";
+
+    public Long addNewBlankUser(final String string) {
+        final String q = "INSERT INTO seen(lastNick, login, hostname, time) VALUES (? , ?, ? , ?) ";
 
         return queue.execute(new SQLiteJob<Long>() {
             @Override
             protected Long job(SQLiteConnection connection) throws Throwable {
                 SQLiteStatement st = connection.prepare(q);
-                st.bind(1, id);
-                st.bind(2, nick);
+                st.bind(1, string);
+                st.bind(2, "-");
+                st.bind(3, "-");
+                st.bind(4, 0L);
                 st.step();
                 st.dispose();
+
                 return connection.getLastInsertId();
             }
         }).complete();
     }
 
-    public Long isUserInDB(final String hostname) {
-        final String check = "SELECT id FROM seen WHERE hostname = ?";
+    public Long isUserInDB(final User user) {
+        final String check = "SELECT id FROM seen WHERE lastNick LIKE ?";
 
         return queue.execute(new SQLiteJob<Long>() {
             @Override
             protected Long job(SQLiteConnection connection) throws Throwable {
                 SQLiteStatement st = connection.prepare(check);
-                st.bind(1, hostname);
+                st.bind(1, user.getNick());
+
                 try {
                     if (st.step())
                         return st.columnLong(0);
@@ -147,6 +153,67 @@ public class SeenDataBase {
                 } finally {
                     st.dispose();
                 }
+            }
+        }).complete();
+    }
+
+    public Long addTell(final String nick, final String string) {
+        final String q = "INSERT INTO messages(nick, message) VALUES (? , ?) ";
+
+        return queue.execute(new SQLiteJob<Long>() {
+            @Override
+            protected Long job(SQLiteConnection connection) throws Throwable {
+                SQLiteStatement st = connection.prepare(q);
+                st.bind(1, nick);
+                st.bind(2, string);
+                st.step();
+                st.dispose();
+
+                return connection.getLastInsertId();
+            }
+        }).complete();
+    }
+
+    public Long deleteTells(final String nick) {
+        final String q = "DELETE FROM messages WHERE nick = ? ";
+
+        return queue.execute(new SQLiteJob<Long>() {
+            @Override
+            protected Long job(SQLiteConnection connection) throws Throwable {
+                SQLiteStatement st = connection.prepare(q);
+                st.bind(1, nick);
+                st.step();
+                st.dispose();
+
+                return connection.getLastInsertId();
+            }
+        }).complete();
+    }
+
+    public List<String> getTells(final User user) {
+        List<String> out = new ArrayList<>();
+
+        out = getTellsbyNick(user.getNick());
+        deleteTells(user.getNick());
+
+        return out;
+    }
+
+    public List<String> getTellsbyNick(final String nick) {
+
+        final String q = "SELECT message FROM messages WHERE nick = ? COLLATE NOCASE";
+        final List<String> out = new ArrayList<>();
+        return queue.execute(new SQLiteJob<List<String>>() {
+            @Override
+            protected List<String> job(SQLiteConnection connection) throws Throwable {
+                SQLiteStatement st = connection.prepare(q);
+                st.bind(1, nick);
+                while (st.step()) {
+                    System.out.println(st.columnString(0));
+                    out.add(st.columnString(0));
+                }
+                st.dispose();
+                return out;
             }
         }).complete();
     }

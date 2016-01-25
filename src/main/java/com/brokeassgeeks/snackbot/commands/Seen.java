@@ -46,22 +46,19 @@ public class Seen extends Command{
         if (((MessageEvent) event).getChannel().getUsersNicks().contains(target)) {
             User fetchUser = event.getBot().getUserChannelDao().getUser(target);
 
-            if(SnackBot.getSeenDataBase().isUserInDB(fetchUser.getHostname()) == 0)
+            if(SnackBot.getSeenDataBase().isUserInDB(fetchUser) == 0)
                 SnackBot.getSeenDataBase().processUserSeenRecord(fetchUser,System.currentTimeMillis());
 
-            super.respond( String.format("<B><b>%s<N> is right here!", args));
+            super.respond( String.format("<B><b>%s<N> is right here!", target));
             return;
         }
 
         UserDB userDB = SnackBot.getSeenDataBase().getUserbyNick(target);
 
-        if (userDB != null) {
-            if (((MessageEvent) event).getChannel().getUsersNicks().contains(userDB.getLastNick())) {
-                super.respond(String.format("<B><b>%s<N> is right here! Disguised as <B><b>%s<N>", target, userDB.getLastNick()));
-            } else {
-                Date currentDate = new Date(userDB.getTimeSeen());
-                super.respond(String.format("I last saw <B><b>%s<N> in %s on: <B><b>%s<N>",target,((MessageEvent) event).getChannel().getName(), Utils.getTime(currentDate)));
-            }
+        if (userDB != null && userDB.getTimeSeen() > 0) {
+            Date currentDate = new Date(userDB.getTimeSeen());
+            super.respond(String.format("I last saw <B><b>%s<N> on: <B><b>%s<N>",target, Utils.getTime(currentDate)));
+
         } else {
             super.respond(String.format("I have not seen <B><b>%s<N>",target));
 

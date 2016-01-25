@@ -55,7 +55,7 @@ public class Time extends Command{
             time = getTimewithZone(newZone,offset);
 
         if (time.equalsIgnoreCase("ERROR")) {
-            super.respond(String.format("<r>INVALID ZONE: <B>%s<N>", args));
+            super.respond(String.format("<r>INVALID ZONE: <B>%s<N>", args[1]));
             super.respond(String.format("<B><b>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
         }
         else

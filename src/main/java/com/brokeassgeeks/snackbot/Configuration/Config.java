@@ -25,6 +25,7 @@ public class Config {
     public static String VERSION;
     public static int MESSAGECOUNT;
     public static int COMMAND_TIMEOUT;
+    public static String PASTEBIN_API;
 
     private Properties prop;
 
@@ -67,6 +68,7 @@ public class Config {
         prop.setProperty("nickcomplete", "false");
         prop.setProperty("cmdtimeout", "10");
         prop.setProperty("messagecount", "1");
+        prop.setProperty("pastebinapi","");
 
         save();
     }
@@ -95,6 +97,8 @@ public class Config {
         CATCH_CHAR = prop.getProperty("catchchar");
         COMMAND_TIMEOUT = Integer.parseInt(prop.getProperty("cmdtimeout"));
         MESSAGECOUNT = Integer.parseInt(prop.getProperty("messagecount"));
+
+        PASTEBIN_API = prop.getProperty("pastebinapi");
 
         Configuration.Builder b = new Configuration.Builder()
                 .setName(BOT_NICK)

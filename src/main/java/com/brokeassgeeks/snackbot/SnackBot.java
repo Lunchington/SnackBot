@@ -6,6 +6,7 @@ import com.brokeassgeeks.snackbot.commands.*;
 import com.brokeassgeeks.snackbot.commands.fun.EightBall;
 import com.brokeassgeeks.snackbot.commands.fun.Fortune;
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.listeners.SeenActivityListener;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.commands.fun.Insult;
 import com.brokeassgeeks.snackbot.listeners.CommandListener;
@@ -25,25 +26,22 @@ import java.util.logging.Logger;
 
 public class SnackBot {
     private static final Logger logger = Logger.getLogger(SnackBot.class.getName());
-    private static PircBotX bot;
-    private static Configuration configuration;
-    private static ThreadedListenerManager listenerManager;
 
     @Getter private static SeenDataBase seenDataBase = new SeenDataBase();
     @Getter private static MinecraftServer[] servers;
 
-
     public static void main(String[] args) throws IOException, IrcException {
         logger.info("Bot Starting....");
-        listenerManager = new ThreadedListenerManager();
+        ThreadedListenerManager listenerManager = new ThreadedListenerManager();
 
-        configuration = Config.getInstance().load()
+        Configuration configuration = Config.getInstance().load()
                 .setListenerManager(listenerManager)
                 .buildConfiguration();
 
         listenerManager.addListener(new UrlParserListener());
         listenerManager.addListener(new CommandListener());
         listenerManager.addListener(new ServerActivityListener());
+        listenerManager.addListener(new SeenActivityListener());
 
         CommandManager.getInstance().addCommand(SimpleCommand.class);
         CommandManager.getInstance().addCommand(EightBall.class);
@@ -56,10 +54,11 @@ public class SnackBot {
         CommandManager.getInstance().addCommand(Seen.class);
         CommandManager.getInstance().addCommand(TwitchCommand.class);
         CommandManager.getInstance().addCommand(Insult.class);
+        CommandManager.getInstance().addCommand(Tell.class);
 
         servers = MinecraftServerUtils.loadServers();
 
-        bot = new PircBotX(configuration);
+        PircBotX bot = new PircBotX(configuration);
         bot.startBot();
 
     }
