@@ -1,8 +1,12 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.fun;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.commands.Command;
 import com.google.gson.Gson;
+import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,31 +14,48 @@ import java.io.Reader;
 
 import java.util.Random;
 
-public class Insult extends BotCommand {
+public class Insult extends Command {
     private Insults insults;
 
-    public Insult() {
-        super("insult");
+    private class Insults {
+        String[] adj;
+        String[] amt;
+        String[] noun;
+    }
+
+    public Insult(GenericMessageEvent event, String[] args) {
+        super(event, args);
+    }
+
+
+    @Override
+    public void init() {
+        triggers.add("insult");
         loadJson();
-        setDesc("get a fun description!");
     }
 
     @Override
-    public void handleMessage(String channel, String sender, String login, String hostname, String args) {
+    public void run() {
+
         String message =  "<B>%s<N> you, %s";
-        if (args.length() > 0) {
-            args = Utils.splitWords(args)[0];
+        String sender = event.getUser().getNick();
+        String out = String.format(message, sender, getRandomInsult());
 
-            if (SnackBot.bot.isUserInChannel(channel,args))
-                sender = args;
-            else
-                message = String.format("%s %s %s is not even here", message ,sender,args);
-
+        if (args.length == 1) {
+            super.respond(out);
+            return;
         }
-        super.sendMessage(channel,String.format(message,sender,getRandomInsult()));
+
+        String target = args[1];
+
+        if (!((MessageEvent) event).getChannel().getUsersNicks().contains(target))
+            out = String.format("%s s is not even here", target);
+        else {
+            out = String.format(message, target, getRandomInsult());
+        }
+        super.respond(out);
     }
 
-    @Override
     public void loadJson() {
 
         try {
@@ -66,11 +87,5 @@ public class Insult extends BotCommand {
         String noun = insults.noun[r.nextInt(insults.noun.length)];
 
         return String.format("%s %s of %s %s", adj1, amt,adj2,noun);
-    }
-
-    private class Insults {
-        String[] adj;
-        String[] amt;
-        String[] noun;
     }
 }

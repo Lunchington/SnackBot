@@ -1,11 +1,10 @@
 package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.commands.ServerStatus;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import org.jibble.pircbot.Colors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.pircbotx.Colors;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -19,13 +18,13 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static HashMap<String, String> replaceMap = new HashMap<String, String>()  {{
-        put("<B>",Colors.BOLD);
+        put("<B>", Colors.BOLD);
         put("<U>",Colors.UNDERLINE);
         put("<N>",Colors.NORMAL);
 
         put("<r>",Colors.RED);
         put("<b>",Colors.BLUE);
-        put("<y",Colors.YELLOW);
+        put("<y>",Colors.YELLOW);
         put("<g>",Colors.GREEN);
 
     }};
@@ -72,51 +71,6 @@ public class Utils {
             return false;
         }
         return true;
-
-    }
-    public static String parseforHTML(String str) {
-        String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]";
-        Pattern urlPattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-
-        Matcher matcher = urlPattern.matcher(str);
-
-        while (matcher.find()) {
-            try {
-                String newUrl = matcher.group();
-                if (matcher.group().startsWith("www")) {
-                    newUrl = "http://" + matcher.group();
-                }
-
-                Document doc = Jsoup.connect(newUrl).userAgent("Mozilla").timeout(6000).get();
-                String title = doc.title();
-               String shorturl = getShortUrl(newUrl);
-                return title + " - " + shorturl;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public static String getShortUrl(String uri)
-    {
-        String tinyUrl = "";
-        String urlString = "http://tinyurl.com/api-create.php?url=" + uri;
-
-        try {
-            URL url = new URL(urlString);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            String str;
-
-            while ((str = in.readLine()) != null) {
-                tinyUrl += str;
-            }
-            in.close();
-        }
-        catch (Exception e) {
-        }
-        return tinyUrl;
     }
 
     public static boolean isEmpty(String string) {
@@ -125,14 +79,13 @@ public class Utils {
 
     public static boolean isBot(String sender) {
 
-        for (MinecraftServer s : SnackBot.bot.cmdServerStatus.getServers())
+        for (MinecraftServer s : SnackBot.getServers())
         {
             if ((sender.equalsIgnoreCase(s.getName())) || sender.toLowerCase().startsWith("tom")) {
 
                 return true;
             }
         }
-
         return false;
     }
 

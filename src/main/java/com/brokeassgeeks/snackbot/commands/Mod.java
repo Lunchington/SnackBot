@@ -1,49 +1,59 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
 import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
+import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
-/**
- * Created by abeha.
- */
-public class Mod extends BotCommand {
-    public Mod() {
-        super("mod");
-        setDesc("Get mod info from server");
+public class Mod extends Command {
+
+
+    public Mod(GenericMessageEvent event, String[] args) {
+        super(event, args);
     }
-    @Override
-    public void handleMessage(String channel, String sender, String login, String hostname, String args) {
 
-        if (args.length() == 0) {
-            super.sendMessage(channel, String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>" , this.getFullCmd()));
+    @Override
+    public void init() {
+        triggers.add("mod");
+    }
+
+    @Override
+    public void run() {
+        if (args.length <= 2) {
+            super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>" , args[0]));
             return;
         }
-        String[] cmd = Utils.splitWords(args);
 
-        MinecraftServer s = SnackBot.bot.cmdServerStatus.getServer(cmd[0]);
+        MinecraftServer s = MinecraftServerUtils.getServerbyName(SnackBot.getServers(),args[1]);
 
         if (s == null) {
-            super.sendMessage(channel, String.format("<r>Invalid server: %s" , cmd[0]));
+            super.respond(String.format("<r>Invalid server: %s" , args[1]));
             return;
         }
 
         StatusResponse response = new ServerConnection(s).getResponse();
 
-        if (cmd.length ==1) {
-            super.sendMessage(channel, String.format("<B><b>Modlist for %s:<N> %s" , s.getName(), response.getModList()));
-        } else {
-            StatusResponse.Mods.ModInfo mod = response.getMod(cmd[1]);
-            if (mod == null) {
-                super.sendMessage(channel, String.format("<r>No such mod <B>%s<N><b> on %s" , cmd[1],cmd[0]));
-            } else {
-                super.sendMessage(channel, String.format("<B><b>%s<N> is using version <B><b>%s<N> of <B><b>%s<N>" , s.getName(),mod.getVersion(),mod.getModid()));
-
-            }
-
-
+        if (response == null) {
+            super.respond(String.format("<B><r>%s is down!<N>", s.getName()));
+            return;
         }
+
+        String out;
+        StatusResponse.Mods.ModInfo mod = response.getMod(args[2]);
+
+        if (mod == null) {
+           out = String.format("<B><b>%s<N> is not using <B><b>%s<N>" , args[1],args[2]);
+        } else {
+            out = String.format("<B><b>%s<N> is using version <B><b>%s<N> of <B><b>%s<N>" , s.getName(),mod.getVersion(),mod.getModid());
+        }
+
+
+        super.respond(out);
     }
+
 }

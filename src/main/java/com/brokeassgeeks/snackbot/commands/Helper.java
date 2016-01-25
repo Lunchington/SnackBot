@@ -1,27 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.Utils;
-
-public class Helper extends BotCommand
+public class Helper
 {
-    public Helper() {
-        super("help");
-    }
 
-    @Override
-    public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        super.sendMessage(target, String.format("<B><b>HELP: <N> %s", getHelp()));
-    }
-
-    public String getHelp() {
-        String output = "";
-        for (BotCommand b: SnackBot.bot.commands ) {
-            if (b != this)
-                output += String.format("<b><B>%s<N> - %s ",b.name , b.desc);
-
-        }
-        return output;
-    }
 
 }

@@ -1,21 +1,30 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import org.pircbotx.hooks.types.GenericMessageEvent;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Time extends BotCommand{
+public class Time extends Command{
 
-    public Time() {
-        super("time");
-        setDesc("get the time in any timezone.");
+
+    public Time(GenericMessageEvent event, String[] args) {
+        super(event, args);
+    }
+
+
+    @Override
+    public void init() {
+        triggers.add("time");
+
     }
 
     @Override
-    public void handleMessage(String channel, String sender, String login, String hostname, String args) {
-        if (args.length() == 0) {
-            super.sendMessage(channel, String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
+    public void run() {
+        if(args.length == 1) {
+            super.respond(String.format("<g>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
             return;
         }
 
@@ -24,11 +33,11 @@ public class Time extends BotCommand{
         int offset = 0;
         String[] d = new String[0];
 
-        if (args.contains("-")) {
-            d = args.split("\\-");
+        if (args[1].contains("-")) {
+            d = args[1].split("\\-");
             d[1] = "-" + d[1];
-        }else if (args.contains("+")) {
-            d = args.split("\\+");
+        }else if (args[1].contains("+")) {
+            d = args[1].split("\\+");
             d[1] = "+" + d[1];
         }
 
@@ -37,7 +46,7 @@ public class Time extends BotCommand{
             offset = Integer.parseInt(d[1]);
 
         } else {
-            newZone= getTimeZoneProper(args);
+            newZone= getTimeZoneProper(args[1]);
         }
 
 
@@ -45,13 +54,15 @@ public class Time extends BotCommand{
             time = getTimewithZone(newZone,offset);
 
         if (time == "ERROR") {
-            super.sendMessage(channel, String.format("<r>INVALID ZONE: <B>%s<N>", args));
-            super.sendMessage(channel, String.format("<B><b>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
+            super.respond(String.format("<r>INVALID ZONE: <B>%s<N>", args));
+            super.respond(String.format("<B><b>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
         }
         else
-            super.sendMessage(channel,   String.format("<B><b>Time for %s: <N>%s",args ,time ));
+            super.respond(String.format("<B><b>Time for %s: <N>%s",args[1] ,time ));
+
 
     }
+
 
     public String getTimeZoneProper(String string) {
         String[] validIDs = TimeZone.getAvailableIDs();
@@ -77,7 +88,7 @@ public class Time extends BotCommand{
 
         Date currentDate = new Date();
         formatter.setTimeZone(TimeZone.getTimeZone(zone));
-        currentDate.setTime(currentDate.getTime() + (off*hour));
+        currentDate.setTime(currentDate.getTime() + (off * hour));
 
         return formatter.format(currentDate);
     }

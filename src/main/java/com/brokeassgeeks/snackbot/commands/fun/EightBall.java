@@ -1,22 +1,37 @@
 package com.brokeassgeeks.snackbot.commands.fun;
 
-import com.brokeassgeeks.snackbot.SnackBot;
+
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.commands.BotCommand;
+import com.brokeassgeeks.snackbot.commands.Command;
+import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class EightBall extends BotCommand {
-    public EightBall() {
-        super("8ball");
-        setDesc("Ask the magic 8ball a question");
+public class EightBall extends Command {
+
+
+    public EightBall(GenericMessageEvent event, String[] args) {
+        super(event, args);
     }
 
     @Override
-    public void handleMessage(String target, String sender, String login, String hostname, String args) {
-        if (args.length() == 0) {
-            super.sendMessage(target, String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>", getFullCmd()));
+    public void init() {
+        triggers.add("8ball");
+        triggers.add("8");
+    }
+
+    @Override
+    public void run() {
+        if (!(event instanceof MessageEvent))
+            return;
+        String out = "";
+
+        if (args.length == 1) {
+            out = String.format("<B><b>USAGE:<N> %s <QUESTION>", args[0]);
+            ((MessageEvent)event).getChannel().send().message(Utils.replaceTags(out));
             return;
         }
 
@@ -27,6 +42,8 @@ public class EightBall extends BotCommand {
             e.printStackTrace();
         }
 
-        super.sendAction(target, String.format("shakes the magic 8 ball... %s",s));
+        out = String.format("shakes the magic 8 ball... %s",s);
+
+        ((MessageEvent)event).getChannel().send().action(Utils.replaceTags(out));
     }
 }

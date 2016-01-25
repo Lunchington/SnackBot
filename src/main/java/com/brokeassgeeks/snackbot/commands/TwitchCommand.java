@@ -4,9 +4,9 @@ import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.Utils.Twitch;
-import com.brokeassgeeks.snackbot.Utils.TwitchResponse;
+import com.brokeassgeeks.snackbot.Twitch.Twitch;
+import com.brokeassgeeks.snackbot.Twitch.TwitchResponse;
+import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -14,53 +14,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TwitchCommand extends BotCommand{
-    private List<String> streamers;
+public class TwitchCommand extends Command{
+    private static List<String> streamers;
 
-    public TwitchCommand() {
-        super("twitch");
-        streamers = new ArrayList<>();
-        loadJson();
-        this.setDesc("show users streaming on twitch, use: " + this.getFullCmd() + " add <NAME> to add a channel");
+    public TwitchCommand(GenericMessageEvent event, String[] args) {
+        super(event, args);
     }
 
     @Override
-    public void handleMessage(String channel, String sender, String login, String hostname, String args) {
-        String output = "";
-        if (args.length() > 0) {
-            String[] cmd = Utils.splitWords(args);
-            if( cmd[0].equals("add")) {
-                if(cmd.length <2) {
-                    super.sendMessage(channel, String.format("<B><b>USAGE: %s add <channel>",getFullCmd()));
-                } else {
-                    super.sendMessage(channel,addChannel(cmd[1]));
-                }
+    public void init() {
+        triggers.add("twitch");
+        triggers.add("streamers");
+        triggers.add("streams");
+    }
+
+    @Override
+    public void run() {
+        if (streamers.size() == 0) {
+            super.respond("<B><b>NO Streamers added!<N>");
+            return;
+        }
+
+        if(args[1].equals("add")) {
+            if(args.length <3) {
+                super.respond(String.format("<B><b>USAGE: %s add <channel>",args[0]));
+            } else {
+                super.respond(addChannel(args[2]));
             }
         } else {
 
-            if (streamers.size() == 0) {
-                super.sendMessage(channel, "<B><b>NO Streamers added!<N>");
-                return;
-            }
+            if (args.length == 2) {
+                String output = "";
+                for (String s : streamers) {
+                    TwitchResponse response = Twitch.getTwitch(s);
 
-            for (String s : streamers) {
-                TwitchResponse response = Twitch.getTwitch(s);
-
-                if (Twitch.isChannelLive(response)) {
-                    output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
+                    if (Twitch.isChannelLive(response)) {
+                        output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
+                    }
                 }
-            }
 
-            if (output.length() > 0)
-                super.sendMessage(channel, String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
-            else
-                super.sendMessage(channel, "<B><b>NO Streamers live!<N>");
+                if (output.length() > 0)
+                    super.respond(String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
+                else
+                    super.respond("<B><b>NO Streamers live!<N>");
+            }
 
         }
+
     }
 
 
-    @Override
+
     public void loadJson() {
 
         try {
@@ -114,4 +118,5 @@ public class TwitchCommand extends BotCommand{
         writeJson();
         return  String.format("<B><b>Channel:<N> %s added!",channel);
     }
+
 }

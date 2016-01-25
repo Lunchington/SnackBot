@@ -1,5 +1,6 @@
-package com.brokeassgeeks.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Twitch;
 
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class Twitch {
     }
 
     public static boolean isChannelLive(TwitchResponse response) {
-            if (response.stream != null) {
+            if (response.getStream() != null) {
                 return true;
             }
 

@@ -1,69 +1,62 @@
 package com.brokeassgeeks.snackbot.Configuration;
 
-import java.io.*;
+import org.pircbotx.Configuration;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Config {
-    private Properties prop;
-
-    private File file;
-    private InputStream input = null;
-    private FileOutputStream output = null;
+    private static final Logger logger = Logger.getLogger(Config.class.getName());
+    private static final String configFile = "bot.config";
+    public static Config instance;
 
     public static String CATCH_CHAR;
-
     public static String BOT_NICK;
     public static String BOT_USER;
-
     public static String BOT_REALNAME;
-    public static String SERVER;
+    public static String HOSTNAME;
     public static String PORT;
-    public static String[] CHANNEL;
+    public static String[] CHANNELS;
     public static String VERSION;
-    public static String AUTHSERV;
-    public static String AUTHPASSWORD;
-    public static String NICKCOMPLETE;
     public static int MESSAGECOUNT;
-
-    public static String TIMEAPIKEY;
-
     public static int COMMAND_TIMEOUT;
 
+    private Properties prop;
 
+    public static Config getInstance() {
+        if(instance == null) {
+            instance = new Config();
+        }
+        return instance;
+    }
 
     public Config() {
         prop = new Properties();
+        File config = new File(configFile);
+        prop = new Properties();
 
-        try {
-            file = new File("bot.config");
-            if (!file.exists()) {
-                System.out.println("Configuration file does not exist. Creating..");
-                file.createNewFile();
+        if (!config.exists()) {
+            logger.log(Level.SEVERE, "Cannot load file creating...");
+            try {
+                config.createNewFile();
                 setDefaults();
-            } else {
-                input = new FileInputStream(file);
-                prop.load(input);
-                load();
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Cannot create config ...", e);
             }
         }
     }
+
     private void setDefaults() {
 
         prop.setProperty("nick", "SnackBot");
         prop.setProperty("user", "SnackBot");
         prop.setProperty("realname", "SnackBot");
-        prop.setProperty("server", "pinebox.no-ip.org");
+        prop.setProperty("server", "localhost");
         prop.setProperty("port", "6667");
         prop.setProperty("channel", "#Lunchtest");
         prop.setProperty("version", "-[ SnackBot by Lunchington ]-");
@@ -74,46 +67,58 @@ public class Config {
         prop.setProperty("cmdtimeout", "10");
         prop.setProperty("messagecount", "1");
 
-        try {
-            output = new FileOutputStream(file);
-            prop.store(new FileOutputStream(file), null);
-        } catch (IOException e) {
+        save();
+    }
 
-        } finally {
-            load();
-            if (output != null) {
-                try {
-                    output.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    public Configuration.Builder load() {
+        FileInputStream input;
+
+        try {
+            logger.info("Loading config...");
+            input = new FileInputStream(new File(configFile));
+            prop.load(input);
+
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Cannot load config ...", e);
         }
 
 
-    }
-
-    public void load() {
         BOT_NICK = prop.getProperty("nick");
         BOT_USER = prop.getProperty("user");
         BOT_REALNAME = prop.getProperty("realname");
-        SERVER = prop.getProperty("server");
+        HOSTNAME = prop.getProperty("server");
         PORT = prop.getProperty("port");
 
-        CHANNEL = prop.getProperty("channel").split(",",-1);
-
+        CHANNELS = prop.getProperty("channel").split(",",-1);
         VERSION = prop.getProperty("version");
-
         CATCH_CHAR = prop.getProperty("catchchar");
-
-        AUTHSERV = prop.getProperty("authserv");
-        AUTHPASSWORD = prop.getProperty("authpassword");
-        NICKCOMPLETE = prop.getProperty("nickcomplete");
         COMMAND_TIMEOUT = Integer.parseInt(prop.getProperty("cmdtimeout"));
-
         MESSAGECOUNT = Integer.parseInt(prop.getProperty("messagecount"));
-        TIMEAPIKEY = prop.getProperty("timedb_api");
 
+        Configuration.Builder b = new Configuration.Builder()
+                .setName(BOT_NICK)
+                .setRealName(BOT_REALNAME)
+                .setLogin(BOT_USER)
+                .setVersion(VERSION)
+                .setServerHostname(HOSTNAME)
+                .setServerPort(Integer.parseInt(PORT));
 
+        for (String s : CHANNELS) {
+            b.addAutoJoinChannel(s);
+        }
+
+        return b;
+    }
+
+    public void save() {
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(new File(configFile));
+            prop.store(out,null);
+            out.close();
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Cannot save config ...", e);
+        }
     }
 }

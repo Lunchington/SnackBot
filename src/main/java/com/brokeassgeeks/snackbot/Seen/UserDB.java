@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Seen;
 
 import lombok.Data;
 

@@ -31,11 +31,11 @@ public class ServerConnection {
             query.doHandShake();
             response = query.doStatusQuery();
             this.disconnect();
+            return response;
 
         } catch (IOException e) {
             return null;
         }
-        return response;
     }
 
     public void connect() throws IOException {

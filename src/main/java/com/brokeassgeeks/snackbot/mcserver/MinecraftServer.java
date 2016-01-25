@@ -41,4 +41,9 @@ public class MinecraftServer {
         }
         return false;
     }
+
+    public void updateActivity(String user, long time) {
+        this.lastactivity.time = time;
+        this.lastactivity.user = user;
+    }
 }

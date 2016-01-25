@@ -1,6 +1,8 @@
-package com.brokeassgeeks.snackbot.Utils;
+package com.brokeassgeeks.snackbot.Seen;
 
 import com.almworks.sqlite4java.*;
+import org.pircbotx.User;
+
 import java.io.File;
 
 public class SeenDataBase {
@@ -76,20 +78,20 @@ public class SeenDataBase {
     }
 
 
-    public void processUserSeenRecord(final String channel, final String nick, final String login, final String hostname, final long time) {
+    public void processUserSeenRecord(User user, final long time) {
 
-        final String loginHost = login + "@" + hostname;
+        final String loginHost = user.getLogin() + "@" + user.getHostname();
         long userRecord = isUserInDB(loginHost);
         if (userRecord > 0) {
             UserDB currentUser = getUserbyID(userRecord);
-            if (!nick.equalsIgnoreCase(currentUser.getLastNick())) {
-                addNewNickbyID(currentUser.getId(),nick);
+            if (!user.getNick().equalsIgnoreCase(currentUser.getLastNick())) {
+                addNewNickbyID(currentUser.getId(),user.getNick());
             }
-            upDateUserbyID(userRecord,nick,hostname, time);
+            upDateUserbyID(userRecord,user.getNick(),user.getHostname(), time);
         } else
         {
-            Long newID = addNewUser(nick,loginHost,time);
-            addNewNickbyID(newID,nick);
+            Long newID = addNewUser(user.getNick(),loginHost,time);
+            addNewNickbyID(newID,user.getNick());
         }
 
     }
