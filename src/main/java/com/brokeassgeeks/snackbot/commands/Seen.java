@@ -43,7 +43,7 @@ public class Seen extends Command{
             return;
         }
 
-        if (((MessageEvent) event).getChannel().getUsersNicks().contains(target)) {
+        if (event.getBot().getUserChannelDao().containsUser(target)) {
             User fetchUser = event.getBot().getUserChannelDao().getUser(target);
 
             if(SnackBot.getSeenDataBase().isUserInDB(fetchUser) == 0)

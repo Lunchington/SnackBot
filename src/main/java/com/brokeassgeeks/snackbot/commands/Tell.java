@@ -1,11 +1,8 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.almworks.sqlite4java.SQLiteConnection;
-import com.almworks.sqlite4java.SQLiteJob;
-import com.almworks.sqlite4java.SQLiteStatement;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.Seen.UserDB;
 import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -13,9 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.apache.http.message.BasicNameValuePair;
-import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -57,14 +52,15 @@ public class Tell extends Command{
             return;
         }
 
-        if (((MessageEvent) event).getChannel().getUsersNicks().contains(target)) {
+
+        if (event.getBot().getUserChannelDao().containsUser(target)) {
             super.respond( String.format("<B><b>%s<N> why dont you tell <B><b>%s yourself!", sender,target));
             return;
         }
 
 
         String tellMsg[] = event.getMessage().split(" ", 3);
-        SnackBot.getSeenDataBase().addTell(target,String.format("<B><b>%s <N>said: %s",sender,tellMsg[2]));
+        SnackBot.getSeenDataBase().addTell(target,String.format("<B><b>%s, %s <N>said: %s",target, sender,tellMsg[2]));
         super.respond(String.format("<B><b>%s <N>I will let <B><b>%s<N> know when i see them" ,event.getUser().getNick(),args[1]));
 
 

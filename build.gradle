@@ -24,8 +24,29 @@ dependencies {
     //compile 'commons-logging:commons-logging:1.2'
 }
 
+
+
 jar {
-    baseName="SnackBot"
-    from configurations.compile.collect{ zipTree it}
-    manifest.attributes "Main-Class" : "com.brokeassgeeks.snackbot.SnackBot"
+    manifest {
+        attributes(
+                'Main-Class': 'com.brokeassgeeks.snackbot.SnackBot',
+        )
+    }
+}
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    classifier = 'all'
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    with jar
+}
+
+artifacts {
+    archives fatJar
 }

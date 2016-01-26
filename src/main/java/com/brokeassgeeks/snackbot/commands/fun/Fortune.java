@@ -25,7 +25,9 @@ public class Fortune extends Command {
     public void run() {
 
         try {
-            super.respond(String.format("<B><b>%s,<N> %s",event.getUser().getNick(), Utils.chooseRandomLine(new File("data/fun/fortunes.txt"))));
+            String s = Utils.chooseRandomLine(new File("data/fun/fortunes.txt"));
+
+            super.respond(String.format("<B><b>%s,<N> %s",event.getUser().getNick(), s));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

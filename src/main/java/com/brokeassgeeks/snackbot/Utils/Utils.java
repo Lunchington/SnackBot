@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
+import com.google.common.collect.ImmutableSortedSet;
 import org.pircbotx.Colors;
 
 import java.io.*;
@@ -123,5 +124,14 @@ public class Utils {
         formatter.setTimeZone(currentTimeZone);
 
         return formatter.format(time);
+    }
+
+    public static boolean containsIgnoreCase(ImmutableSortedSet<String> list, String soughtFor) {
+        for (String current : list) {
+            if (current.equalsIgnoreCase(soughtFor)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -42,11 +42,6 @@ public class ServerOnlineUsers extends Command{
                 }
                 System.out.println(response.getPlayers().getOnline());
                 out = String.format("<B><b>%s<N> - %s: ", s.getName(), response.getDescription());
-
-                if (response.getPlayers().getOnline() > 0) {
-                    out += "<B>";
-                }
-                out += String.format("%s<N>/%s ", response.getPlayers().getOnline(), response.getPlayers().getMax());
                 out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
 
                 if (!Utils.isEmpty(serverPlayers)) {
