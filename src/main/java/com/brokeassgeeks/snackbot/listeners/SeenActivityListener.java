@@ -1,7 +1,6 @@
 package com.brokeassgeeks.snackbot.listeners;
 
 
-import com.brokeassgeeks.snackbot.Seen.SeenDataBase;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Timers;
 import org.pircbotx.Channel;
@@ -10,9 +9,7 @@ import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.*;
 import org.pircbotx.hooks.types.GenericUserEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
