@@ -1,8 +1,17 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.google.common.collect.ImmutableSortedSet;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.pircbotx.Colors;
 
 import java.io.*;
@@ -133,5 +142,47 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static String putPaste(String string) throws Exception {
+        String api = Config.PASTEBIN_API;
+        StringBuilder out = new StringBuilder();
+
+        HttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("http://paste.brokeassgeeks.com/api/create");
+
+        // Request parameters and other properties.
+        List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+        params.add(new BasicNameValuePair("title", "Messages"));
+        params.add(new BasicNameValuePair("text", string));
+        params.add(new BasicNameValuePair("name", "SnackBot"));
+        params.add(new BasicNameValuePair("private", "1"));
+        params.add(new BasicNameValuePair("expires", "1440"));
+        params.add(new BasicNameValuePair("apikey", "SLJSFHfzJu"));
+
+
+
+
+
+        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+        //Execute and get the response.
+        HttpResponse response = httpclient.execute(httppost);
+        HttpEntity entity = response.getEntity();
+
+        if (entity != null) {
+            InputStream instream = entity.getContent();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    out.append(line);
+                }
+
+            } finally {
+                instream.close();
+            }
+        }
+        return out.toString();
     }
 }

@@ -57,10 +57,10 @@ public class Seen extends Command{
 
         if (userDB != null && userDB.getTimeSeen() > 0) {
             Date currentDate = new Date(userDB.getTimeSeen());
-            super.respond(String.format("I last saw <B><b>%s<N> on: <B><b>%s<N>",target, Utils.getTime(currentDate)));
+            super.respond(String.format("<B><b>%s<N> was last seen on: <B><b>%s<N>",target, Utils.getTime(currentDate)));
 
         } else {
-            super.respond(String.format("I have not seen <B><b>%s<N>",target));
+            super.respond(String.format("<B><b>%s<N> has not beeb seen by me",target));
 
         }
     }

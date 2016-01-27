@@ -190,11 +190,11 @@ public class SeenDataBase {
         }).complete();
     }
 
-    public List<String> getTells(final User user) {
+    public List<String> getTells(final String user) {
         List<String> out = new ArrayList<>();
 
-        out = getTellsbyNick(user.getNick());
-        deleteTells(user.getNick());
+        out = getTellsbyNick(user);
+        deleteTells(user);
 
         return out;
     }

@@ -1,7 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
 import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
@@ -29,7 +29,7 @@ public class Mod extends Command {
         MinecraftServer s = MinecraftServerUtils.getServerbyName(SnackBot.getServers(),args[1]);
 
         if (s == null) {
-            super.respond(String.format("<r>Invalid server: %s" , args[1]));
+            super.respond(String.format("<B><b>Invalid server:<N> %s" , args[1]));
             return;
         }
 
@@ -44,7 +44,7 @@ public class Mod extends Command {
         StatusResponse.Mods.ModInfo mod = response.getMod(args[2]);
 
         if (mod == null) {
-           out = String.format("<B><b>%s<N> is not using <B><b>%s<N>" , args[1],args[2]);
+           out = String.format("<B><b>%s<N> is not using <B><b>%s<N>" , s.getName(),args[2]);
         } else {
             out = String.format("<B><b>%s<N> is using version <B><b>%s<N> of <B><b>%s<N>" , s.getName(),mod.getVersion(),mod.getModid());
         }

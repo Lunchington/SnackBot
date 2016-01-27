@@ -1,9 +1,7 @@
 package com.brokeassgeeks.snackbot.commands.fun;
 
-import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.google.gson.Gson;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;
@@ -11,7 +9,6 @@ import java.io.FileReader;
 import java.io.Reader;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 
 public class Insult extends Command {
     private Insults insults;
@@ -36,7 +33,7 @@ public class Insult extends Command {
     @Override
     public void run() {
 
-        String message =  "<B>%s<N> you, %s";
+        String message =  "<B><b>%s<N> you, %s";
         String sender = event.getUser().getNick();
         String out = String.format(message, sender, getRandomInsult());
 
@@ -51,7 +48,7 @@ public class Insult extends Command {
         if (event.getBot().getUserChannelDao().containsUser(target))
             out = String.format(message, target, getRandomInsult());
         else
-            out = String.format("%s s is not even here", target);
+            out = String.format("<B><b>%s<N> is not even here", target);
 
         super.respond(out);
     }

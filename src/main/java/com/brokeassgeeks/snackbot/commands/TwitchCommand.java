@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Twitch.Twitch;
 import com.brokeassgeeks.snackbot.Twitch.TwitchResponse;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -13,6 +15,7 @@ import java.util.List;
 
 
 public class TwitchCommand extends Command{
+
     private static List<String> streamers;
 
     public TwitchCommand(GenericMessageEvent event, String[] args) {
@@ -34,31 +37,31 @@ public class TwitchCommand extends Command{
             return;
         }
 
-        if(args[1].equals("add")) {
-            if(args.length <3) {
+        if(args.length >= 2) {
+            if(args.length < 3 || !args[1].equalsIgnoreCase("add")) {
                 super.respond(String.format("<B><b>USAGE: %s add <channel>",args[0]));
             } else {
                 super.respond(addChannel(args[2]));
             }
         } else {
 
-            if (args.length == 2) {
-                String output = "";
-                for (String s : streamers) {
-                    TwitchResponse response = Twitch.getTwitch(s);
+            String output = "";
+            for (String s : streamers) {
 
-                    if (response != null && Twitch.isChannelLive(response)) {
-                        output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
-                    }
+                TwitchResponse response = Twitch.getTwitch(s);
+
+                if (response != null && Twitch.isChannelLive(response)) {
+                    output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
                 }
-
-                if (output.length() > 0)
-                    super.respond(String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
-                else
-                    super.respond("<B><b>NO Streamers live!<N>");
             }
 
+            if (output.length() > 0)
+                super.respond(String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
+            else
+                super.respond("<B><b>NO Streamers live!<N>");
+
         }
+
 
     }
 
@@ -75,7 +78,6 @@ public class TwitchCommand extends Command{
             Type collectionType = new TypeToken<List<String>>(){}.getType();
 
             streamers = gson.fromJson(jsonFile,collectionType );
-
             jsonFile.close();
         } catch (Exception e) {
             e.printStackTrace();

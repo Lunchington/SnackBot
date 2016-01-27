@@ -66,43 +66,6 @@ public class Tell extends Command{
 
     }
 
-    public String putPaste(String string) throws Exception {
-        String api = Config.PASTEBIN_API;
-        StringBuilder out = new StringBuilder();
 
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost("http://pastebin.com/api/api_post.php");
-
-        // Request parameters and other properties.
-        List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("api_dev_key", api));
-        params.add(new BasicNameValuePair("api_option", "paste"));
-        params.add(new BasicNameValuePair("api_paste_code", string));
-        params.add(new BasicNameValuePair("api_paste_private", "1"));
-        params.add(new BasicNameValuePair("api_paste_expire_date", "1D"));
-
-
-
-        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-
-        //Execute and get the response.
-        HttpResponse response = httpclient.execute(httppost);
-        HttpEntity entity = response.getEntity();
-
-        if (entity != null) {
-            InputStream instream = entity.getContent();
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    out.append(line);
-                }
-
-            } finally {
-                instream.close();
-            }
-        }
-        return out.toString();
-    }
 
 }

@@ -1,13 +1,17 @@
 package com.brokeassgeeks.snackbot;
 
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
 import com.brokeassgeeks.snackbot.Seen.SeenDataBase;
+import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.commands.*;
 import com.brokeassgeeks.snackbot.commands.fun.EightBall;
 import com.brokeassgeeks.snackbot.commands.fun.Fortune;
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.commands.fun.Lart;
 import com.brokeassgeeks.snackbot.listeners.SeenActivityListener;
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.commands.fun.Insult;
 import com.brokeassgeeks.snackbot.listeners.CommandListener;
 import com.brokeassgeeks.snackbot.listeners.UrlParserListener;
@@ -16,21 +20,30 @@ import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 
 import lombok.Getter;
 
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 import org.pircbotx.hooks.managers.ThreadedListenerManager;
 
 import java.io.*;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 public class SnackBot {
-    private static final Logger logger = Logger.getLogger(SnackBot.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SnackBot.class);
 
     @Getter private static SeenDataBase seenDataBase = new SeenDataBase();
     @Getter private static MinecraftServer[] servers;
+    @Getter@Setter private static ArrayList<String> admins;
 
     public static void main(String[] args) throws IOException, IrcException {
+
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        StatusPrinter.print(lc);
+
         logger.info("Bot Starting....");
         ThreadedListenerManager listenerManager = new ThreadedListenerManager();
 
@@ -55,8 +68,12 @@ public class SnackBot {
         CommandManager.getInstance().addCommand(TwitchCommand.class);
         CommandManager.getInstance().addCommand(Insult.class);
         CommandManager.getInstance().addCommand(Tell.class);
+        CommandManager.getInstance().addCommand(AdminCommand.class);
+        CommandManager.getInstance().addCommand(Lart.class);
+
 
         servers = MinecraftServerUtils.loadServers();
+        admins = AdminUtils.loadAdmins();
 
         PircBotX bot = new PircBotX(configuration);
         bot.startBot();

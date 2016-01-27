@@ -34,11 +34,11 @@ public class ServerStatus extends Command {
         long time = server.getLastactivity().getTime();
         long now = System.currentTimeMillis();
 
-        String out=String.format("There is no activity for <B><b>%s",server.getName());
+        String out=String.format("<B><b>There is no activity for %s",server.getName());
 
         if (time != 0) {
             TimeDifference diff = new TimeDifference(Utils.getTime(now), Utils.getTime(time));
-            out =  String.format("Last activity on <B>%s<N> was <B><b>%s<N> by <B><b>%s<B>",server.getName(),diff.getDifferenceString(),user);
+            out =  String.format("<B>%s:<N> Last activity was <B><b>%s<N> by <B><b>%s<B>",server.getName(),diff.getDifferenceString(),user);
         }
         super.respond(out);
     }
