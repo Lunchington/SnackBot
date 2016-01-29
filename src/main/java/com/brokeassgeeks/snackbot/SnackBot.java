@@ -30,6 +30,7 @@ import org.pircbotx.exception.IrcException;
 import org.pircbotx.hooks.managers.ThreadedListenerManager;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class SnackBot {

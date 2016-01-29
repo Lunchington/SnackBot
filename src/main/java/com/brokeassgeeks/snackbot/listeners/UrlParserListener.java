@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.listeners;
 
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.google.common.base.CharMatcher;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,8 +28,12 @@ public class UrlParserListener extends ListenerAdapter {
         }
 
         String string = parseforHTML(event.getMessage());
-        if (string != null && string.length() >0)
-                event.getChannel().send().message(string);
+        System.out.println(string);
+
+        if (string != null && string.length() >0) {
+            event.respondWith(Utils.replaceTags(string));
+
+        }
 
     }
 
@@ -47,7 +53,10 @@ public class UrlParserListener extends ListenerAdapter {
                 Document doc = Jsoup.connect(newUrl).userAgent("Mozilla").timeout(6000).get();
                 String title = doc.title();
                 String shorturl = getShortUrl(newUrl);
-                return title + " - " + shorturl;
+                title = title.replaceAll("\\P{Print}", "");
+
+
+                return String.format("%s - %s",title,shorturl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
