@@ -37,7 +37,7 @@ public class Tell extends Command{
         String sender = event.getUser().getNick();
         String target = args[1];
 
-        if (args.length < 3) {
+        if (args.length < 3 || target.length() == 0) {
             super.respond(String.format("<B><b>USAGE:<N> %s <USER> <MESSAGE>" ,args[0]));
             return;
         }
@@ -61,7 +61,7 @@ public class Tell extends Command{
 
         String tellMsg[] = event.getMessage().split(" ", 3);
         SnackBot.getSeenDataBase().addTell(target,String.format("<B><b>%s, %s <N>said: %s",target, sender,tellMsg[2]));
-        super.respond(String.format("<B><b>%s <N>I will let <B><b>%s<N> know when i see them" ,event.getUser().getNick(),args[1]));
+        super.respond(String.format("<B><b>%s <N>I will let <B><b>%s<N> know when i see them" ,sender,args[1]));
 
 
     }

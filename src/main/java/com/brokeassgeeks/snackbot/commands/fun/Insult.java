@@ -34,7 +34,6 @@ public class Insult extends Command {
     public void run() {
 
         String message =  "<B><b>%s<N> you, %s";
-        String sender = event.getUser().getNick();
         String out = String.format(message, sender, getRandomInsult());
 
         if (args.length == 1) {

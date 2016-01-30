@@ -40,6 +40,8 @@ public class SnackBot {
     @Getter private static MinecraftServer[] servers;
     @Getter@Setter private static ArrayList<String> admins;
 
+    @Getter private static PircBotX bot;
+
     public static void main(String[] args) throws IOException, IrcException {
 
         LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -76,7 +78,7 @@ public class SnackBot {
         servers = MinecraftServerUtils.loadServers();
         admins = AdminUtils.loadAdmins();
 
-        PircBotX bot = new PircBotX(configuration);
+        bot = new PircBotX(configuration);
         bot.startBot();
 
     }

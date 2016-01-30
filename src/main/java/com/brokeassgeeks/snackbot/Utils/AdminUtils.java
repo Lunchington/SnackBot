@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,6 +59,9 @@ public class AdminUtils {
     }
 
     public static boolean isAdmin(User user, List<String> admins) {
+        if (user == SnackBot.getBot().getUserBot())
+            return false;
+
         String uString = String.format("%s!%s@%s",user.getNick(),user.getLogin(),user.getHostname());
         String uStringWC = String.format("%s!*@%s",user.getNick(),user.getHostname());
 

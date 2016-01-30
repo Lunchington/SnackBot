@@ -22,12 +22,19 @@ public class CommandListener extends ListenerAdapter{
     @Override
     public void onGenericMessage(final GenericMessageEvent event) throws Exception {
 
-        if(!event.getMessage().startsWith(Config.CATCH_CHAR)) {
+        String message = event.getMessage();
+        String sender ="";
+
+        if (message.startsWith("<") && message.contains(">")) {
+            sender = message.substring(message.indexOf("<") + 1, message.indexOf(">"));
+            message = message.replaceAll("^<.*?>", "").trim();
+        } else { sender=event.getUser().getNick(); }
+
+        if(!message.startsWith(Config.CATCH_CHAR)) {
             return;
         }
 
-
-        String[] args = event.getMessage().split(" ");
+        String[] args = message.split(" ");
 
         for(Class<?> cmd : CommandManager.getInstance().getCommands()) {
             Command command;
@@ -42,6 +49,7 @@ public class CommandListener extends ListenerAdapter{
             args[0] = args[0].replaceAll(Config.CATCH_CHAR,"");
             if (command.getTriggers().contains(args[0].toLowerCase())) {
                 logger.info("Executing Command: " + command.getClass().getCanonicalName());
+                command.setSender(sender);
                 threadPool.submit(command);
             }
 

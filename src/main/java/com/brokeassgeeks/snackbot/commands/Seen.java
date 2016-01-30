@@ -23,8 +23,6 @@ public class Seen extends Command{
     public void run() {
         if (!(event instanceof MessageEvent))
             return;
-        User user = event.getUser();
-        String sender = user.getNick();
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>USAGE:<N> %s <USER>" ,args[0]));

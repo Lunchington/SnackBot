@@ -23,7 +23,7 @@ public class Lart extends Command{
     @Override
     public void run() {
 
-        String target = event.getUser().getNick();
+        String target = sender;
         String s="";
 
         try {
@@ -40,8 +40,9 @@ public class Lart extends Command{
                 return;
             }
         }
+
         if (target.equalsIgnoreCase(event.getBot().getNick()))
-            target = event.getUser().getNick();
+            target = sender;
 
         ((MessageEvent)event).getChannel().send().action(Utils.replaceTags(replaceNick(s,target)));
     }
