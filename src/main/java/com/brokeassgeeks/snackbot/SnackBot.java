@@ -73,6 +73,7 @@ public class SnackBot {
         CommandManager.getInstance().addCommand(Tell.class);
         CommandManager.getInstance().addCommand(AdminCommand.class);
         CommandManager.getInstance().addCommand(Lart.class);
+        CommandManager.getInstance().addCommand(Help.class);
 
 
         servers = MinecraftServerUtils.loadServers();
