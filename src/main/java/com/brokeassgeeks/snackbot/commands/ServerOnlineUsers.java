@@ -40,7 +40,7 @@ public class ServerOnlineUsers extends Command{
                         serverPlayers += String.format("%s ",player.getName());
                     }
                 }
-                System.out.println(response.getPlayers().getOnline());
+
                 out = String.format("<B><b>%s<N> - %s: ", s.getName(), response.getDescription());
                 out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
 

@@ -46,9 +46,11 @@ public class TwitchCommand extends Command{
         } else {
 
             String output = "";
+            loadJson();
             for (String s : streamers) {
 
                 TwitchResponse response = Twitch.getTwitch(s);
+                System.out.println(response);
 
                 if (response != null && Twitch.isChannelLive(response)) {
                     output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());

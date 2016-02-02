@@ -21,8 +21,6 @@ public class ServerStatus extends Command {
 
     @Override
     public void run() {
-        if (!(event instanceof MessageEvent))
-            return;
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>Server Status:<N> %s", getServerStatus()));

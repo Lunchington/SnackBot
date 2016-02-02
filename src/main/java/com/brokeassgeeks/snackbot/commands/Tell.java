@@ -34,13 +34,14 @@ public class Tell extends Command{
 
     @Override
     public void run() {
-        String sender = event.getUser().getNick();
-        String target = args[1];
 
-        if (args.length < 3 || target.length() == 0) {
+        if (args.length < 3 ) {
             super.respond(String.format("<B><b>USAGE:<N> %s <USER> <MESSAGE>" ,args[0]));
             return;
         }
+
+        String sender = event.getUser().getNick();
+        String target = args[1];
 
         if (sender.equalsIgnoreCase(target)) {
             super.respond(String.format("<B><b>%s<N> talking to yourself again?", sender));
