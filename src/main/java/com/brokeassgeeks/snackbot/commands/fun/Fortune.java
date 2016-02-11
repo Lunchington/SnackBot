@@ -16,12 +16,6 @@ public class Fortune extends Command {
 
 
     @Override
-    public void init() {
-        triggers.add("fortune");
-        triggers.add("f");
-    }
-
-    @Override
     public void run() {
 
         try {

@@ -21,13 +21,7 @@ public class Insult extends Command {
 
     public Insult(GenericMessageEvent event, String[] args) {
         super(event, args);
-    }
-
-
-    @Override
-    public void init() {
-        triggers.add("insult");
-        loadJson();
+        load();
     }
 
     @Override
@@ -52,7 +46,7 @@ public class Insult extends Command {
         super.respond(out);
     }
 
-    public void loadJson() {
+    public void load() {
 
         try {
             Gson gson = new Gson();

@@ -13,13 +13,6 @@ public class ServerStatus extends Command {
     }
 
     @Override
-    public void init() {
-        triggers.add("status");
-        triggers.add("s");
-
-    }
-
-    @Override
     public void run() {
 
         if (args.length == 1) {

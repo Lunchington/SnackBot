@@ -14,10 +14,6 @@ public class Seen extends Command{
     public Seen(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
-    @Override
-    public void init() {
-        triggers.add("seen");
-    }
 
     @Override
     public void run() {

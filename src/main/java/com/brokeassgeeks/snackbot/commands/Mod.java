@@ -15,11 +15,6 @@ public class Mod extends Command {
     }
 
     @Override
-    public void init() {
-        triggers.add("mod");
-    }
-
-    @Override
     public void run() {
         if (args.length <= 2) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>" , args[0]));

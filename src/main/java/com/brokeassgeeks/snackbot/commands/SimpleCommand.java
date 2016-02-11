@@ -12,6 +12,7 @@ import java.util.List;
 public class SimpleCommand extends Command{
 
     private SCommands[] scommands;
+    @Getter private List<String> triggers;
 
     private class SCommands {
         @Getter private List<String> triggers;
@@ -23,9 +24,9 @@ public class SimpleCommand extends Command{
 
     public SimpleCommand(GenericMessageEvent event, String[] args) {
         super(event, args);
+        init();
     }
 
-    @Override
     public void init() {
         load();
         for(SCommands s: scommands) {

@@ -23,14 +23,6 @@ public class TwitchCommand extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("twitch");
-        triggers.add("streamers");
-        triggers.add("streams");
-        loadJson();
-    }
-
-    @Override
     public void run() {
         if (streamers.size() == 0) {
             super.respond("<B><b>NO Streamers added!<N>");

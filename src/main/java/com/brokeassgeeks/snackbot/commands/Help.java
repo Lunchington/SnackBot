@@ -12,12 +12,6 @@ public class Help extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("help");
-        triggers.add("h");
-    }
-
-    @Override
     public void run() {
         String out = "";
         for (Class<?> cmd: CommandManager.getInstance().getCommands()) {
@@ -31,8 +25,9 @@ public class Help extends Command{
                 continue;
             }
 
-            for (String s: command.getTriggers()) {
-                out += Config.CATCH_CHAR + s+ " ";
+            for (String s: CommandManager.getInstance().getTriggers(command)) {
+                if(CommandManager.getInstance().isCommandEnabled(command))
+                    out += Config.CATCH_CHAR + s+ " ";
             }
         }
 

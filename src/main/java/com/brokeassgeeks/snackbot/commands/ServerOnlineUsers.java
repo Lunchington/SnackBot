@@ -14,12 +14,6 @@ public class ServerOnlineUsers extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("online");
-        triggers.add("o");
-    }
-
-    @Override
     public void run() {
         if (!(event instanceof MessageEvent))
             return;

@@ -14,13 +14,6 @@ public class Time extends Command{
         super(event, args);
     }
 
-
-    @Override
-    public void init() {
-        triggers.add("time");
-
-    }
-
     @Override
     public void run() {
         if(args.length == 1) {

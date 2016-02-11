@@ -17,12 +17,6 @@ public class EightBall extends Command {
     }
 
     @Override
-    public void init() {
-        triggers.add("8ball");
-        triggers.add("8");
-    }
-
-    @Override
     public void run() {
         if (!(event instanceof MessageEvent))
             return;

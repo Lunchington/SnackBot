@@ -105,7 +105,8 @@ public class Config {
                 .setRealName(BOT_REALNAME)
                 .setLogin(BOT_USER)
                 .setVersion(VERSION)
-                .addServer(HOSTNAME,Integer.parseInt(PORT));
+                .addServer(HOSTNAME,Integer.parseInt(PORT))
+                .setAutoReconnect(true);
 
         for (String s : CHANNELS) {
             b.addAutoJoinChannel(s);

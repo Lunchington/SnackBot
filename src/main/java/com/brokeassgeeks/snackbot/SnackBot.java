@@ -59,7 +59,7 @@ public class SnackBot {
         listenerManager.addListener(new ServerActivityListener());
         listenerManager.addListener(new SeenActivityListener());
 
-        CommandManager.getInstance().addCommand(SimpleCommand.class);
+        //CommandManager.getInstance().addCommand(SimpleCommand.class);
         CommandManager.getInstance().addCommand(EightBall.class);
         CommandManager.getInstance().addCommand(Fortune.class);
         CommandManager.getInstance().addCommand(ServerStatus.class);
@@ -81,6 +81,11 @@ public class SnackBot {
 
         bot = new PircBotX(configuration);
         bot.startBot();
+
+    }
+
+    public static ArrayList<String> getAdmins() {
+        return AdminUtils.loadAdmins();
 
     }
 

@@ -11,12 +11,6 @@ public class AdminCommand extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("admin");
-        triggers.add("a");
-    }
-
-    @Override
     public void run() {
         if (!AdminUtils.isAdmin(event.getUser(), SnackBot.getAdmins())) {
             return;

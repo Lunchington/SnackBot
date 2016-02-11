@@ -3,10 +3,16 @@ package com.brokeassgeeks.snackbot.listeners;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.google.gson.Gson;
+import lombok.Getter;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -47,10 +53,17 @@ public class CommandListener extends ListenerAdapter{
                 continue;
             }
             args[0] = args[0].replaceAll(Config.CATCH_CHAR,"");
-            if (command.getTriggers().contains(args[0].toLowerCase())) {
-                logger.info("Executing Command: " + command.getClass().getCanonicalName());
-                command.setSender(sender);
-                threadPool.submit(command);
+            logger.info("Executing Command: " + command.getClass().getCanonicalName());
+
+            if (CommandManager.getInstance().getTriggers(command).contains(args[0].toLowerCase())) {
+                if(CommandManager.getInstance().isCommandEnabled(command)) {
+                    logger.info("Executing Command: " + command.getClass().getCanonicalName());
+                    command.setSender(sender);
+                    threadPool.submit(command);
+                }
+                else
+                    logger.info("Command Disabled: " + command.getClass().getCanonicalName());
+
             }
 
         }

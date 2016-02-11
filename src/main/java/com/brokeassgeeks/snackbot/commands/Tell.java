@@ -28,11 +28,6 @@ public class Tell extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("tell");
-    }
-
-    @Override
     public void run() {
 
         if (args.length < 3 ) {

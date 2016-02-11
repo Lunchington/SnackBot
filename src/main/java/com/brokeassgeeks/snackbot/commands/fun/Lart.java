@@ -15,12 +15,6 @@ public class Lart extends Command{
     }
 
     @Override
-    public void init() {
-        triggers.add("lart");
-
-    }
-
-    @Override
     public void run() {
 
         String target = sender;

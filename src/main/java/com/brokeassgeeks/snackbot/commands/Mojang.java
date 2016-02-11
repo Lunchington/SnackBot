@@ -28,11 +28,6 @@ public class Mojang extends Command {
         shortNames.put("textures.minecraft.net", "Textures");
     }
 
-    @Override
-    public void init() {
-        triggers.add("mojang");
-        triggers.add("mineccraft");
-    }
 
     @Override
     public void run() {
