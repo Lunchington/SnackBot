@@ -1,9 +1,7 @@
 package com.brokeassgeeks.snackbot.Utils;
 
-import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import com.google.common.collect.ImmutableSortedSet;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -135,24 +133,14 @@ public class Utils {
         return formatter.format(time);
     }
 
-    public static boolean containsIgnoreCase(ImmutableSortedSet<String> list, String soughtFor) {
-        for (String current : list) {
-            if (current.equalsIgnoreCase(soughtFor)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static String putPaste(String string) throws Exception {
-        String api = Config.PASTEBIN_API;
         StringBuilder out = new StringBuilder();
 
         HttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost("http://paste.brokeassgeeks.com/api/create");
 
         // Request parameters and other properties.
-        List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+        List<NameValuePair> params = new ArrayList<>(2);
         params.add(new BasicNameValuePair("title", "Messages"));
         params.add(new BasicNameValuePair("text", string));
         params.add(new BasicNameValuePair("name", "SnackBot"));
@@ -171,16 +159,13 @@ public class Utils {
         HttpEntity entity = response.getEntity();
 
         if (entity != null) {
-            InputStream instream = entity.getContent();
-            try {
+            try (InputStream instream = entity.getContent()) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     out.append(line);
                 }
 
-            } finally {
-                instream.close();
             }
         }
         return out.toString();

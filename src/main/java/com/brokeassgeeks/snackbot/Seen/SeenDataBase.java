@@ -1,8 +1,6 @@
 package com.brokeassgeeks.snackbot.Seen;
 
 import com.almworks.sqlite4java.*;
-import com.brokeassgeeks.snackbot.SnackBot;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.pircbotx.User;
 
 import java.io.File;
@@ -117,26 +115,6 @@ public class SeenDataBase {
 
     }
 
-
-    public Long addNewBlankUser(final String string) {
-        final String q = "INSERT INTO seen(lastNick, login, hostname, time) VALUES (? , ?, ? , ?) ";
-
-        return queue.execute(new SQLiteJob<Long>() {
-            @Override
-            protected Long job(SQLiteConnection connection) throws Throwable {
-                SQLiteStatement st = connection.prepare(q);
-                st.bind(1, string);
-                st.bind(2, "-");
-                st.bind(3, "-");
-                st.bind(4, 0L);
-                st.step();
-                st.dispose();
-
-                return connection.getLastInsertId();
-            }
-        }).complete();
-    }
-
     public Long isUserInDB(final User user) {
         final String check = "SELECT id FROM seen WHERE lastNick LIKE ?";
 
@@ -191,11 +169,8 @@ public class SeenDataBase {
     }
 
     public List<String> getTells(final String user) {
-        List<String> out = new ArrayList<>();
-
-        out = getTellsbyNick(user);
+        List<String> out = getTellsbyNick(user);
         deleteTells(user);
-
         return out;
     }
 

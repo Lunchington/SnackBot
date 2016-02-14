@@ -4,7 +4,6 @@ import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Seen.UserDB;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.pircbotx.User;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.util.Date;

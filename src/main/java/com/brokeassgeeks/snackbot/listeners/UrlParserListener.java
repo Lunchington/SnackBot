@@ -2,7 +2,6 @@ package com.brokeassgeeks.snackbot.listeners;
 
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.google.common.base.CharMatcher;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -12,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

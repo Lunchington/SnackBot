@@ -53,7 +53,6 @@ public class CommandListener extends ListenerAdapter{
                 continue;
             }
             args[0] = args[0].replaceAll(Config.CATCH_CHAR,"");
-            logger.info("Executing Command: " + command.getClass().getCanonicalName());
 
             if (CommandManager.getInstance().getTriggers(command).contains(args[0].toLowerCase())) {
                 if(CommandManager.getInstance().isCommandEnabled(command)) {

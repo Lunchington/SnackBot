@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Command implements Runnable{
     protected String[] args;
     protected GenericMessageEvent event;

@@ -4,7 +4,6 @@ import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.TimeDifference;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class ServerStatus extends Command {

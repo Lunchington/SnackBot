@@ -1,24 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.Utils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Tell extends Command{
 
@@ -35,7 +18,6 @@ public class Tell extends Command{
             return;
         }
 
-        String sender = event.getUser().getNick();
         String target = args[1];
 
         if (sender.equalsIgnoreCase(target)) {

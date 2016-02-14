@@ -8,10 +8,8 @@ import org.pircbotx.User;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 public class Timers extends Timer {
-    private static final Logger logger = Logger.getLogger(Timers.class.getName());
 
     private User user;
     private Channel channel;
@@ -28,6 +26,14 @@ public class Timers extends Timer {
 
     }
 
+
+    private void end() {
+        this.task.cancel();
+    }
+    public boolean isDone() {
+        return isDone;
+    }
+
     public void startTells() {
         this.task = new TimerTask() {
             @Override
@@ -39,10 +45,6 @@ public class Timers extends Timer {
         this.schedule(this.task,time);
     }
 
-    private void end() {
-        this.task.cancel();
-    }
-
     private void getTells() {
         List<String> output = SnackBot.getSeenDataBase().getTells(user.getNick());
 
@@ -51,10 +53,6 @@ public class Timers extends Timer {
                 String paste="";
                 for(String s: output) {
                     paste += s +"\r\n";
-                }
-                try {
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 try {
@@ -80,7 +78,4 @@ public class Timers extends Timer {
         SeenActivityListener.userActivity.remove(user.getNick());
     }
 
-    public boolean isDone() {
-        return isDone;
-    }
 }

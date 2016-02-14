@@ -6,8 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Twitch.Twitch;
 import com.brokeassgeeks.snackbot.Twitch.TwitchResponse;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -20,6 +18,7 @@ public class TwitchCommand extends Command{
 
     public TwitchCommand(GenericMessageEvent event, String[] args) {
         super(event, args);
+        load();
     }
 
     @Override
@@ -38,7 +37,7 @@ public class TwitchCommand extends Command{
         } else {
 
             String output = "";
-            loadJson();
+            load();
             for (String s : streamers) {
 
                 TwitchResponse response = Twitch.getTwitch(s);
@@ -61,7 +60,7 @@ public class TwitchCommand extends Command{
 
 
 
-    public void loadJson() {
+    public void load() {
 
         try {
             Gson gson = new Gson();
