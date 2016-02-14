@@ -116,7 +116,7 @@ public class SeenDataBase {
     }
 
     public Long isUserInDB(final User user) {
-        final String check = "SELECT id FROM seen WHERE lastNick LIKE ?";
+        final String check = "SELECT id FROM seen WHERE lastNick LIKE ? COLLATE NOCASE";
 
         return queue.execute(new SQLiteJob<Long>() {
             @Override
@@ -153,7 +153,7 @@ public class SeenDataBase {
     }
 
     public Long deleteTells(final String nick) {
-        final String q = "DELETE FROM messages WHERE nick = ? ";
+        final String q = "DELETE FROM messages WHERE nick = ? COLLATE NOCASE";
 
         return queue.execute(new SQLiteJob<Long>() {
             @Override
