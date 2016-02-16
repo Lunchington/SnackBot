@@ -35,7 +35,7 @@ public class ServerOnlineUsers extends Command{
                     }
                 }
 
-                out = String.format("<B><b>%s<N> - %s: ", s.getName(), response.getDescription());
+                out = String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getName(), s.getVersion());
                 out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
 
                 if (!Utils.isEmpty(serverPlayers)) {

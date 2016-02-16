@@ -1,15 +1,18 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
+
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class MinecraftServerUtils {
-    private static final Logger logger = Logger.getLogger(MinecraftServerUtils.class.getName());
+    public static final Logger logger = (Logger) LoggerFactory.getLogger(MinecraftServerUtils.class);
 
     public static void updateServerActivity(MinecraftServer[] servers, String name, String sender, long time) {
         MinecraftServer s = getServerbyName(servers,name);
@@ -47,7 +50,7 @@ public class MinecraftServerUtils {
             return s;
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Cannot load server config ...", e);
+            logger.error("Cannot load server config ...", e);
         }
         return null;
     }
@@ -65,7 +68,40 @@ public class MinecraftServerUtils {
             writer.close();
             out.close();
         }  catch (IOException e) {
-            logger.log(Level.SEVERE, "Cannot load server config...", e);
+            logger.error( "Cannot load server config...", e);
         }
+    }
+
+    public static boolean setValue(String server, String setting, String value) {
+        MinecraftServer servers[] = SnackBot.getServers();
+        MinecraftServer s = getServerbyName(servers,server);
+        boolean isSet = false;
+
+        if (s == null)
+            return false;
+
+        if (setting.equalsIgnoreCase("pack")) {
+            isSet = true;
+            s.setPack(value);
+        }
+
+        if (setting.equalsIgnoreCase("version")) {
+            isSet = true;
+            s.setVersion(value);
+        }
+
+        if (setting.equalsIgnoreCase("host")) {
+            isSet = true;
+            s.setHost(value);
+        }
+        if (setting.equalsIgnoreCase("port")) {
+            isSet = true;
+            s.setPort(Integer.parseInt(value));
+        }
+
+        if (isSet)
+            writeServerJson(servers);
+
+        return isSet;
     }
 }

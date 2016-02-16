@@ -1,8 +1,9 @@
 package com.brokeassgeeks.snackbot;
 
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.core.util.StatusPrinter;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.brokeassgeeks.snackbot.Seen.SeenDataBase;
 import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.commands.*;
@@ -20,8 +21,6 @@ import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 
 import lombok.Getter;
 
-import lombok.Setter;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.pircbotx.Configuration;
@@ -33,18 +32,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class SnackBot {
-    private static final Logger logger = LoggerFactory.getLogger(SnackBot.class);
+    public static final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 
     @Getter private static SeenDataBase seenDataBase = new SeenDataBase();
-    @Getter private static MinecraftServer[] servers;
-    @Getter@Setter private static ArrayList<String> admins;
 
     @Getter private static PircBotX bot;
 
     public static void main(String[] args) throws IOException, IrcException {
-
-        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-        StatusPrinter.print(lc);
+        logger.setLevel(Level.INFO);
 
         logger.info("Bot Starting....");
         ThreadedListenerManager listenerManager = new ThreadedListenerManager();
@@ -73,14 +68,19 @@ public class SnackBot {
         CommandManager.getInstance().addCommand(AdminCommand.class);
         CommandManager.getInstance().addCommand(Lart.class);
         CommandManager.getInstance().addCommand(Help.class);
-
-
-        servers = MinecraftServerUtils.loadServers();
-        admins = AdminUtils.loadAdmins();
+        CommandManager.getInstance().addCommand(ServerAdmin.class);
 
         bot = new PircBotX(configuration);
         bot.startBot();
 
+    }
+
+    public static MinecraftServer[] getServers() {
+        return MinecraftServerUtils.loadServers();
+    }
+
+    public static ArrayList<String> getAdmins() {
+        return AdminUtils.loadAdmins();
     }
 
 }

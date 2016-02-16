@@ -1,11 +1,13 @@
 package com.brokeassgeeks.snackbot.listeners;
 
+import ch.qos.logback.classic.Logger;
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UrlParserListener extends ListenerAdapter {
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(UrlParserListener.class);
+
     private String[]  blacklist = { "goo.gl", "pastebin", "redd.it"};
 
     @Override

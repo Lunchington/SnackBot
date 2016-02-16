@@ -11,10 +11,12 @@ import org.pircbotx.hooks.types.GenericUserEvent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
 
 public class SeenActivityListener extends ListenerAdapter{
-    private static final Logger logger = Logger.getLogger(SeenActivityListener.class.getName());
+    private final Logger logger = (Logger) LoggerFactory.getLogger(SeenActivityListener.class);
 
     public static Map<String, Timers> userActivity = new HashMap<>();
 

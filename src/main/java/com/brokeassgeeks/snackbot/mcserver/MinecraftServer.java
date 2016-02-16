@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 public class MinecraftServer {
     private String name;
     private String pack;
+    private String version;
     private String host;
     private int port;
     private LastActivity lastactivity;
@@ -26,6 +27,7 @@ public class MinecraftServer {
     public MinecraftServer() {
         this.name = "";
         this.pack = "";
+        this.version = "";
         this.host = "";
         this.port = 0;
         this.lastactivity = new LastActivity();

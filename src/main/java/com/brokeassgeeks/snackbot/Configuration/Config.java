@@ -1,17 +1,18 @@
 package com.brokeassgeeks.snackbot.Configuration;
 
+import ch.qos.logback.classic.Logger;
 import org.pircbotx.Configuration;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Config {
-    private static final Logger logger = Logger.getLogger(Config.class.getName());
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Config.class);
+
     private static final String configFile = "bot.config";
     public static Config instance;
 
@@ -42,13 +43,13 @@ public class Config {
         prop = new Properties();
 
         if (!config.exists()) {
-            logger.log(Level.SEVERE, "Cannot load file creating...");
+            logger.error("Cannot load file creating...");
             try {
                 final boolean newFile = config.createNewFile();
                 if (newFile)
                     setDefaults();
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Cannot create config ...", e);
+                logger.error("Cannot create config ...", e);
             }
         }
     }
@@ -82,7 +83,7 @@ public class Config {
             prop.load(input);
 
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Cannot load config ...", e);
+            logger.error("Cannot load config ...", e);
         }
 
 
@@ -123,7 +124,7 @@ public class Config {
             prop.store(out,null);
             out.close();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Cannot save config ...", e);
+            logger.error("Cannot save config ...", e);
         }
     }
 }

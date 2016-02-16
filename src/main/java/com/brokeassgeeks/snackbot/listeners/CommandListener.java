@@ -3,22 +3,19 @@ package com.brokeassgeeks.snackbot.listeners;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.google.gson.Gson;
-import lombok.Getter;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
+
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Logger;
 
 public class CommandListener extends ListenerAdapter{
-    private static final Logger logger = Logger.getLogger(CommandListener.class.getName());
+    private final Logger logger = (Logger) LoggerFactory.getLogger(CommandListener.class);
+
     private ExecutorService threadPool;
 
     public CommandListener() {
@@ -61,7 +58,7 @@ public class CommandListener extends ListenerAdapter{
                     threadPool.submit(command);
                 }
                 else
-                    logger.info("Command Disabled: " + command.getClass().getCanonicalName());
+                    logger.warn("Command Disabled: " + command.getClass().getCanonicalName());
 
             }
 

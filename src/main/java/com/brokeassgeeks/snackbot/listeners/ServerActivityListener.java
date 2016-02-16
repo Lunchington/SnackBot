@@ -7,7 +7,11 @@ import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
 
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
+
 public class ServerActivityListener extends ListenerAdapter {
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(ServerActivityListener.class);
 
     @Override
     public void onMessage(MessageEvent event) {
