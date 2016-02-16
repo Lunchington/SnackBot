@@ -1,9 +1,10 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.admin;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.commands.Command;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class ServerAdmin extends Command {

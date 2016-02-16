@@ -1,15 +1,16 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.mcserver;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
-import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
+import com.brokeassgeeks.snackbot.commands.Command;
+import com.brokeassgeeks.snackbot.commands.mcserver.MinecraftServer;
+import com.brokeassgeeks.snackbot.commands.mcserver.ServerConnection;
+import com.brokeassgeeks.snackbot.commands.mcserver.StatusResponse;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class ServerOnlineUsers extends Command{
-    public ServerOnlineUsers(GenericMessageEvent event, String[] args) {
+public class Online extends Command {
+    public Online(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
 

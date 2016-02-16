@@ -75,7 +75,7 @@ public class SeenActivityListener extends ListenerAdapter{
 
     public void removeTimer(String user) {
         if (userActivity.containsKey(user)) {
-            userActivity.get(user).cancel();
+            userActivity.get(user).end();
             userActivity.remove(user);
         }
     }

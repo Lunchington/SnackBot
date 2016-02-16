@@ -5,6 +5,8 @@ import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Help extends Command{
     public Help(GenericMessageEvent event, String[] args) {
@@ -13,26 +15,32 @@ public class Help extends Command{
 
     @Override
     public void run() {
-        String out = "";
-        for (Class<?> cmd: CommandManager.getInstance().getCommands()) {
-            Command command;
-            try {
-                command = (Command) cmd.getDeclaredConstructor(
-                        GenericMessageEvent.class, String[].class).newInstance(event, args);
-            } catch (InstantiationException | IllegalAccessException
-                    | InvocationTargetException |NoSuchMethodException e) {
-                e.printStackTrace();
-                continue;
+        ArrayList<String> temp = getHelp();
+
+        int partitionSize = 5;
+        for (int i = 0; i < temp.size(); i += partitionSize) {
+            List<String> t = temp.subList(i,
+                    Math.min(i + partitionSize, temp.size()));
+            String out ="";
+
+            for (String st : t) {
+                out += st + " ";
             }
 
-            for (String s: CommandManager.getInstance().getTriggers(command)) {
-                if(CommandManager.getInstance().isCommandEnabled(command))
-                    out += Config.CATCH_CHAR + s+ " ";
-            }
+            super.respond(event.getUser(),out);
+
+
         }
 
-        if (out.length() > 0) {
-            event.getUser().send().notice(Utils.replaceTags("<B><b>Commands: <N>" + out));
-        }
     }
+
+    public ArrayList<String> getHelp() {
+        ArrayList<String> s = new ArrayList<>();
+        for(CommandData c: CommandManager.getInstance().getCommandData()) {
+            String temp = String.format("<B><b>%s:<N> %s ",c.getName(),c.getTriggers());
+            s.add(temp);
+        }
+        return s;
+    }
+
 }

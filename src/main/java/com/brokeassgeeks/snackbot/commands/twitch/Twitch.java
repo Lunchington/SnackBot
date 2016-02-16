@@ -1,10 +1,10 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.twitch;
 
+import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.commands.Command;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.brokeassgeeks.snackbot.Twitch.Twitch;
-import com.brokeassgeeks.snackbot.Twitch.TwitchResponse;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.*;
@@ -12,11 +12,11 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 
-public class TwitchCommand extends Command{
+public class Twitch extends Command {
 
     private static List<String> streamers;
 
-    public TwitchCommand(GenericMessageEvent event, String[] args) {
+    public Twitch(GenericMessageEvent event, String[] args) {
         super(event, args);
         load();
     }
@@ -40,10 +40,10 @@ public class TwitchCommand extends Command{
             load();
             for (String s : streamers) {
 
-                TwitchResponse response = Twitch.getTwitch(s);
+                TwitchResponse response = getTwitch(s);
                 System.out.println(response);
 
-                if (response != null && Twitch.isChannelLive(response)) {
+                if (response != null && isChannelLive(response)) {
                     output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
                 }
             }
@@ -58,6 +58,40 @@ public class TwitchCommand extends Command{
 
     }
 
+    private boolean isvalidUser(String channel) {
+        Boolean isvalid = true;
+        try {
+            String url = Utils.readUrl("https://api.twitch.tv/kraken/streams/" + channel);
+            GsonBuilder builder = new GsonBuilder();
+            Object o = builder.create().fromJson(url, Object.class);
+            System.out.println(o.toString());
+
+        } catch (IOException e) {
+            isvalid = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isvalid;
+
+    }
+
+    public boolean isChannelLive(TwitchResponse response) {
+        return response.getStream() != null;
+    }
+
+    private TwitchResponse getTwitch(String channel) {
+        try {
+            String url = Utils.readUrl("https://api.twitch.tv/kraken/streams/" + channel);
+            Gson gson = new Gson();
+
+            return gson.fromJson(url, TwitchResponse.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
 
 
     public void load() {
@@ -95,7 +129,7 @@ public class TwitchCommand extends Command{
     }
 
     public String addChannel(String args) {
-        if(Twitch.isvalidUser(args)) {
+        if(isvalidUser(args)) {
             if  (streamers.contains(args.toLowerCase())) {
                 return String.format("<B><b>Channel:<N> %s is already in the list!",args);
             }

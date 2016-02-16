@@ -1,13 +1,14 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.mcserver;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.TimeDifference;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
+import com.brokeassgeeks.snackbot.commands.Command;
+import com.brokeassgeeks.snackbot.commands.mcserver.MinecraftServer;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class ServerStatus extends Command {
-    public ServerStatus(GenericMessageEvent event, String[] args) {
+public class Status extends Command {
+    public Status(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
 

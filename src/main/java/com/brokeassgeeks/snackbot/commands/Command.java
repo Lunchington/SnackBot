@@ -3,6 +3,7 @@ package com.brokeassgeeks.snackbot.commands;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public abstract class Command implements Runnable{
@@ -21,7 +22,12 @@ public abstract class Command implements Runnable{
     }
 
     public void respond(String message) {
+
         event.respondWith(Utils.replaceTags(message));
+    }
+
+    public void respond(User user, String message) {
+        event.getUser().send().message(Utils.replaceTags(message));
     }
 
 }

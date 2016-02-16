@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.Twitch;
+package com.brokeassgeeks.snackbot.commands.twitch;
 
 import lombok.Data;
 

@@ -1,22 +1,22 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(CommandManager.class);
 
     private static CommandManager instance;
-
-    @Getter private List<String> allTriggers;
     @Getter private List<Class<?>> commands;
-
-    private CommandData[] commandData;
 
 
     public static CommandManager getInstance() {
@@ -28,8 +28,6 @@ public class CommandManager {
 
     private CommandManager() {
         commands = new ArrayList<>();
-        allTriggers = new ArrayList<>();
-
     }
 
     public void addCommand(Class<?> command) {
@@ -37,59 +35,64 @@ public class CommandManager {
     }
 
 
-
-    private class CommandData {
-        @Getter
-        private String command;
-        private boolean enabled;
-        private List<String> triggers;
-    }
-
-    public void load() {
+    public ArrayList<CommandData> load() {
         try {
+            ArrayList<CommandData> s;
             Gson gson = new Gson();
             File file = new File("data/commands.json");
 
             Reader jsonFile = new FileReader(file);
-            commandData = gson.fromJson(jsonFile,CommandData[].class );
+            Type collectionType = new TypeToken<ArrayList<CommandData>>(){}.getType();
+
+            s = gson.fromJson(jsonFile,collectionType );
             jsonFile.close();
-
-            for (CommandData d: commandData) {
-                allTriggers.addAll(d.triggers);
-            }
-
-            ArrayList<SimpleCommandData> sc = SimpleCommand.load();
-
-            assert sc != null;
-
-            for (SimpleCommandData s : sc) {
-                allTriggers.addAll(s.getTriggers());
-
-            }
+            return s;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public CommandData getCommand(Command command) {
-        load();
+    public void write(ArrayList<CommandData>  commands) {
 
-        for (CommandData c: commandData) {
-            if(c.command.equalsIgnoreCase(command.getClass().getSimpleName()))
-                return c;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String s = gson.toJson(commands);
+
+        try {
+            String jsonFile = "data/commands.json";
+            FileOutputStream out = new FileOutputStream(jsonFile);
+            OutputStreamWriter writer = new OutputStreamWriter(out);
+            writer.write(s);
+            writer.close();
+            out.close();
+        }  catch (IOException e) {
+            logger.error("Cannot write commands config...", e);
+        }
+    }
+
+
+
+    public ArrayList<CommandData> getCommandData() {
+        return load();
+    }
+
+
+    public CommandData getCommandDataFromTrigger(String trigger) {
+        for (CommandData s : getCommandData()) {
+            if(s.getTriggers().contains(trigger))
+                return s;
         }
         return null;
     }
 
-    public boolean isCommandEnabled(Command command) {
-        CommandData commandData = getCommand(command);
-        return (commandData == null || commandData.enabled);
+    public CommandData triggerExists(String trigger) {
+        for (CommandData s : getCommandData()) {
+            if (s.getTriggers().contains(trigger.toLowerCase()))
+                    return s;
+        }
+        return null;
     }
 
-    public List<String> getTriggers(Command command) {
-        CommandData commandData = getCommand(command);
-        return commandData.triggers;
-    }
 
 }

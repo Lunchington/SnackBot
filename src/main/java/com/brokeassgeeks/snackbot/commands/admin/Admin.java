@@ -1,12 +1,13 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot.commands.admin;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.AdminUtils;
+import com.brokeassgeeks.snackbot.commands.Command;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class AdminCommand extends Command{
-    public AdminCommand(GenericMessageEvent event, String[] args) {
+public class Admin extends Command {
+    public Admin(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
 

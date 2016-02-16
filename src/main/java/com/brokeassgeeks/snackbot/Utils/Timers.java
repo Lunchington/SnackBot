@@ -15,23 +15,17 @@ public class Timers extends Timer {
     private Channel channel;
     private Long time;
     private TimerTask task;
-    private boolean isDone;
-
 
     public Timers(User user, Channel channel, long time) {
         this.user = user;
         this.channel = channel;
         this.time = time;
-        this.isDone = false;
 
     }
 
 
-    private void end() {
+    public void end() {
         this.task.cancel();
-    }
-    public boolean isDone() {
-        return isDone;
     }
 
     public void startTells() {
@@ -39,7 +33,6 @@ public class Timers extends Timer {
             @Override
             public void run() {
                 getTells();
-                isDone = true;
             }
         };
         this.schedule(this.task,time);

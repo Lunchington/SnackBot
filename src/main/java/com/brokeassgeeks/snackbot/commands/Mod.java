@@ -2,9 +2,9 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
-import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import com.brokeassgeeks.snackbot.mcserver.ServerConnection;
-import com.brokeassgeeks.snackbot.mcserver.StatusResponse;
+import com.brokeassgeeks.snackbot.commands.mcserver.MinecraftServer;
+import com.brokeassgeeks.snackbot.commands.mcserver.ServerConnection;
+import com.brokeassgeeks.snackbot.commands.mcserver.StatusResponse;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class Mod extends Command {
