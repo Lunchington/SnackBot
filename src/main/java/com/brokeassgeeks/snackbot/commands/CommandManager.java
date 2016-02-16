@@ -12,7 +12,10 @@ import java.util.List;
 public class CommandManager {
 
     private static CommandManager instance;
+
+    @Getter private List<String> allTriggers;
     @Getter private List<Class<?>> commands;
+
     private CommandData[] commandData;
 
 
@@ -25,6 +28,8 @@ public class CommandManager {
 
     private CommandManager() {
         commands = new ArrayList<>();
+        allTriggers = new ArrayList<>();
+
     }
 
     public void addCommand(Class<?> command) {
@@ -48,6 +53,20 @@ public class CommandManager {
             Reader jsonFile = new FileReader(file);
             commandData = gson.fromJson(jsonFile,CommandData[].class );
             jsonFile.close();
+
+            for (CommandData d: commandData) {
+                allTriggers.addAll(d.triggers);
+            }
+
+            ArrayList<SimpleCommandData> sc = SimpleCommand.load();
+
+            assert sc != null;
+
+            for (SimpleCommandData s : sc) {
+                allTriggers.addAll(s.getTriggers());
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

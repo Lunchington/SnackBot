@@ -3,6 +3,7 @@ package com.brokeassgeeks.snackbot.listeners;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
 import com.brokeassgeeks.snackbot.Configuration.Config;
+import com.brokeassgeeks.snackbot.commands.SimpleCommand;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -51,7 +52,14 @@ public class CommandListener extends ListenerAdapter{
             }
             args[0] = args[0].replaceAll(Config.CATCH_CHAR,"");
 
-            if (CommandManager.getInstance().getTriggers(command).contains(args[0].toLowerCase())) {
+            if(command instanceof SimpleCommand) {
+                logger.info("Simple Command: " + command.getClass().getCanonicalName());
+
+                if (((SimpleCommand) command).getTriggers().contains(args[0].toLowerCase()))
+                    threadPool.submit(command);
+            }
+
+            else if (CommandManager.getInstance().getTriggers(command).contains(args[0].toLowerCase())) {
                 if(CommandManager.getInstance().isCommandEnabled(command)) {
                     logger.info("Executing Command: " + command.getClass().getCanonicalName());
                     command.setSender(sender);
