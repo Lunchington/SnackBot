@@ -19,9 +19,10 @@ public class ServerAdmin extends Command {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <OPTION> <SETTING>" ,args[0]));
             return;
         }
+        String msg[] = event.getMessage().split(" ", 4);
 
-        if(MinecraftServerUtils.setValue(args[1],args[2],args[3])) {
-            super.respond(String.format("<B><b>%s<N> set to <B><b>%s<N> for <B><b>%s<N>",args[2],args[3],args[1]));
+        if(MinecraftServerUtils.setValue(msg[1],msg[2],msg[3])) {
+            super.respond(String.format("<B><b>%s<N> set to <B><b>%s<N> for <B><b>%s<N>",msg[2],msg[3],msg[1]));
         }
         else {
             super.respond("<B><b>ERROR IN SETTINGS<N>");
