@@ -36,7 +36,7 @@ public class Online extends Command {
                     }
                 }
 
-                out = String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getName(), s.getVersion());
+                out = String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getPack(), s.getVersion());
                 out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
 
                 if (!Utils.isEmpty(serverPlayers)) {
