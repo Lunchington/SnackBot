@@ -9,6 +9,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,21 +36,24 @@ public class Twitch extends Command {
                 super.respond(addChannel(args[2]));
             }
         } else {
-
-            String output = "";
+            ArrayList<String> livestreamers = new ArrayList<>();
             load();
+
             for (String s : streamers) {
 
                 TwitchResponse response = getTwitch(s);
                 System.out.println(response);
 
                 if (response != null && isChannelLive(response)) {
-                    output += String.format("%s - %s", s, response.getStream().getChannel().getUrl());
+                    livestreamers.add(String.format("<B><b>%s<N> - %s", s, response.getStream().getChannel().getUrl()));
                 }
             }
 
-            if (output.length() > 0)
-                super.respond(String.format("<B><b>Currently Streaming:<N> <g>%s<N>", output));
+            if (livestreamers.size() > 0) {
+                super.respond("<B><b>Currently Streaming<N>");
+                for (String s: livestreamers)
+                    super.respond(s);
+            }
             else
                 super.respond("<B><b>NO Streamers live!<N>");
 
