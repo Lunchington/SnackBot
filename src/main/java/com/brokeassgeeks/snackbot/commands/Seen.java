@@ -51,7 +51,7 @@ public class Seen extends Command{
             super.respond(String.format("<B><b>%s<N> was last seen on: <B><b>%s<N>",target, Utils.getTime(currentDate)));
 
         } else {
-            super.respond(String.format("<B><b>%s<N> has not beeb seen by me",target));
+            super.respond(String.format("<B><b>%s<N> has not been seen by me",target));
 
         }
     }

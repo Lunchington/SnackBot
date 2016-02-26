@@ -7,10 +7,10 @@ import com.brokeassgeeks.snackbot.commands.CommandData;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TriggerAdmin extends Command {
-    private ArrayList<CommandData> sc;
+    private List<CommandData> sc;
 
     public TriggerAdmin(GenericMessageEvent event, String[] args) {
         super(event, args);
@@ -55,7 +55,7 @@ public class TriggerAdmin extends Command {
 
                     } else {
                         data.getTriggers().add(args[2]);
-                        CommandManager.getInstance().write(sc);
+                        CommandManager.getInstance().writeReload(sc);
                         super.respond(String.format("<B><b>Trigger:<N> <B>%s<N> added for <B><b>%s<N> command",args[2],data.getName()));
 
                     }
@@ -81,7 +81,7 @@ public class TriggerAdmin extends Command {
                     if (data.getTriggers().size() == 0)
                         data.getTriggers().add(data.getName());
 
-                    CommandManager.getInstance().write(sc);
+                    CommandManager.getInstance().writeReload(sc);
                     super.respond(String.format("<B><b>Trigger:<N> <B>%s<N>  removed from <B><b>%s<N>",args[1],data.getName()));
 
                 }

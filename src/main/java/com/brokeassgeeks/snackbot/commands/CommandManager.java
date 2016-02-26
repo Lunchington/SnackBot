@@ -15,8 +15,10 @@ import java.util.List;
 public class CommandManager {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(CommandManager.class);
 
-    private static CommandManager instance;
+    private List<CommandData> commandData;
     @Getter private List<Class<?>> commands;
+
+    private static CommandManager instance;
 
 
     public static CommandManager getInstance() {
@@ -28,6 +30,7 @@ public class CommandManager {
 
     private CommandManager() {
         commands = new ArrayList<>();
+        commandData = new ArrayList<>();
     }
 
     public void addCommand(Class<?> command) {
@@ -35,7 +38,7 @@ public class CommandManager {
     }
 
 
-    public ArrayList<CommandData> load() {
+    private List<CommandData> load() {
         try {
             ArrayList<CommandData> s;
             Gson gson = new Gson();
@@ -54,7 +57,7 @@ public class CommandManager {
         return null;
     }
 
-    public void write(ArrayList<CommandData>  commands) {
+    private void write(List<CommandData>  commands) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String s = gson.toJson(commands);
@@ -72,9 +75,12 @@ public class CommandManager {
     }
 
 
+    public void reload() {
+        commandData = load();
+    }
 
-    public ArrayList<CommandData> getCommandData() {
-        return load();
+    public List<CommandData> getCommandData() {
+        return commandData;
     }
 
 
@@ -95,4 +101,9 @@ public class CommandManager {
     }
 
 
+
+    public void writeReload(List<CommandData> sc) {
+        write(sc);
+        reload();
+    }
 }

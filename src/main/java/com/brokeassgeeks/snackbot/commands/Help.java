@@ -19,9 +19,10 @@ public class Help extends Command{
 
         int partitionSize = 5;
         for (int i = 0; i < temp.size(); i += partitionSize) {
+            String out ="";
+
             List<String> t = temp.subList(i,
                     Math.min(i + partitionSize, temp.size()));
-            String out ="";
 
             for (String st : t) {
                 out += st + " ";

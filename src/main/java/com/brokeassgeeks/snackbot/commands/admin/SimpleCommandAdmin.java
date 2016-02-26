@@ -10,9 +10,10 @@ import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleCommandAdmin extends Command {
-    private ArrayList<CommandData> sc;
+    private List<CommandData> sc;
 
     public SimpleCommandAdmin(GenericMessageEvent event, String[] args) {
         super(event, args);
@@ -43,7 +44,7 @@ public class SimpleCommandAdmin extends Command {
             } else {
                 if (sData.isSimple()) {
                     sc.remove(sData);
-                    CommandManager.getInstance().write(sc);
+                    CommandManager.getInstance().writeReload(sc);
                     super.respond(String.format("Command <B><b>%s<N> removed!", args[2]));
                 } else {
                     super.respond(String.format("Cannot remove complex command: <B><b>%s<N>", args[2]));
@@ -67,13 +68,14 @@ public class SimpleCommandAdmin extends Command {
 
 
                 sc.add(newCommand);
-                CommandManager.getInstance().write(sc);
+                CommandManager.getInstance().writeReload(sc);
                 super.respond(String.format("Command <B><b>%s<N> added!" ,msg[1]));
             } else {
                 if (sData.isSimple()) {
 
                     sData.setOutput(msg[2]);
-                    CommandManager.getInstance().write(sc);
+                    CommandManager.getInstance().writeReload(sc);
+
                     super.respond(String.format("Command <B><b>%s<N> output edited", msg[1]));
                 }else {
                     super.respond(String.format("Cannot edit complex command: <B><b>%s<N>", args[1]));
