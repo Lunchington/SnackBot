@@ -5,6 +5,7 @@ package com.brokeassgeeks.snackbot.commands.mcserver;
     URL: https://github.com/zh32/TeleportSigns/blob/development/src/main/java/de/zh32/teleportsigns/server/status/QueryHandler.java
  */
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -31,7 +32,7 @@ public class ServerQuery {
         sendPacket(bs.toByteArray());
     }
 
-    public StatusResponse doStatusQuery() throws IOException {
+    public StatusResponse  doStatusQuery() throws IOException, InvalidResponseException {
         sendPacket(new byte[]{0x00});
         int size = readVarInt(connection.dataInputStream);
         int packetId = readVarInt(connection.dataInputStream);
@@ -45,8 +46,13 @@ public class ServerQuery {
         byte[] responseData = new byte[stringLength];
         connection.dataInputStream.readFully(responseData);
         String jsonString = new String(responseData, Charset.forName("utf-8"));
-        StatusResponse response = gson.fromJson(jsonString, StatusResponse.class);
-        return response;
+        try {
+            return gson.fromJson(jsonString, StatusResponse19.class);
+        } catch (JsonSyntaxException ignored) {}
+        try {
+            return gson.fromJson(jsonString, StatusResponse17.class);
+        } catch (JsonSyntaxException ignored) {}
+        throw new InvalidResponseException();
     }
 
     private void sendPacket(byte[] data) throws IOException {

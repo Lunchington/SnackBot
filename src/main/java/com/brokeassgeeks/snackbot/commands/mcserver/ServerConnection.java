@@ -23,7 +23,7 @@ public class ServerConnection {
         this.timeout = 7000;
     }
 
-    public StatusResponse getResponse() {
+    public StatusResponse getResponse() throws IOException, InvalidResponseException {
         StatusResponse response;
         try {
             this.connect();
@@ -32,10 +32,10 @@ public class ServerConnection {
             response = query.doStatusQuery();
             this.disconnect();
             return response;
-
         } catch (IOException e) {
             return null;
         }
+
     }
 
     public void connect() throws IOException {

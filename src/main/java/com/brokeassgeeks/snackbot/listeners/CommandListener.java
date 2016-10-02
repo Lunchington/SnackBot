@@ -44,7 +44,6 @@ public class CommandListener extends ListenerAdapter{
         String trigger = args[0].toLowerCase();
 
         CommandData commandData = CommandManager.getInstance().getCommandDataFromTrigger(trigger);
-        logger.info(trigger);
 
         if (commandData.isEnabled()) {
             if (commandData.isSimple()) {

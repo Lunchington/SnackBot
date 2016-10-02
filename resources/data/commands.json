@@ -206,16 +206,6 @@
     "name": "Online",
     "enabled": true,
     "triggers": [
-      "online"
-    ],
-    "privateMessage": false,
-    "simple": false,
-    "output": ""
-  },
-  {
-    "name": "Online",
-    "enabled": true,
-    "triggers": [
       "online",
       "o"
     ],

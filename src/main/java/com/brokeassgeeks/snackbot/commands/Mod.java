@@ -2,10 +2,10 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
-import com.brokeassgeeks.snackbot.commands.mcserver.MinecraftServer;
-import com.brokeassgeeks.snackbot.commands.mcserver.ServerConnection;
-import com.brokeassgeeks.snackbot.commands.mcserver.StatusResponse;
+import com.brokeassgeeks.snackbot.commands.mcserver.*;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+
+import java.io.IOException;
 
 public class Mod extends Command {
 
@@ -28,7 +28,14 @@ public class Mod extends Command {
             return;
         }
 
-        StatusResponse response = new ServerConnection(s).getResponse();
+        StatusResponse response = null;
+        try {
+            response = new ServerConnection(s).getResponse();
+        } catch (InvalidResponseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (response == null) {
             super.respond(String.format("<B><r>%s is down!<N>", s.getName()));
@@ -36,7 +43,7 @@ public class Mod extends Command {
         }
 
         String out;
-        StatusResponse.Mods.ModInfo mod = response.getMod(args[2]);
+        Mods.ModInfo mod = response.getMod(args[2]);
 
         if (mod == null) {
            out = String.format("<B><b>%s<N> is not using <B><b>%s<N>" , s.getName(),args[2]);

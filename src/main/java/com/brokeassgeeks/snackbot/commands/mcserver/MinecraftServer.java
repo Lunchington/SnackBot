@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands.mcserver;
 
 import lombok.Data;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
 @Data
@@ -35,9 +36,9 @@ public class MinecraftServer {
 
     public InetSocketAddress getHost() { return new InetSocketAddress(this.host,this.port); }
 
-    public boolean isOnServer(String player) {
+    public boolean isOnServer(String player) throws InvalidResponseException, IOException {
         StatusResponse response =  new ServerConnection(this).getResponse();
-        for (StatusResponse.Players.Player p : response.getOnlinePlayers()) {
+        for (Player p : response.getOnlinePlayersName()) {
             if (p.getName().equalsIgnoreCase(player))
                 return true;
         }
