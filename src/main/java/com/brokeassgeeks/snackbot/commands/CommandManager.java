@@ -31,6 +31,7 @@ public class CommandManager {
     private CommandManager() {
         commands = new ArrayList<>();
         commandData = new ArrayList<>();
+        commandData = load();
     }
 
     public void addCommand(Class<?> command) {
