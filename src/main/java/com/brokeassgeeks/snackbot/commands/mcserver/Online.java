@@ -24,7 +24,7 @@ public class Online extends Command {
         for (MinecraftServer s : SnackBot.getServers()) {
             serverPlayers ="";
 
-            StatusResponse response = null;
+            IStatusResponse response = null;
 
             try {
                 response = new ServerConnection(s).getResponse();

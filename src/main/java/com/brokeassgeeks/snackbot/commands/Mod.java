@@ -28,7 +28,7 @@ public class Mod extends Command {
             return;
         }
 
-        StatusResponse response = null;
+        IStatusResponse response = null;
         try {
             response = new ServerConnection(s).getResponse();
         } catch (InvalidResponseException e) {

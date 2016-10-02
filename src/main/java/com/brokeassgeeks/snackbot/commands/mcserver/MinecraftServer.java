@@ -37,7 +37,7 @@ public class MinecraftServer {
     public InetSocketAddress getHost() { return new InetSocketAddress(this.host,this.port); }
 
     public boolean isOnServer(String player) throws InvalidResponseException, IOException {
-        StatusResponse response =  new ServerConnection(this).getResponse();
+        IStatusResponse response =  new ServerConnection(this).getResponse();
         for (Player p : response.getOnlinePlayersName()) {
             if (p.getName().equalsIgnoreCase(player))
                 return true;

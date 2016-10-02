@@ -32,7 +32,7 @@ public class ServerQuery {
         sendPacket(bs.toByteArray());
     }
 
-    public StatusResponse  doStatusQuery() throws IOException, InvalidResponseException {
+    public IStatusResponse doStatusQuery() throws IOException, InvalidResponseException {
         sendPacket(new byte[]{0x00});
         int size = readVarInt(connection.dataInputStream);
         int packetId = readVarInt(connection.dataInputStream);

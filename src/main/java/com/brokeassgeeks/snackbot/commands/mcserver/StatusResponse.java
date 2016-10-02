@@ -1,18 +1,82 @@
 package com.brokeassgeeks.snackbot.commands.mcserver;
 
+import lombok.Data;
+
 import java.util.List;
 
-public interface StatusResponse {
-    Integer getOnlinePlayers();
+/**
+ * Created by Lunchington on 10/2/2016.
+ */
+@Data
+public class StatusResponse implements IStatusResponse{
+    private Players players;
+    private Version version;
+    private String favicon;
+    private Mods modinfo;
 
-    Integer getMaxPlayers();
+    @Override
+    public Integer getOnlinePlayers() {
+        return players.getOnline();
+    }
 
-    String getDescription();
+    @Override
+    public Integer getMaxPlayers() {
+        return players.getMax();
+    }
 
-    List<Player> getOnlinePlayersName();
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-    public Integer modCount();
 
-    Mods.ModInfo getMod(String arg);
-    public String getModList();
+    @Override
+    public List<Player> getOnlinePlayersName() {
+        return this.players.sample;
+    }
+
+
+    @Override
+    public Integer modCount() {
+        if (modinfo == null)
+            return 0;
+        return modinfo.getModList().size();
+    }
+
+    @Override
+    public Mods.ModInfo getMod(String name) {
+        for (Mods.ModInfo s: modinfo.getModList()) {
+            if (s.getModid().equalsIgnoreCase(name))
+                return s;
+        }
+        return null;
+    }
+
+    @Override
+    public String getModList() {
+        String output = null;
+
+        for (Mods.ModInfo s: modinfo.getModList()) {
+            output += s.getModid() + " ";
+        }
+        return output;
+    }
+
+    @Data
+    public class Description {
+        private String text;
+    }
+
+    @Data
+    public class Players {
+        private int max;
+        private int online;
+        private List<Player> sample;
+    }
+
+    @Data
+    public class Version {
+        public String name;
+        public String protocol;
+    }
 }
