@@ -115,6 +115,14 @@ public class Utils {
         return s;
     }
 
+    public static String replaceTagsDiscord(String string) {
+        String s = string;
+        for (String key:replaceMap.keySet()) {
+            if (s.contains(key))
+                s = s.replaceAll(key, "");
+        }
+        return s;
+    }
 
     public static Date getTime(Long time) {
         return new Date(time);

@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.listeners;
 
 import ch.qos.logback.classic.Logger;
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,22 +51,20 @@ public class DiscordBouncer extends ListenerAdapter {
 
 
     public void onMessage(MessageEvent event) {
-        String mirror = DiscordBouncer.getMirror(event.getChannel().getName());
+        String mirror = getMirror(event.getChannel().getName());
+        TextChannel dChan = getChannelByName(mirror);
+        String msg = String.format("<%s> %s",event.getUser().getNick(), event.getMessage());
 
-        List<TextChannel> dChannels = SnackBot.getJda().getTextChannelsByName(mirror);
-        TextChannel dChan = getChannelByName(dChannels, mirror);
-
-        String msg = String.format("[%s] <%s> %s",event.getChannel().getName(),event.getUser().getNick(), event.getMessage());
-
-        if (dChan != null)
+        if (dChan != null && !event.getMessage().startsWith(Config.CATCH_CHAR))
             dChan.sendMessage(msg);
-
     }
 
-     public TextChannel getChannelByName(List<TextChannel> channels, String chan) {
+     public static TextChannel getChannelByName( String chan) {
 
-        for (int i = 0; i < channels.size(); i++) {
-            TextChannel c = channels.get(i);
+         List<TextChannel> dChannels = SnackBot.getJda().getTextChannelsByName(chan);
+
+        for (int i = 0; i < dChannels.size(); i++) {
+            TextChannel c = dChannels.get(i);
             if (c.getName().equalsIgnoreCase(chan))
                 return c;
         }

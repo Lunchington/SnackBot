@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,9 +13,16 @@ public class Help extends Command{
     public Help(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
+    public Help(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+    }
 
     @Override
     public void run() {
+        if (isFromDiscord()) {
+            return;
+        }
+
         ArrayList<String> temp = getHelp();
 
         int partitionSize = 5;
@@ -28,7 +36,7 @@ public class Help extends Command{
                 out += st + " ";
             }
 
-            super.respond(event.getUser(),out);
+            super.respond(ircEvent.getUser(),out);
 
 
         }

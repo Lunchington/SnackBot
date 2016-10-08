@@ -5,6 +5,9 @@ import com.brokeassgeeks.snackbot.SnackBot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import net.dv8tion.jda.entities.Role;
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.hooks.ListenerAdapter;
 import org.pircbotx.Channel;
 import org.pircbotx.User;
 import org.slf4j.LoggerFactory;
@@ -59,6 +62,7 @@ public class AdminUtils {
     }
 
     public static boolean isAdmin(User user, List<String> admins) {
+
         if (user == SnackBot.getBot().getUserBot())
             return false;
 
@@ -75,9 +79,16 @@ public class AdminUtils {
             if (s.equalsIgnoreCase(uString) || s.equalsIgnoreCase(sWC))
                     return true;
         }
+
+
+
         return false;
     }
 
+    public  static boolean isAdmin (String user, List<String> admins) {
+
+        return false;
+    }
     public static boolean match(String host, String mask) {
         String[] sections = mask.split("\\*");
         String text = host;

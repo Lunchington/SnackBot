@@ -4,6 +4,7 @@ package com.brokeassgeeks.snackbot.commands;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.lang.reflect.Type;
@@ -28,6 +29,18 @@ public class Mojang extends Command {
         shortNames.put("textures.minecraft.net", "Textures");
     }
 
+    public Mojang(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+        shortNames.put("minecraft.net", "MineCraft.Net");
+        shortNames.put("session.minecraft.net", "Sesssion");
+        shortNames.put("account.mojang.com", "Account");
+        shortNames.put("auth.mojang.com", "Auth");
+        shortNames.put("skins.minecraft.net", "Skins");
+        shortNames.put("authserver.mojang.com", "AuthServer");
+        shortNames.put("sessionserver.mojang.com", "Session");
+        shortNames.put("api.mojang.com", "Api");
+        shortNames.put("textures.minecraft.net", "Textures");
+    }
 
     @Override
     public void run() {

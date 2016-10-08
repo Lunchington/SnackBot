@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands.fun;
 
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.google.gson.Gson;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;
@@ -24,6 +25,10 @@ public class Insult extends Command {
         load();
     }
 
+    public Insult(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+        load();
+    }
     @Override
     public void run() {
 
@@ -34,14 +39,6 @@ public class Insult extends Command {
             super.respond(out);
             return;
         }
-
-        String target = args[1];
-
-
-        if (event.getBot().getUserChannelDao().containsUser(target))
-            out = String.format(message, target, getRandomInsult());
-        else
-            out = String.format("<B><b>%s<N> is not even here", target);
 
         super.respond(out);
     }

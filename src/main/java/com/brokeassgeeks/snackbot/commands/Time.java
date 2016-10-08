@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.text.DateFormat;
@@ -11,6 +12,9 @@ public class Time extends Command{
 
 
     public Time(GenericMessageEvent event, String[] args) {
+        super(event, args);
+    }
+    public Time(MessageReceivedEvent event, String[] args) {
         super(event, args);
     }
 

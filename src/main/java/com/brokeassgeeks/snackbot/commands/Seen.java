@@ -3,6 +3,7 @@ package com.brokeassgeeks.snackbot.commands;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Seen.UserDB;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -13,9 +14,15 @@ public class Seen extends Command{
     public Seen(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
+    public Seen(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+    }
 
     @Override
     public void run() {
+        if (isFromDiscord()) {
+            return;
+        }
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>USAGE:<N> %s <USER>" ,args[0]));
@@ -29,13 +36,13 @@ public class Seen extends Command{
             return;
         }
 
-        if (target.equalsIgnoreCase(event.getBot().getNick())) {
+        if (target.equalsIgnoreCase(ircEvent.getBot().getNick())) {
             super.respond(String.format("<B><b>%s<N> of course I am here.", sender));
             return;
         }
 
-        if (event.getBot().getUserChannelDao().containsUser(target)) {
-            User fetchUser = event.getBot().getUserChannelDao().getUser(target);
+        if (ircEvent.getBot().getUserChannelDao().containsUser(target)) {
+            User fetchUser = ircEvent.getBot().getUserChannelDao().getUser(target);
 
             if(SnackBot.getSeenDataBase().isUserInDB(fetchUser) == 0)
                 SnackBot.getSeenDataBase().processUserSeenRecord(fetchUser,System.currentTimeMillis());

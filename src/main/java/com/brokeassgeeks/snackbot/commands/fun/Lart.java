@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands.fun;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.Command;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -13,9 +14,15 @@ public class Lart extends Command{
     public Lart(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
+    public Lart(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+    }
 
     @Override
     public void run() {
+        if (isFromDiscord()) {
+            return;
+        }
 
         String target = sender;
         String s="";
@@ -27,7 +34,7 @@ public class Lart extends Command{
         }
 
         if (args.length > 1) {
-            if (event.getBot().getUserChannelDao().containsUser(args[1]))
+            if (ircEvent.getBot().getUserChannelDao().containsUser(args[1]))
                 target = args[1];
             else {
                 super.respond(String.format("<B><b>%s<N> is not even here", args[1]));
@@ -35,10 +42,10 @@ public class Lart extends Command{
             }
         }
 
-        if (target.equalsIgnoreCase(event.getBot().getNick()))
+        if (target.equalsIgnoreCase(ircEvent.getBot().getNick()))
             target = sender;
 
-        ((MessageEvent)event).getChannel().send().action(Utils.replaceTags(replaceNick(s,target)));
+        ((MessageEvent)ircEvent).getChannel().send().action(Utils.replaceTags(replaceNick(s,target)));
     }
     public static String replaceNick(String string,String target) {
 

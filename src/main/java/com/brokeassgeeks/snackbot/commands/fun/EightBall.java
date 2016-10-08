@@ -3,6 +3,7 @@ package com.brokeassgeeks.snackbot.commands.fun;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.Command;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -11,14 +12,13 @@ import java.io.FileNotFoundException;
 
 public class EightBall extends Command {
 
-
-    public EightBall(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
+    public EightBall(GenericMessageEvent event, String[] args) { super(event, args); }
+    public EightBall(MessageReceivedEvent event, String[] args) { super(event, args); }
 
     @Override
+
     public void run() {
-        if (!(event instanceof MessageEvent))
+        if (!(ircEvent instanceof MessageEvent) && !isFromDiscord())
             return;
 
         if (args.length == 1) {
@@ -34,6 +34,10 @@ public class EightBall extends Command {
         }
 
         String out = String.format("shakes the magic 8 ball... %s",s);
-        ((MessageEvent)event).getChannel().send().action(Utils.replaceTags(out));
+
+        if (isFromDiscord())
+            discordEvent.getChannel().sendMessage(Utils.replaceTagsDiscord(out));
+        else
+            ((MessageEvent)ircEvent).getChannel().send().action(Utils.replaceTags(out));
     }
 }

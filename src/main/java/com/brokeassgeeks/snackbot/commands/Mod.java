@@ -3,6 +3,7 @@ package com.brokeassgeeks.snackbot.commands;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.commands.mcserver.*;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.IOException;
@@ -11,6 +12,9 @@ public class Mod extends Command {
 
 
     public Mod(GenericMessageEvent event, String[] args) {
+        super(event, args);
+    }
+    public Mod(MessageReceivedEvent event, String[] args) {
         super(event, args);
     }
 

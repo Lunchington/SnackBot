@@ -45,9 +45,11 @@ public class SnackBot {
     @Getter private static SeenDataBase seenDataBase;
 
     @Getter private static PircBotX bot;
+    @Getter private static CommandListener commandListener;
 
     public static void main(String[] args) throws IOException, IrcException, LoginException, InterruptedException {
         seenDataBase = new SeenDataBase();
+        commandListener = new CommandListener();
 
         logger.setLevel(Level.INFO);
 
@@ -59,7 +61,7 @@ public class SnackBot {
                 .buildConfiguration();
 
         listenerManager.addListener(new UrlParserListener());
-        listenerManager.addListener(new CommandListener());
+        listenerManager.addListener(commandListener);
         listenerManager.addListener(new ServerActivityListener());
         listenerManager.addListener(new SeenActivityListener());
         listenerManager.addListener(new DiscordBouncer());
@@ -85,7 +87,7 @@ public class SnackBot {
 
         bot = new PircBotX(configuration);
 
-        jda = new JDABuilder().setBotToken("MjMzMDM3NDkxNDIxMTg0MDAw.CtXthw.iYKX7Qd7HMEXhO20SArSMkRHNGE").addListener(new SnackbotDiscord()).buildBlocking();
+        jda = new JDABuilder().setBotToken(Config.DISCORD_TOKEN).addListener(new SnackbotDiscord()).buildBlocking();
         bot.startBot();
 
 

@@ -27,6 +27,7 @@ public class Config {
     public static int MESSAGECOUNT;
     public static int COMMAND_TIMEOUT;
     public static String PASTEBIN_API;
+    public static String DISCORD_TOKEN;
 
     private Properties prop;
 
@@ -70,6 +71,7 @@ public class Config {
         prop.setProperty("cmdtimeout", "10");
         prop.setProperty("messagecount", "1");
         prop.setProperty("pastebinapi","");
+        prop.setProperty("discordtoken", "");
 
         save();
     }
@@ -100,6 +102,8 @@ public class Config {
         MESSAGECOUNT = Integer.parseInt(prop.getProperty("messagecount"));
 
         PASTEBIN_API = prop.getProperty("pastebinapi");
+
+        DISCORD_TOKEN = prop.getProperty("discordtoken");
 
         Configuration.Builder b = new Configuration.Builder()
                 .setName(BOT_NICK)

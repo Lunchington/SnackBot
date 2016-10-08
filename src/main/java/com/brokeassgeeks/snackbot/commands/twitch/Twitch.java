@@ -5,6 +5,7 @@ import com.brokeassgeeks.snackbot.commands.Command;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.*;
@@ -22,6 +23,10 @@ public class Twitch extends Command {
         load();
     }
 
+    public Twitch(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+        load();
+    }
     @Override
     public void run() {
         if (streamers.size() == 0) {

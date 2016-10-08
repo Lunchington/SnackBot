@@ -6,6 +6,7 @@ import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.commands.Command;
 import com.brokeassgeeks.snackbot.commands.CommandData;
 import com.brokeassgeeks.snackbot.commands.CommandManager;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -19,11 +20,17 @@ public class SimpleCommandAdmin extends Command {
         super(event, args);
         sc = CommandManager.getInstance().getCommandData();
     }
+    public SimpleCommandAdmin(MessageReceivedEvent event, String[] args) {
+        super(event, args);
+        sc = CommandManager.getInstance().getCommandData();
+    }
 
     @Override
     public void run() {
-        if (!AdminUtils.isAdmin(event.getUser(), SnackBot.getAdmins()) || Utils.isBot(sender))
+        if (!AdminUtils.isAdmin(ircEvent.getUser(), SnackBot.getAdmins()) &&
+                !AdminUtils.isAdmin(discordEvent.getAuthor().getUsername(), SnackBot.getAdmins())) {
             return;
+        }
 
         if (args.length == 2 && args[1].equalsIgnoreCase("list")) {
 
@@ -55,7 +62,7 @@ public class SimpleCommandAdmin extends Command {
         }
 
         if (args.length >= 3) {
-            String msg[] = event.getMessage().split(" ", 3);
+            String msg[] = ircEvent.getMessage().split(" ", 3);
 
             CommandData sData = getCommandDataByName(msg[1]);
 
@@ -63,7 +70,7 @@ public class SimpleCommandAdmin extends Command {
             if (sData == null) {
                 CommandData newCommand = new CommandData(msg[1],msg[2]);
 
-                if(event instanceof PrivateMessageEvent)
+                if(ircEvent instanceof PrivateMessageEvent)
                     newCommand.setPrivateMessage(true);
 
 
