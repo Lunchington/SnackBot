@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Time extends Command{
+public class Time extends Command {
 
 
     public Time(GenericMessageEvent event, String[] args) {

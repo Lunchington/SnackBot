@@ -1,13 +1,12 @@
 package com.brokeassgeeks.snackbot.listeners;
 
-import com.brokeassgeeks.snackbot.commands.Command;
-import com.brokeassgeeks.snackbot.commands.CommandData;
-import com.brokeassgeeks.snackbot.commands.CommandManager;
+import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.CommandData;
+import com.brokeassgeeks.snackbot.CommandManager;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.commands.simplecommand.SimpleCommand;
+import com.brokeassgeeks.snackbot.simplecommand.SimpleCommand;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import org.slf4j.LoggerFactory;
@@ -53,24 +52,15 @@ public class CommandListener extends ListenerAdapter {
                 threadPool.submit(new SimpleCommand(event, args));
             } else {
 
-                for (Class<?> cmd : CommandManager.getInstance().getCommands()) {
-                    Command command;
-                    try {
-                        command = (Command) cmd.getDeclaredConstructor(
+                Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
+
+                Command command = (Command) cmd.getDeclaredConstructor(
                                 GenericMessageEvent.class, String[].class).newInstance(event, args);
-                    } catch (InstantiationException | IllegalAccessException
-                            | InvocationTargetException | NoSuchMethodException e) {
-                        e.printStackTrace();
-                        continue;
-                    }
 
-                    if (command.getClass().getSimpleName().equalsIgnoreCase(commandData.getName())) {
-                        logger.info("Executing Command: " + command.getClass().getName());
-                        command.setSender(sender);
-                        threadPool.submit(command);
-                    }
+                logger.info("Executing Command: " + command.getClass().getName());
+                command.setSender(sender);
+                threadPool.submit(command);
 
-                }
             }
         } else {
             logger.warn("Command Disabled: " + commandData.getName());
@@ -102,24 +92,14 @@ public class CommandListener extends ListenerAdapter {
                 threadPool.submit(new SimpleCommand(event, args));
             } else {
 
-                for (Class<?> cmd : CommandManager.getInstance().getCommands()) {
-                    Command command;
-                    try {
-                        command = (Command) cmd.getDeclaredConstructor(
-                                MessageReceivedEvent.class, String[].class).newInstance(event, args);
-                    } catch (InstantiationException | IllegalAccessException
-                            | InvocationTargetException | NoSuchMethodException e) {
-                        e.printStackTrace();
-                        continue;
-                    }
+                Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
 
-                    if (command.getClass().getSimpleName().equalsIgnoreCase(commandData.getName())) {
-                        logger.info("Executing Command: " + command.getClass().getName());
-                        command.setSender(sender);
-                        threadPool.submit(command);
-                    }
+                Command command = (Command) cmd.getDeclaredConstructor(
+                        GenericMessageEvent.class, String[].class).newInstance(event, args);
 
-                }
+                logger.info("Executing Command: " + command.getClass().getName());
+                command.setSender(sender);
+                threadPool.submit(command);
             }
         } else {
             logger.warn("Command Disabled: " + commandData.getName());

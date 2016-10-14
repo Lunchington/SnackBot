@@ -1,5 +1,6 @@
-package com.brokeassgeeks.snackbot.commands.mcserver;
+package com.brokeassgeeks.snackbot.mcserver;
 
+import com.brokeassgeeks.snackbot.commands.Mods;
 import lombok.Data;
 
 import java.util.List;

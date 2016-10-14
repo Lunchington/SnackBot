@@ -1,17 +1,17 @@
-package com.brokeassgeeks.snackbot.commands.admin;
+package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.AdminUtils;
-import com.brokeassgeeks.snackbot.commands.Command;
+import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class Admin extends Command {
-    public Admin(GenericMessageEvent event, String[] args) {
+public class AdminCommand extends Command {
+    public AdminCommand(GenericMessageEvent event, String[] args) {
         super(event, args);
     }
-    public Admin(MessageReceivedEvent event, String[] args) {
+    public AdminCommand(MessageReceivedEvent event, String[] args) {
         super(event, args);
     }
 

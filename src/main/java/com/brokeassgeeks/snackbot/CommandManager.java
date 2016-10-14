@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot;
 
 import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
@@ -16,8 +16,6 @@ public class CommandManager {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(CommandManager.class);
 
     private List<CommandData> commandData;
-    @Getter private List<Class<?>> commands;
-
     private static CommandManager instance;
 
 
@@ -29,14 +27,10 @@ public class CommandManager {
     }
 
     private CommandManager() {
-        commands = new ArrayList<>();
         commandData = new ArrayList<>();
         commandData = load();
     }
 
-    public void addCommand(Class<?> command) {
-        commands.add(command);
-    }
 
 
     private List<CommandData> load() {

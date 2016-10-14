@@ -1,8 +1,6 @@
-package com.brokeassgeeks.snackbot.commands.mcserver;
+package com.brokeassgeeks.snackbot.mcserver;
 
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * Created by Lunchington on 10/2/2016.

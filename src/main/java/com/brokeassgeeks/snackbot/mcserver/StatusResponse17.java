@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.commands.mcserver;
+package com.brokeassgeeks.snackbot.mcserver;
 /*
     Author: zh32
     Edited by: Lunchington
@@ -6,8 +6,6 @@ package com.brokeassgeeks.snackbot.commands.mcserver;
  */
 
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class StatusResponse17 extends StatusResponse {

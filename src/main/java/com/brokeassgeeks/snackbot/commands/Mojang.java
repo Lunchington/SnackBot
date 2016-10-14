@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 
+import com.brokeassgeeks.snackbot.Command;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.brokeassgeeks.snackbot.Utils.Utils;

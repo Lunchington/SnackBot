@@ -1,16 +1,14 @@
-package com.brokeassgeeks.snackbot.commands.admin;
+package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.AdminUtils;
-import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.commands.Command;
-import com.brokeassgeeks.snackbot.commands.CommandData;
-import com.brokeassgeeks.snackbot.commands.CommandManager;
+import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.CommandData;
+import com.brokeassgeeks.snackbot.CommandManager;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleCommandAdmin extends Command {

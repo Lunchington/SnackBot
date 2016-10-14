@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.commands.mcserver;
+package com.brokeassgeeks.snackbot.mcserver;
 /*
     Derived from
     Author: zh32

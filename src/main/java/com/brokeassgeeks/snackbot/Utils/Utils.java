@@ -1,7 +1,7 @@
 package com.brokeassgeeks.snackbot.Utils;
 
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.commands.mcserver.MinecraftServer;
+import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

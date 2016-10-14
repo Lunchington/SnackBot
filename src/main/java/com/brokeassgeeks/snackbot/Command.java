@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.listeners.DiscordBouncer;

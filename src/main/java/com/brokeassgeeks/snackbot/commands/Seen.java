@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Seen.UserDB;
 import com.brokeassgeeks.snackbot.Utils.Utils;
@@ -9,7 +10,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.util.Date;
 
-public class Seen extends Command{
+public class Seen extends Command {
 
     public Seen(GenericMessageEvent event, String[] args) {
         super(event, args);

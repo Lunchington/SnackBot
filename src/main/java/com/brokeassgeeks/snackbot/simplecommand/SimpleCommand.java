@@ -1,9 +1,9 @@
-package com.brokeassgeeks.snackbot.commands.simplecommand;
+package com.brokeassgeeks.snackbot.simplecommand;
 
 import ch.qos.logback.classic.Logger;
-import com.brokeassgeeks.snackbot.commands.Command;
-import com.brokeassgeeks.snackbot.commands.CommandData;
-import com.brokeassgeeks.snackbot.commands.CommandManager;
+import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.CommandData;
+import com.brokeassgeeks.snackbot.CommandManager;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.slf4j.LoggerFactory;

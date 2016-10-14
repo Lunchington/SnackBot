@@ -1,15 +1,15 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.CommandData;
+import com.brokeassgeeks.snackbot.CommandManager;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Help extends Command{
+public class Help extends Command {
     public Help(GenericMessageEvent event, String[] args) {
         super(event, args);
     }

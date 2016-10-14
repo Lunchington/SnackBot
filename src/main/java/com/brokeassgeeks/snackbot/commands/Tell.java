@@ -1,10 +1,11 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-public class Tell extends Command{
+public class Tell extends Command {
 
 
     public Tell(GenericMessageEvent event, String[] args) {

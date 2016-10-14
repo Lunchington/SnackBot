@@ -1,7 +1,8 @@
-package com.brokeassgeeks.snackbot.commands.twitch;
+package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.commands.Command;
+import com.brokeassgeeks.snackbot.twitch.TwitchResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

@@ -1,8 +1,9 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
-import com.brokeassgeeks.snackbot.commands.mcserver.*;
+import com.brokeassgeeks.snackbot.mcserver.*;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
