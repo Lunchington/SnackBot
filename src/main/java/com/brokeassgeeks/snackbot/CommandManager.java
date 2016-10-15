@@ -70,7 +70,7 @@ public class CommandManager {
     }
 
 
-    public void reload() {
+    private void reload() {
         commandData = load();
     }
 

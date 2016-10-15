@@ -59,15 +59,14 @@ public class DiscordBouncer extends ListenerAdapter {
             dChan.sendMessage(msg);
     }
 
-     public static TextChannel getChannelByName( String chan) {
+     private static TextChannel getChannelByName(String chan) {
 
          List<TextChannel> dChannels = SnackBot.getJda().getTextChannelsByName(chan);
 
-        for (int i = 0; i < dChannels.size(); i++) {
-            TextChannel c = dChannels.get(i);
-            if (c.getName().equalsIgnoreCase(chan))
-                return c;
-        }
+         for (TextChannel c : dChannels) {
+             if (c.getName().equalsIgnoreCase(chan))
+                 return c;
+         }
         return  null;
     }
 

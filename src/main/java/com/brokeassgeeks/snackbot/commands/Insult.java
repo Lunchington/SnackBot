@@ -43,7 +43,7 @@ public class Insult extends Command {
         super.respond(out);
     }
 
-    public void load() {
+    private void load() {
 
         try {
             Gson gson = new Gson();
@@ -61,7 +61,7 @@ public class Insult extends Command {
 
     }
 
-    public String getRandomInsult() {
+    private String getRandomInsult() {
         Random r = new Random();
 
         String adj1 = insults.adj[r.nextInt(insults.adj.length)];

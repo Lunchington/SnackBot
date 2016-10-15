@@ -24,8 +24,7 @@ public class TriggerAdmin extends Command {
     }
     @Override
     public void run() {
-        if (!AdminUtils.isAdmin(ircEvent.getUser(), SnackBot.getAdmins()) &&
-                !AdminUtils.isAdmin(discordEvent.getAuthor().getUsername(), SnackBot.getAdmins())) {
+        if (!AdminUtils.isAdmin(this) ) {
             return;
         }
 
@@ -98,7 +97,7 @@ public class TriggerAdmin extends Command {
         }
     }
 
-    public CommandData getCommandDataFromTrigger(String trigger) {
+    private CommandData getCommandDataFromTrigger(String trigger) {
         for (CommandData s : sc) {
             if(s.getTriggers().contains(trigger))
                 return s;
@@ -106,7 +105,7 @@ public class TriggerAdmin extends Command {
         return null;
     }
 
-    public CommandData getCommandDataByName(String name) {
+    private CommandData getCommandDataByName(String name) {
         for (CommandData s : sc) {
             if(s.getName().equalsIgnoreCase(name))
                 return s;

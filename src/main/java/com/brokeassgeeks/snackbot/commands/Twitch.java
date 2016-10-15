@@ -86,7 +86,7 @@ public class Twitch extends Command {
 
     }
 
-    public boolean isChannelLive(TwitchResponse response) {
+    private boolean isChannelLive(TwitchResponse response) {
         return response.getStream() != null;
     }
 
@@ -104,7 +104,7 @@ public class Twitch extends Command {
     }
 
 
-    public void load() {
+    private void load() {
 
         try {
             Gson gson = new Gson();
@@ -122,7 +122,7 @@ public class Twitch extends Command {
         }
     }
 
-    public void writeJson() {
+    private void writeJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String s = gson.toJson(streamers);
 
@@ -138,7 +138,7 @@ public class Twitch extends Command {
         }
     }
 
-    public String addChannel(String args) {
+    private String addChannel(String args) {
         if(isvalidUser(args)) {
             if  (streamers.contains(args.toLowerCase())) {
                 return String.format("<B><b>Channel:<N> %s is already in the list!",args);
@@ -151,7 +151,7 @@ public class Twitch extends Command {
             return String.format("<B><b>Channel:<N> %s is not a valid channel",args);
         }
     }
-    public String  addStreamer(String channel) {
+    private String  addStreamer(String channel) {
         streamers.add(channel);
         writeJson();
         return  String.format("<B><b>Channel:<N> %s added!",channel);

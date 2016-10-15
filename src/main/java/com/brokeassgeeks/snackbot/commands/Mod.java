@@ -36,9 +36,7 @@ public class Mod extends Command {
         IStatusResponse response = null;
         try {
             response = new ServerConnection(s).getResponse();
-        } catch (InvalidResponseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (InvalidResponseException | IOException e) {
             e.printStackTrace();
         }
 

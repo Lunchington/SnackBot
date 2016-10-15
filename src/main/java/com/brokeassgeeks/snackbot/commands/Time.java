@@ -63,7 +63,7 @@ public class Time extends Command {
     }
 
 
-    public String getTimeZoneProper(String string) {
+    private String getTimeZoneProper(String string) {
         String[] validIDs = TimeZone.getAvailableIDs();
         for (String str : validIDs) {
             if (str != null && str.equalsIgnoreCase(string)) {
@@ -73,7 +73,7 @@ public class Time extends Command {
         return "ERROR";
     }
 
-    public String getTimewithZone(String zone, int off) {
+    private String getTimewithZone(String zone, int off) {
         long hour = 3600 * 1000;
 
         Locale locale = Locale.getDefault();

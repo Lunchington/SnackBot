@@ -38,7 +38,7 @@ public class Config {
         return instance;
     }
 
-    public Config() {
+    private Config() {
         prop = new Properties();
         File config = new File(configFile);
         prop = new Properties();
@@ -120,7 +120,7 @@ public class Config {
         return b;
     }
 
-    public void save() {
+    private void save() {
 
         FileOutputStream out;
         try {

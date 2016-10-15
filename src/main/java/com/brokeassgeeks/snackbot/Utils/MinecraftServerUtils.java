@@ -55,7 +55,7 @@ public class MinecraftServerUtils {
         return null;
     }
 
-    public static void writeServerJson(MinecraftServer[] servers) {
+    private static void writeServerJson(MinecraftServer[] servers) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String s = gson.toJson(servers);

@@ -71,7 +71,7 @@ public class TimeDifference {
         return differenceString;
     }
 
-    public void setDifferenceString(String differenceString) {
+    private void setDifferenceString(String differenceString) {
         this.differenceString = differenceString;
     }
 }

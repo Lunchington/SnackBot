@@ -36,14 +36,14 @@ public class Help extends Command {
                 out += st + " ";
             }
 
-            super.respond(ircEvent.getUser(),out);
+            super.respondUser(out);
 
 
         }
 
     }
 
-    public ArrayList<String> getHelp() {
+    private ArrayList<String> getHelp() {
         ArrayList<String> s = new ArrayList<>();
         for(CommandData c: CommandManager.getInstance().getCommandData()) {
             String temp = String.format("<B><b>%s:<N> %s ",c.getName(),c.getTriggers());

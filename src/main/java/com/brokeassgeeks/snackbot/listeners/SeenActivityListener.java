@@ -52,13 +52,13 @@ public class SeenActivityListener extends ListenerAdapter{
         addTimer(event.getUser(),null);
     }
 
-    public void processEvents(GenericUserEvent event) {
+    private void processEvents(GenericUserEvent event) {
         if(event.getUser() == event.getBot().getUserBot())
             return;
         SnackBot.getSeenDataBase().processUserSeenRecord(event.getUser(), System.currentTimeMillis());
     }
 
-    public void addTimer(User user, Channel channel) {
+    private void addTimer(User user, Channel channel) {
         if(user == user.getBot().getUserBot() || !hasTells(user.getNick()))
             return;
         if (!userActivity.containsKey(user.getNick())) {
@@ -69,11 +69,11 @@ public class SeenActivityListener extends ListenerAdapter{
         }
     }
 
-    public boolean hasTells(String user) {
+    private boolean hasTells(String user) {
         return SnackBot.getSeenDataBase().getTellsbyNick(user).size() > 0;
     }
 
-    public void removeTimer(String user) {
+    private void removeTimer(String user) {
         if (userActivity.containsKey(user)) {
             userActivity.get(user).end();
             userActivity.remove(user);

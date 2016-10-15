@@ -47,7 +47,7 @@ public class Lart extends Command{
 
         ((MessageEvent)ircEvent).getChannel().send().action(Utils.replaceTags(replaceNick(s,target)));
     }
-    public static String replaceNick(String string,String target) {
+    private String replaceNick(String string, String target) {
 
         return  string.replaceAll("<user>","<B><b>"+target+"<N>");
 

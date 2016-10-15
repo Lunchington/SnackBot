@@ -1,18 +1,16 @@
 package com.brokeassgeeks.snackbot;
 
 import com.brokeassgeeks.snackbot.Utils.Utils;
-import com.brokeassgeeks.snackbot.listeners.DiscordBouncer;
 import lombok.Getter;
 import lombok.Setter;
-import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public abstract class Command implements Runnable{
     protected String[] args;
-    protected GenericMessageEvent ircEvent;
-    protected MessageReceivedEvent discordEvent;
+    @Getter protected GenericMessageEvent ircEvent;
+    @Getter protected MessageReceivedEvent discordEvent;
 
 
     @Getter@Setter
@@ -41,15 +39,18 @@ public abstract class Command implements Runnable{
             respondIRC(message);
     }
 
-    public void respondIRC(String message) {
+    private void respondIRC(String message) {
             ircEvent.respondWith(Utils.replaceTags(message));
     }
 
-    public void respondDiscord (String message) {
+    private void respondDiscord(String message) {
         discordEvent.getChannel().sendMessage("```\n" + Utils.replaceTagsDiscord(message) + "```\n");
     }
 
-    public void respond(User user, String message) {
+    protected void respondUser(String message) {
+        if (isFromDiscord())
+            discordEvent.getPrivateChannel().sendMessage(message);
+        else
             ircEvent.getUser().send().message(Utils.replaceTags(message));
     }
 

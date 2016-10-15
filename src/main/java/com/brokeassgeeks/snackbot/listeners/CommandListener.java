@@ -46,10 +46,13 @@ public class CommandListener extends ListenerAdapter {
 
         CommandData commandData = CommandManager.getInstance().getCommandDataFromTrigger(trigger);
 
+        if (commandData == null )
+            return;
+
         if (commandData.isEnabled()) {
             if (commandData.isSimple()) {
                 logger.info("Simple Command: " + commandData.getName());
-                threadPool.submit(new SimpleCommand(event, args));
+                threadPool.submit(new SimpleCommand(event,commandData,args));
             } else {
 
                 Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
@@ -86,16 +89,19 @@ public class CommandListener extends ListenerAdapter {
 
         CommandData commandData = CommandManager.getInstance().getCommandDataFromTrigger(trigger);
 
+        if (commandData == null )
+            return;
+
         if (commandData.isEnabled()) {
             if (commandData.isSimple()) {
                 logger.info("Simple Command: " + commandData.getName());
-                threadPool.submit(new SimpleCommand(event, args));
+                threadPool.submit(new SimpleCommand(event,commandData, args));
             } else {
 
                 Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
 
                 Command command = (Command) cmd.getDeclaredConstructor(
-                        GenericMessageEvent.class, String[].class).newInstance(event, args);
+                        MessageReceivedEvent.class, String[].class).newInstance(event, args);
 
                 logger.info("Executing Command: " + command.getClass().getName());
                 command.setSender(sender);

@@ -14,6 +14,7 @@ import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import lombok.Getter;
 
 import net.dv8tion.jda.JDA;
+import net.dv8tion.jda.JDABuilder;
 import org.slf4j.LoggerFactory;
 
 import org.pircbotx.Configuration;
@@ -53,28 +54,9 @@ public class SnackBot {
         listenerManager.addListener(new SeenActivityListener());
         listenerManager.addListener(new DiscordBouncer());
 
-//        CommandManager.getInstance().addCommand(EightBall.class);
-//        CommandManager.getInstance().addCommand(Fortune.class);
-//        CommandManager.getInstance().addCommand(Status.class);
-//        CommandManager.getInstance().addCommand(Online.class);
-//        CommandManager.getInstance().addCommand(Mod.class);
-//        CommandManager.getInstance().addCommand(Mojang.class);
-//        CommandManager.getInstance().addCommand(Time.class);
-//        CommandManager.getInstance().addCommand(Seen.class);
-//        CommandManager.getInstance().addCommand(Twitch.class);
-//        CommandManager.getInstance().addCommand(Insult.class);
-//        CommandManager.getInstance().addCommand(Tell.class);
-//        CommandManager.getInstance().addCommand(AdminCommand.class);
-//        CommandManager.getInstance().addCommand(Lart.class);
-//        CommandManager.getInstance().addCommand(Help.class);
-//        CommandManager.getInstance().addCommand(ServerAdmin.class);
-//        CommandManager.getInstance().addCommand(SimpleCommandAdmin.class);
-//        CommandManager.getInstance().addCommand(TriggerAdmin.class);
-
-
         bot = new PircBotX(configuration);
 
-        //jda = new JDABuilder().setBotToken(Config.DISCORD_TOKEN).addListener(new SnackbotDiscord()).buildBlocking();
+        jda = new JDABuilder().setBotToken(Config.DISCORD_TOKEN).addListener(new SnackbotDiscord()).buildBlocking();
         bot.startBot();
 
 

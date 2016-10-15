@@ -117,7 +117,7 @@
     "output": ""
   },
   {
-    "name": "Admin",
+    "name": "AdminCommand",
     "enabled": true,
     "triggers": [
       "admin"

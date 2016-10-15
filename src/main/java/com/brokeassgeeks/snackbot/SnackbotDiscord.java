@@ -7,10 +7,6 @@ import net.dv8tion.jda.events.Event;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.EventListener;
 
-
-/**
- * Created by Lunchington on 10/4/2016.
- */
 public class SnackbotDiscord implements EventListener {
 
 
@@ -25,7 +21,7 @@ public class SnackbotDiscord implements EventListener {
             }
     }
 
-    public void onMessageReceived(MessageReceivedEvent event) throws Exception {
+    private void onMessageReceived(MessageReceivedEvent event) throws Exception {
         if (!event.isPrivate() && !event.getAuthor().isBot())
         {
             String mirror = DiscordBouncer.getMirror(event.getTextChannel().getName());

@@ -1,13 +1,12 @@
 package com.brokeassgeeks.snackbot.Utils;
 
 import ch.qos.logback.classic.Logger;
+import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import net.dv8tion.jda.entities.Role;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.hooks.ListenerAdapter;
+
 import org.pircbotx.Channel;
 import org.pircbotx.User;
 import org.slf4j.LoggerFactory;
@@ -100,5 +99,14 @@ public class AdminUtils {
             text = text.substring(index + section.length());
         }
         return true;
+    }
+
+    public static boolean isAdmin(Command command) {
+        if (command.isFromDiscord()) {
+            if (command.getDiscordEvent().getTextChannel().getName().equalsIgnoreCase("snackbottest"))
+                    return true;
+        }
+
+        return false;
     }
 }

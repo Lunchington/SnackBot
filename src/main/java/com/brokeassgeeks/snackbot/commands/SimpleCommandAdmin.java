@@ -25,8 +25,7 @@ public class SimpleCommandAdmin extends Command {
 
     @Override
     public void run() {
-        if (!AdminUtils.isAdmin(ircEvent.getUser(), SnackBot.getAdmins()) &&
-                !AdminUtils.isAdmin(discordEvent.getAuthor().getUsername(), SnackBot.getAdmins())) {
+        if (!AdminUtils.isAdmin(this)) {
             return;
         }
 
@@ -92,7 +91,7 @@ public class SimpleCommandAdmin extends Command {
 
         super.respond(String.format("<B><b>USAGE:<N> %s <NAME> <OUTPUT>" ,args[0]));
     }
-    public CommandData getCommandDataByName(String name) {
+    private CommandData getCommandDataByName(String name) {
         for (CommandData s : sc) {
             if(s.getName().equalsIgnoreCase(name))
                 return s;

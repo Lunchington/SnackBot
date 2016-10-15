@@ -47,7 +47,7 @@ public class Status extends Command {
         return out;
     }
 
-    public MinecraftServer getServer(String string) {
+    private MinecraftServer getServer(String string) {
         for (MinecraftServer s : SnackBot.getServers()) {
             if (s.getName().equalsIgnoreCase(string))
                 return s;

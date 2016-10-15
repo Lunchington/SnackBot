@@ -18,8 +18,6 @@ public class EightBall extends Command {
     @Override
 
     public void run() {
-        if (!(ircEvent instanceof MessageEvent) && !isFromDiscord())
-            return;
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>USAGE:<N> %s <QUESTION>", args[0]));

@@ -13,8 +13,7 @@ public class ServerAdmin extends Command {
 
     @Override
     public void run() {
-        if (!AdminUtils.isAdmin(ircEvent.getUser(), SnackBot.getAdmins()) &&
-                !AdminUtils.isAdmin(discordEvent.getAuthor().getUsername(), SnackBot.getAdmins())) {
+        if (!AdminUtils.isAdmin(this)){
             return;
         }
 

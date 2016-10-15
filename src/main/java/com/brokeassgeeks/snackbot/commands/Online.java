@@ -35,8 +35,9 @@ public class Online extends Command {
             try {
                 response = new ServerConnection(s).getResponse();
             }
-            catch (IOException e) {  }
-            catch (InvalidResponseException e) { }
+            catch (IOException | InvalidResponseException e) {
+                e.printStackTrace();
+            }
 
             if (response != null) {
                 out = String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getPack(), s.getVersion());

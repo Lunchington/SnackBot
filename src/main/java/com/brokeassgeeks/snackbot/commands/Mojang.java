@@ -49,7 +49,7 @@ public class Mojang extends Command {
         super.respond(getStatus());
     }
 
-    public void queryMojang() {
+    private void queryMojang() {
         String site  = "http://status.mojang.com/check";
         Gson gson = new Gson();
 
