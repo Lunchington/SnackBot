@@ -14,12 +14,8 @@ import java.util.List;
 public class SimpleCommandAdmin extends Command {
     private List<CommandData> sc;
 
-    public SimpleCommandAdmin(GenericMessageEvent event, String[] args) {
-        super(event, args);
-        sc = CommandManager.getInstance().getCommandData();
-    }
-    public SimpleCommandAdmin(MessageReceivedEvent event, String[] args) {
-        super(event, args);
+    public SimpleCommandAdmin(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        super(ircEvent,discordEvent, args);
         sc = CommandManager.getInstance().getCommandData();
     }
 
@@ -59,7 +55,9 @@ public class SimpleCommandAdmin extends Command {
         }
 
         if (args.length >= 3) {
-            String msg[] = ircEvent.getMessage().split(" ", 3);
+            String a = String.join(" ", args);
+
+            String msg[] = a.split(" ", 3);
 
             CommandData sData = getCommandDataByName(msg[1]);
 

@@ -8,8 +8,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class ServerAdmin extends Command {
-    public ServerAdmin(GenericMessageEvent event, String[] args) { super(event, args); }
-    public ServerAdmin(MessageReceivedEvent event, String[] args) { super(event, args); }
+    public ServerAdmin(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {
@@ -21,7 +20,9 @@ public class ServerAdmin extends Command {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <OPTION> <SETTING>" ,args[0]));
             return;
         }
-        String msg[] = ircEvent.getMessage().split(" ", 4);
+
+        String a = String.join(" ", args);
+        String msg[] = a.split(" ", 4);
 
         if(MinecraftServerUtils.setValue(msg[1],msg[2],msg[3])) {
             super.respond(String.format("<B><b>%s<N> set to <B><b>%s<N> for <B><b>%s<N>",msg[2],msg[3],msg[1]));

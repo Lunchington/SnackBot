@@ -4,31 +4,28 @@ import com.brokeassgeeks.snackbot.Utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public abstract class Command implements Runnable{
     protected String[] args;
     @Getter protected GenericMessageEvent ircEvent;
     @Getter protected MessageReceivedEvent discordEvent;
+    @Getter@Setter protected String sender;
+    @Getter@Setter protected String message;
 
-
-    @Getter@Setter
-    protected String sender;
-    @Getter@Setter
-    protected String message;
-
-    public Command(GenericMessageEvent event, String[] args) {
-        this.ircEvent = event;
-        this.discordEvent = null;
+    public Command(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        this.ircEvent = ircEvent;
+        this.discordEvent = discordEvent;
         this.args = args;
-        this.sender = event.getUser().getNick();
+
+        setDefaultSender();
     }
-    public Command(MessageReceivedEvent event, String[] args) {
-        this.ircEvent = null;
-        this.discordEvent = event;
-        this.args = args;
-        this.sender = event.getAuthor().getUsername();
+
+    private void setDefaultSender() {
+        if (isFromDiscord())
+            this.sender =  discordEvent.getAuthor().getUsername();
+        else
+            this.sender =  ircEvent.getUser().getNick();
     }
 
 
@@ -57,5 +54,7 @@ public abstract class Command implements Runnable{
     public boolean isFromDiscord() {
         return discordEvent != null;
     }
+
+
 
 }

@@ -17,9 +17,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Lunchington on 10/4/2016.
- */
 public class DiscordBouncer extends ListenerAdapter {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(DiscordBouncer.class);
 

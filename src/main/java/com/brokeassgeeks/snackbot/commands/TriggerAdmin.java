@@ -13,13 +13,8 @@ import java.util.List;
 public class TriggerAdmin extends Command {
     private List<CommandData> sc;
 
-    public TriggerAdmin(GenericMessageEvent event, String[] args) {
-        super(event, args);
-        sc = CommandManager.getInstance().getCommandData();
-    }
-    public TriggerAdmin(MessageReceivedEvent event, String[] args) {
-
-        super(event, args);
+    public TriggerAdmin(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        super(ircEvent,discordEvent, args);
         sc = CommandManager.getInstance().getCommandData();
     }
     @Override

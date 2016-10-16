@@ -9,12 +9,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class Status extends Command {
-    public Status(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Status(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Status(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

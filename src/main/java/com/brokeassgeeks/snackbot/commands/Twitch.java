@@ -19,13 +19,8 @@ public class Twitch extends Command {
 
     private static List<String> streamers;
 
-    public Twitch(GenericMessageEvent event, String[] args) {
-        super(event, args);
-        load();
-    }
-
-    public Twitch(MessageReceivedEvent event, String[] args) {
-        super(event, args);
+    public Twitch(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        super(ircEvent,discordEvent, args);
         load();
     }
     @Override

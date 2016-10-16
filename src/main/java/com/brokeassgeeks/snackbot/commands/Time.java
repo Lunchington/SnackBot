@@ -12,12 +12,7 @@ import java.util.TimeZone;
 public class Time extends Command {
 
 
-    public Time(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Time(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Time(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

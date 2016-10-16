@@ -9,12 +9,8 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 public class SimpleCommand extends Command {
     private CommandData commandData;
 
-    public SimpleCommand(GenericMessageEvent event, CommandData data, String[] args) {
-        super(event, args);
-        this.commandData = data;
-    }
-    public SimpleCommand(MessageReceivedEvent event, CommandData data, String[] args) {
-        super(event, args);
+    public SimpleCommand(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, CommandData data, String[] args) {
+        super(ircEvent,discordEvent, args);
         this.commandData = data;
     }
 

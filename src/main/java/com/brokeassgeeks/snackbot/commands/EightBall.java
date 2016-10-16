@@ -12,9 +12,7 @@ import java.io.FileNotFoundException;
 
 public class EightBall extends Command {
 
-    public EightBall(GenericMessageEvent event, String[] args) { super(event, args); }
-    public EightBall(MessageReceivedEvent event, String[] args) { super(event, args); }
-
+    public EightBall(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent, discordEvent, args); }
     @Override
 
     public void run() {

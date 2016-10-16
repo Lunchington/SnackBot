@@ -17,8 +17,8 @@ public class Mojang extends Command {
     private ArrayList<HashMap<String, String>> servers;
     private static HashMap<String, String> shortNames = new HashMap<String, String>()  {};
 
-    public Mojang(GenericMessageEvent event, String[] args) {
-        super(event, args);
+    public Mojang(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        super(ircEvent,discordEvent, args);
         shortNames.put("minecraft.net", "MineCraft.Net");
         shortNames.put("session.minecraft.net", "Sesssion");
         shortNames.put("account.mojang.com", "Account");
@@ -30,18 +30,6 @@ public class Mojang extends Command {
         shortNames.put("textures.minecraft.net", "Textures");
     }
 
-    public Mojang(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-        shortNames.put("minecraft.net", "MineCraft.Net");
-        shortNames.put("session.minecraft.net", "Sesssion");
-        shortNames.put("account.mojang.com", "Account");
-        shortNames.put("auth.mojang.com", "Auth");
-        shortNames.put("skins.minecraft.net", "Skins");
-        shortNames.put("authserver.mojang.com", "AuthServer");
-        shortNames.put("sessionserver.mojang.com", "Session");
-        shortNames.put("api.mojang.com", "Api");
-        shortNames.put("textures.minecraft.net", "Textures");
-    }
 
     @Override
     public void run() {

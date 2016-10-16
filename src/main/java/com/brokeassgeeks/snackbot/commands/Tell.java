@@ -8,13 +8,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 public class Tell extends Command {
 
 
-    public Tell(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Tell(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
-
+    public Tell(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
     @Override
     public void run() {
         if (isFromDiscord()) {

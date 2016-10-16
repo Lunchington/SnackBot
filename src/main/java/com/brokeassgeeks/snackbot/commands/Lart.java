@@ -11,12 +11,7 @@ import java.io.FileNotFoundException;
 
 public class Lart extends Command{
 
-    public Lart(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Lart(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Lart(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

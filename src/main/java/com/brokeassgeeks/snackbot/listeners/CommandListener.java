@@ -26,53 +26,29 @@ public class CommandListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGenericMessage(final GenericMessageEvent event) throws Exception {
+    public void onGenericMessage(GenericMessageEvent event) throws Exception {
+        processComand(event,null);
 
-        String message = event.getMessage();
-        String sender = event.getUser().getNick();
-
-        if (message.startsWith("<") && message.contains(">")) {
-            sender = message.substring(message.indexOf("<") + 1, message.indexOf(">"));
-            message = message.replaceAll("^<.*?>", "").trim();
-        }
-
-        if (!message.startsWith(Config.CATCH_CHAR)) {
-            return;
-        }
-
-        String[] args = message.split(" ");
-        args[0] = args[0].replaceAll(Config.CATCH_CHAR, "");
-        String trigger = args[0].toLowerCase();
-
-        CommandData commandData = CommandManager.getInstance().getCommandDataFromTrigger(trigger);
-
-        if (commandData == null )
-            return;
-
-        if (commandData.isEnabled()) {
-            if (commandData.isSimple()) {
-                logger.info("Simple Command: " + commandData.getName());
-                threadPool.submit(new SimpleCommand(event,commandData,args));
-            } else {
-
-                Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
-
-                Command command = (Command) cmd.getDeclaredConstructor(
-                                GenericMessageEvent.class, String[].class).newInstance(event, args);
-
-                logger.info("Executing Command: " + command.getClass().getName());
-                command.setSender(sender);
-                threadPool.submit(command);
-
-            }
-        } else {
-            logger.warn("Command Disabled: " + commandData.getName());
-        }
     }
 
     public void onDiscord(MessageReceivedEvent event) throws Exception {
-        String message = event.getMessage().getContent();
-        String sender = event.getAuthor().getUsername();
+        processComand(null,event);
+    }
+
+    private void processComand(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent) throws Exception {
+        String message;
+        String sender;
+
+        if (discordEvent != null) {
+            message = discordEvent.getMessage().getContent();
+            sender = discordEvent.getAuthor().getUsername();
+
+        }
+        else {
+            message = ircEvent.getMessage();
+            sender = ircEvent.getUser().getNick();
+        }
+
 
         if (message.startsWith("<") && message.contains(">")) {
             sender = message.substring(message.indexOf("<") + 1, message.indexOf(">"));
@@ -95,13 +71,13 @@ public class CommandListener extends ListenerAdapter {
         if (commandData.isEnabled()) {
             if (commandData.isSimple()) {
                 logger.info("Simple Command: " + commandData.getName());
-                threadPool.submit(new SimpleCommand(event,commandData, args));
+                threadPool.submit(new SimpleCommand(ircEvent,discordEvent,commandData, args));
             } else {
 
                 Class<?> cmd = Class.forName("com.brokeassgeeks.snackbot.commands." + commandData.getName() );
 
                 Command command = (Command) cmd.getDeclaredConstructor(
-                        MessageReceivedEvent.class, String[].class).newInstance(event, args);
+                        GenericMessageEvent.class, MessageReceivedEvent.class, String[].class).newInstance(ircEvent, discordEvent, args);
 
                 logger.info("Executing Command: " + command.getClass().getName());
                 command.setSender(sender);
@@ -110,7 +86,6 @@ public class CommandListener extends ListenerAdapter {
         } else {
             logger.warn("Command Disabled: " + commandData.getName());
         }
-
     }
 
 }

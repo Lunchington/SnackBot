@@ -11,10 +11,7 @@ import java.io.FileNotFoundException;
 
 public class Fortune extends Command {
 
-    public Fortune(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Fortune(MessageReceivedEvent event, String[] args) { super(event, args); }
+    public Fortune(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

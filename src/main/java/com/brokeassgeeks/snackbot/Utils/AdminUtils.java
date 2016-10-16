@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.Utils;
 
 import ch.qos.logback.classic.Logger;
 import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.pircbotx.Channel;
 import org.pircbotx.User;
+import org.pircbotx.hooks.events.MessageEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -103,10 +105,10 @@ public class AdminUtils {
 
     public static boolean isAdmin(Command command) {
         if (command.isFromDiscord()) {
-            if (command.getDiscordEvent().getTextChannel().getName().equalsIgnoreCase("snackbottest"))
-                    return true;
+            return command.getDiscordEvent().getTextChannel().getName().equalsIgnoreCase(Config.ADMIN_CHANNEL_DISCORD);
         }
 
-        return false;
+        return ((MessageEvent) command.getIrcEvent()).getChannel().getName().equalsIgnoreCase(Config.ADMIN_CHANNEL_IRC);
+
     }
 }

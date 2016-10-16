@@ -28,6 +28,9 @@ public class Config {
     public static int COMMAND_TIMEOUT;
     public static String PASTEBIN_API;
     public static String DISCORD_TOKEN;
+    public static String ADMIN_CHANNEL_DISCORD;
+    public static String ADMIN_CHANNEL_IRC;
+
 
     private Properties prop;
 
@@ -73,6 +76,9 @@ public class Config {
         prop.setProperty("pastebinapi","");
         prop.setProperty("discordtoken", "");
 
+        prop.setProperty("discordAdmin", "");
+        prop.setProperty("ircAdmin", "");
+
         save();
     }
 
@@ -104,6 +110,9 @@ public class Config {
         PASTEBIN_API = prop.getProperty("pastebinapi");
 
         DISCORD_TOKEN = prop.getProperty("discordtoken");
+
+        ADMIN_CHANNEL_DISCORD = prop.getProperty("discordAdmin");
+        ADMIN_CHANNEL_IRC = prop.getProperty("ircAdmin");
 
         Configuration.Builder b = new Configuration.Builder()
                 .setName(BOT_NICK)

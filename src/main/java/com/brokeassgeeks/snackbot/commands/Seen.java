@@ -12,12 +12,7 @@ import java.util.Date;
 
 public class Seen extends Command {
 
-    public Seen(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Seen(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Seen(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

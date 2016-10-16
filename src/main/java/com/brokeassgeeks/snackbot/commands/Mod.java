@@ -12,12 +12,7 @@ import java.io.IOException;
 public class Mod extends Command {
 
 
-    public Mod(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Mod(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Mod(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

@@ -20,15 +20,11 @@ public class Insult extends Command {
         String[] noun;
     }
 
-    public Insult(GenericMessageEvent event, String[] args) {
-        super(event, args);
+    public Insult(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
+        super(ircEvent,discordEvent, args);
         load();
     }
 
-    public Insult(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-        load();
-    }
     @Override
     public void run() {
 

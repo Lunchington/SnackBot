@@ -11,12 +11,7 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import java.io.IOException;
 
 public class Online extends Command {
-    public Online(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public Online(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public Online(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {

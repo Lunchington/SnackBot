@@ -1,5 +1,14 @@
 [
   {
+    "name": "Console",
+    "enabled": true,
+    "triggers": [
+      "c"
+    ],
+    "privateMessage": false,
+    "simple": false,
+    "output": ""
+  },{
     "name": "EightBall",
     "enabled": true,
     "triggers": [

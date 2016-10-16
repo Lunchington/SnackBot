@@ -8,12 +8,7 @@ import org.pircbotx.User;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public class AdminCommand extends Command {
-    public AdminCommand(GenericMessageEvent event, String[] args) {
-        super(event, args);
-    }
-    public AdminCommand(MessageReceivedEvent event, String[] args) {
-        super(event, args);
-    }
+    public AdminCommand(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
     public void run() {
