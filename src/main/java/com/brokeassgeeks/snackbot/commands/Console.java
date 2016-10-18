@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -23,6 +24,11 @@ public class Console extends Command {
 
     @Override
     public void run() {
+
+        if (!AdminUtils.isAdmin(this) ) {
+            return;
+        }
+
         if (args.length <= 2) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <COMMAND>", args[0]));
             return;

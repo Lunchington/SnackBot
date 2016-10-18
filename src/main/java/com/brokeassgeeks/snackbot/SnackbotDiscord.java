@@ -31,7 +31,7 @@ public class SnackbotDiscord implements EventListener {
                     if(event.getMessage().getContent().startsWith(Config.CATCH_CHAR))
                         SnackBot.getCommandListener().onDiscord(event);
                     else
-                        SnackBot.getBot().getUserChannelDao().getChannel(mirror).send().message("<" + event.getAuthor().getUsername() + "> " + event.getMessage().getContent());
+                        SnackBot.getBot().getUserChannelDao().getChannel(mirror).send().message("<" + event.getAuthorName() + "> " + event.getMessage().getContent());
 
                 }
             }

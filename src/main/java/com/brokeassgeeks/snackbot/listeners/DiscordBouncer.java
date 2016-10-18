@@ -7,7 +7,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.dv8tion.jda.entities.TextChannel;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.events.PartEvent;
+import org.pircbotx.hooks.events.QuitEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -46,25 +49,41 @@ public class DiscordBouncer extends ListenerAdapter {
             }
     }
 
-
+    @Override
     public void onMessage(MessageEvent event) {
-        String mirror = getMirror(event.getChannel().getName());
-        TextChannel dChan = getChannelByName(mirror);
         String msg = String.format("<%s> %s",event.getUser().getNick(), event.getMessage());
-
-        if (dChan != null && !event.getMessage().startsWith(Config.CATCH_CHAR))
-            dChan.sendMessage(msg);
+        if (!event.getMessage().startsWith(Config.CATCH_CHAR))
+            sendMessagetoMirror(event.getChannel().getName(),msg);
     }
 
-     private static TextChannel getChannelByName(String chan) {
 
-         List<TextChannel> dChannels = SnackBot.getJda().getTextChannelsByName(chan);
+    @Override
+    public void onJoin(JoinEvent event) {
+        String msg = String.format("%s joined",event.getUser().getNick());
+        sendMessagetoMirror(event.getChannel().getName(),msg);
+    }
 
-         for (TextChannel c : dChannels) {
-             if (c.getName().equalsIgnoreCase(chan))
-                 return c;
-         }
-        return  null;
+    @Override
+    public void onPart(PartEvent event) {
+        String msg = String.format("%s left the channel",event.getUser().getNick());
+        sendMessagetoMirror(event.getChannel().getName(),msg);
+    }
+
+    @Override
+    public void onQuit(QuitEvent event) {
+        String msg = String.format("%s quit (%s)",event.getUser().getNick(), event.getReason());
+
+        //for (TextChannel t:  SnackBot.getJda().getTextChannels())
+        //    t.sendMessage(msg);
+    }
+
+
+    private void sendMessagetoMirror(String chan, String msg) {
+        String mirror = getMirror(chan);
+        TextChannel dChan = getChannelByName(mirror);
+
+        if (dChan != null)
+            dChan.sendMessage(msg);
     }
 
     public static String getMirror(String chan) {
@@ -78,4 +97,17 @@ public class DiscordBouncer extends ListenerAdapter {
 
         return null;
     }
+
+    private static TextChannel getChannelByName(String chan) {
+
+        List<TextChannel> dChannels = SnackBot.getJda().getTextChannelsByName(chan);
+
+        for (TextChannel c : dChannels) {
+            if (c.getName().equalsIgnoreCase(chan))
+                return c;
+        }
+        return  null;
+    }
+
+
 }
