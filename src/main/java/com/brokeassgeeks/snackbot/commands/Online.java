@@ -2,6 +2,7 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
+import com.brokeassgeeks.snackbot.Utils.MessageUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.mcserver.*;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -54,7 +55,7 @@ public class Online extends Command {
             if (!isFromDiscord())
                 super.respond(out);
             else
-                DiscordOut += Utils.replaceTagsDiscord(out) +"\n";
+                DiscordOut += MessageUtils.replaceTagsDiscord(out) +"\n";
         }
         if (isFromDiscord()) {
             super.respond(DiscordOut);

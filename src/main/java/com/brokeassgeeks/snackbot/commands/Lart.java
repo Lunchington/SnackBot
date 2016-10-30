@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
+import com.brokeassgeeks.snackbot.Utils.MessageUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -40,7 +41,7 @@ public class Lart extends Command{
         if (target.equalsIgnoreCase(ircEvent.getBot().getNick()))
             target = sender;
 
-        ((MessageEvent)ircEvent).getChannel().send().action(Utils.replaceTags(replaceNick(s,target)));
+        ((MessageEvent)ircEvent).getChannel().send().action(MessageUtils.replaceTags(replaceNick(s,target)));
     }
     private String replaceNick(String string, String target) {
 

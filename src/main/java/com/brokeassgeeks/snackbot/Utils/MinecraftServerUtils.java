@@ -11,7 +11,8 @@ import ch.qos.logback.classic.Logger;
 import java.io.*;
 
 
-public class MinecraftServerUtils {
+public final class MinecraftServerUtils {
+    private MinecraftServerUtils() {}
     public static final Logger logger = (Logger) LoggerFactory.getLogger(MinecraftServerUtils.class);
 
     public static void updateServerActivity(MinecraftServer[] servers, String name, String sender, long time) {

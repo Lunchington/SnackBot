@@ -30,6 +30,7 @@ public class Config {
     public static String DISCORD_TOKEN;
     public static String ADMIN_CHANNEL_DISCORD;
     public static String ADMIN_CHANNEL_IRC;
+    public static String MC_SERVER_DIR;
 
 
     private Properties prop;
@@ -78,6 +79,7 @@ public class Config {
 
         prop.setProperty("discordAdmin", "");
         prop.setProperty("ircAdmin", "");
+        prop.setProperty("mcserverdir", "/home/mcservers");
 
         save();
     }
@@ -113,6 +115,8 @@ public class Config {
 
         ADMIN_CHANNEL_DISCORD = prop.getProperty("discordAdmin");
         ADMIN_CHANNEL_IRC = prop.getProperty("ircAdmin");
+
+        MC_SERVER_DIR = prop.getProperty("mcserverdir");
 
         Configuration.Builder b = new Configuration.Builder()
                 .setName(BOT_NICK)

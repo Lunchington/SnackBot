@@ -251,5 +251,15 @@
     "privateMessage": false,
     "simple": true,
     "output": "\u003cB\u003e\u003cb\u003eSnackbot Issues and Suggestions: \u003cN\u003ehttps://github.com/Lunchington/SnackBot/issues"
+  },
+  {
+    "name": "Log",
+    "enabled": true,
+    "triggers": [
+      "log"
+    ],
+    "privateMessage": false,
+    "simple": false,
+    "output": ""
   }
 ]

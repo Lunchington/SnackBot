@@ -37,7 +37,7 @@ public class Status extends Command {
         String out = "";
 
         for (MinecraftServer s : SnackBot.getServers()) {
-            out += String.format("<B><b>%s<N> - %s %s: %s <N>",s.getName(),s.getPack(),s.getVersion(),(Utils.hostAvailabilityCheck(s.getHost()) ? "<g>Up! " : "<r>Down! "));
+            out += String.format("<B><b>%s<N> - %s %s: %s <N>",s.getName(),s.getPack(),s.getVersion(),(s.hostAvailabilityCheck() ? "<g>Up! " : "<r>Down! "));
         }
         return out;
     }

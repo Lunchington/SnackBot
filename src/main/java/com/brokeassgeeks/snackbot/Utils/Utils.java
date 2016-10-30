@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import org.apache.http.HttpEntity;
@@ -19,19 +20,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.util.*;
 
-public class Utils {
-
-    public static HashMap<String, String> replaceMap = new HashMap<String, String>()  {{
-        put("<B>", Colors.BOLD);
-        put("<U>",Colors.UNDERLINE);
-        put("<N>",Colors.NORMAL);
-
-        put("<r>",Colors.RED);
-        put("<b>",Colors.BLUE);
-        put("<y>",Colors.YELLOW);
-        put("<g>",Colors.GREEN);
-
-    }};
+public final class Utils {
 
     public static boolean stringContainsItemFromList(String string, String[] items) {
         for (String s : items) {
@@ -41,7 +30,6 @@ public class Utils {
         }
         return false;
     }
-
 
     public static String readUrl(String urlString) throws IOException{
         BufferedReader reader = null;
@@ -62,22 +50,12 @@ public class Utils {
 
     }
 
-    public static  boolean hostAvailabilityCheck(InetSocketAddress host) {
-        Socket s = new Socket();
-        try  {
-            s.connect(host,7000);
-
-        } catch (IOException ex) {
-            return false;
-        }
-        return true;
-    }
 
     public static boolean isEmpty(String string) {
         return string == null || string.length() == 0;
     }
 
-    public static boolean isBot(String sender) {
+    public static boolean isServer(String sender) {
 
         for (MinecraftServer s : SnackBot.getServers())
         {
@@ -106,24 +84,6 @@ public class Utils {
     }
 
 
-    public static String replaceTags(String string) {
-        String s = string;
-        for (String key:replaceMap.keySet()) {
-            if (s.contains(key))
-                s = s.replaceAll(key, replaceMap.get(key));
-        }
-        return s;
-    }
-
-    public static String replaceTagsDiscord(String string) {
-        String s = string;
-        for (String key:replaceMap.keySet()) {
-            if (s.contains(key))
-                s = s.replaceAll(key, "");
-        }
-        return s;
-    }
-
     public static Date getTime(Long time) {
         return new Date(time);
     }
@@ -141,41 +101,5 @@ public class Utils {
         return formatter.format(time);
     }
 
-    public static String putPaste(String string) throws Exception {
-        StringBuilder out = new StringBuilder();
 
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost("http://paste.brokeassgeeks.com/api/create");
-
-        // Request parameters and other properties.
-        List<NameValuePair> params = new ArrayList<>(2);
-        params.add(new BasicNameValuePair("title", "Messages"));
-        params.add(new BasicNameValuePair("text", string));
-        params.add(new BasicNameValuePair("name", "SnackBot"));
-        params.add(new BasicNameValuePair("private", "1"));
-        params.add(new BasicNameValuePair("expires", "1440"));
-        params.add(new BasicNameValuePair("apikey", "SLJSFHfzJu"));
-
-
-
-
-
-        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-
-        //Execute and get the response.
-        HttpResponse response = httpclient.execute(httppost);
-        HttpEntity entity = response.getEntity();
-
-        if (entity != null) {
-            try (InputStream instream = entity.getContent()) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    out.append(line);
-                }
-
-            }
-        }
-        return out.toString();
-    }
 }

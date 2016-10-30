@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 
+import com.brokeassgeeks.snackbot.Utils.MessageUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -32,8 +33,8 @@ public class EightBall extends Command {
         String out = String.format("shakes the magic 8 ball... %s",s);
 
         if (isFromDiscord())
-            discordEvent.getChannel().sendMessage(Utils.replaceTagsDiscord(out));
+            discordEvent.getChannel().sendMessage(MessageUtils.replaceTagsDiscord(out));
         else
-            ((MessageEvent)ircEvent).getChannel().send().action(Utils.replaceTags(out));
+            ((MessageEvent)ircEvent).getChannel().send().action(MessageUtils.replaceTags(out));
     }
 }

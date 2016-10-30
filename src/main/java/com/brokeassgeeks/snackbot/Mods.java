@@ -1,4 +1,4 @@
-package com.brokeassgeeks.snackbot.commands;
+package com.brokeassgeeks.snackbot;
 
 import lombok.Data;
 

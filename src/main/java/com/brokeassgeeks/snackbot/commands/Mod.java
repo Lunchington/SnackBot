@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.Mods;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.mcserver.*;

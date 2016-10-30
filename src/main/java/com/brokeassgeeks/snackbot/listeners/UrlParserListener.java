@@ -32,7 +32,7 @@ public class UrlParserListener extends ListenerAdapter {
         String string = parseforHTML(event.getMessage());
 
         if (string != null && string.length() >0) {
-            event.respondWith(Utils.replaceTags(string));
+            event.respondWith(string);
 
         }
 

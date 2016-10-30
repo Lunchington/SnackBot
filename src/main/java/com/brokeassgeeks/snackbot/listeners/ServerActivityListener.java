@@ -15,7 +15,7 @@ public class ServerActivityListener extends ListenerAdapter {
 
     @Override
     public void onMessage(MessageEvent event) {
-        if (Utils.isBot(event.getUser().getNick())) {
+        if (Utils.isServer(event.getUser().getNick())) {
             String bot  = event.getUser().getNick();
             String message = event.getMessage();
             String sender ="";

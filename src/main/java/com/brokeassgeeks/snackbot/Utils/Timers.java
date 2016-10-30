@@ -49,9 +49,9 @@ public class Timers extends Timer {
                 }
 
                 try {
-                    String s = String.format("You have %s messages. Get them here: %s",output.size(),Utils.putPaste(paste));
+                    String s = String.format("You have %s messages. Get them here: %s",output.size(),Pastebin.putPaste("Messages", paste));
 
-                    this.user.send().message(Utils.replaceTags(s));
+                    this.user.send().message(MessageUtils.replaceTags(s));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -60,9 +60,9 @@ public class Timers extends Timer {
             }
             else {
                 if (channel == null) {
-                    this.user.send().message(Utils.replaceTags(output.get(0)));
+                    this.user.send().message(MessageUtils.replaceTags(output.get(0)));
                 } else {
-                    this.channel.send().message(Utils.replaceTags(output.get(0)));
+                    this.channel.send().message(MessageUtils.replaceTags(output.get(0)));
                 }
 
             }

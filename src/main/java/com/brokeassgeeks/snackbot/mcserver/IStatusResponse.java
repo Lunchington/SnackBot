@@ -1,6 +1,6 @@
 package com.brokeassgeeks.snackbot.mcserver;
 
-import com.brokeassgeeks.snackbot.commands.Mods;
+import com.brokeassgeeks.snackbot.Mods;
 
 import java.util.List;
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 
 @Data
 public class MinecraftServer {
@@ -49,4 +50,17 @@ public class MinecraftServer {
         this.lastactivity.time = time;
         this.lastactivity.user = user;
     }
+
+    public  boolean hostAvailabilityCheck() {
+        Socket s = new Socket();
+        try  {
+            s.connect(getHost(),7000);
+
+        } catch (IOException ex) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
