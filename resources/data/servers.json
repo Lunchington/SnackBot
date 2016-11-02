@@ -1,57 +1,57 @@
 [
   {
-    "name": "Bacon",
-    "pack": "IE:skyblock",
+    "name": "BACON",
+    "pack": "mDiyo\u0027s WIP",
     "version": "1.1.0",
     "host": "158.69.121.227",
     "port": 25566,
     "lastactivity": {
-      "user": "slidingmike",
-      "time": 1474932091627
+      "user": "8138763",
+      "time": 1477866814835
     }
   },
   {
-    "name": "Donut",
-    "pack": "BreakfastBuffet",
-    "version": "4.0.4",
+    "name": "DONUT",
+    "pack": "Breakfast Special",
+    "version": "2.1",
     "host": "158.69.121.227",
     "port": 25569,
     "lastactivity": {
-      "user": "Hackettbr1",
-      "time": 1475183697416
+      "user": "Demethan",
+      "time": 1478056331366
     }
   },
   {
-    "name": "Crepe",
+    "name": "CREPE",
     "pack": "Sky Factory",
     "version": "2.5.2",
     "host": "158.69.121.227",
     "port": 25572,
     "lastactivity": {
-      "user": "LovelyFlare",
-      "time": 1475400909079
+      "user": "iFruitcake",
+      "time": 1476614633995
     }
   },
   {
     "name": "GRAVY",
-    "pack": "VANILLA",
+    "pack": "Vanilla 1.11 (Snapshot)",
     "version": "1.11",
     "host": "158.69.121.227",
     "port": 25570,
     "lastactivity": {
-      "user": "Demethan",
-      "time": 1475381402080
+      "user": "iFruitcake",
+      "time": 1478126372896
     }
   },
   {
-    "name": "Bagel",
+    "name": "BAGEL",
     "pack": "SpilledJuice",
-    "version": "0.20",
+    "version": "0.2.4",
     "host": "158.69.121.227",
     "port": 25567,
     "lastactivity": {
-      "user": "MrGrimm",
-      "time": 1475406756399
+      "user": "niom22",
+      "time": 1478124729592
     }
   },
   {
@@ -61,8 +61,8 @@
     "host": "158.69.121.227",
     "port": 25576,
     "lastactivity": {
-      "user": "PhilTrout",
-      "time": 1475102169621
+      "user": "F4ndroid",
+      "time": 1476928796012
     }
   }
 ]

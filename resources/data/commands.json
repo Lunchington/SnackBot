@@ -1,14 +1,15 @@
 [
-  {
+	{
     "name": "Console",
     "enabled": true,
     "triggers": [
-      "c"
+      "con"
     ],
     "privateMessage": false,
     "simple": false,
     "output": ""
-  },{
+  },
+  {
     "name": "EightBall",
     "enabled": true,
     "triggers": [
@@ -126,7 +127,7 @@
     "output": ""
   },
   {
-    "name": "AdminCommand",
+    "name": "Admin",
     "enabled": true,
     "triggers": [
       "admin"
@@ -190,26 +191,14 @@
     "output": ""
   },
   {
-    "name": "teamspeak",
+    "name": "Online",
     "enabled": true,
     "triggers": [
-      "ts",
-      "teamspeak"
+      "online"
     ],
     "privateMessage": false,
-    "simple": true,
-    "output": "\u003cB\u003e\u003cb\u003eTeamSpeak info: \u003cN\u003ets.breakfastcraft.com \u003cB\u003e\u003cb\u003epassword:\u003cN\u003e wilson"
-  },
-  {
-    "name": "connection",
-    "enabled": true,
-    "triggers": [
-      "connection",
-      "c"
-    ],
-    "privateMessage": false,
-    "simple": true,
-    "output": "\u003cB\u003e\u003cb\u003eServer Connection info: \u003cN\u003ehttp://breakfastcraft.com/connection-information/"
+    "simple": false,
+    "output": ""
   },
   {
     "name": "Online",
@@ -223,30 +212,11 @@
     "output": ""
   },
   {
-    "name": "add",
-    "enabled": true,
-    "triggers": [
-      "add"
-    ],
-    "privateMessage": false,
-    "simple": true,
-    "output": "issue TES TEST TES"
-  },
-  {
-    "name": "delete",
-    "enabled": true,
-    "triggers": [
-      "delete"
-    ],
-    "privateMessage": false,
-    "simple": true,
-    "output": "add"
-  },
-  {
     "name": "issue",
     "enabled": true,
     "triggers": [
-      "issue"
+      "issue",
+      "i"
     ],
     "privateMessage": false,
     "simple": true,
