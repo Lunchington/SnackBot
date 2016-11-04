@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import com.brokeassgeeks.snackbot.twitch.TwitchResponse;
 import com.google.gson.Gson;
@@ -64,21 +65,7 @@ public class Twitch extends Command {
     }
 
     private boolean isvalidUser(String channel) {
-        Boolean isvalid = true;
-        try {
-            String url = Utils.readUrl("https://api.twitch.tv/kraken/streams/" + channel);
-            GsonBuilder builder = new GsonBuilder();
-            Object o = builder.create().fromJson(url, Object.class);
-            System.out.println(o.toString());
-
-        } catch (IOException e) {
-            isvalid = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return isvalid;
-
+        return getTwitch(channel) != null;
     }
 
     private boolean isChannelLive(TwitchResponse response) {
@@ -87,7 +74,7 @@ public class Twitch extends Command {
 
     private TwitchResponse getTwitch(String channel) {
         try {
-            String url = Utils.readUrl("https://api.twitch.tv/kraken/streams/" + channel);
+            String url = Utils.readUrl(String.format("https://api.twitch.tv/kraken/streams/%s?client_id=%s",channel,Config.TWITCH_CLIENT_ID));
             Gson gson = new Gson();
 
             return gson.fromJson(url, TwitchResponse.class);
@@ -135,13 +122,11 @@ public class Twitch extends Command {
 
     private String addChannel(String args) {
         if(isvalidUser(args)) {
-            if  (streamers.contains(args.toLowerCase())) {
-                return String.format("<B><b>Channel:<N> %s is already in the list!",args);
+            for(String s: streamers) {
+                if (s.equalsIgnoreCase(args))
+                    return  String.format("<B><b>Channel:<N> %s is already in the list!",args);
             }
-            else {
-                return addStreamer(args);
-            }
-
+            return addStreamer(args);
         } else {
             return String.format("<B><b>Channel:<N> %s is not a valid channel",args);
         }
