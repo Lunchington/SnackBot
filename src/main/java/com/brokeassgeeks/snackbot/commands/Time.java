@@ -15,7 +15,7 @@ public class Time extends Command {
     public Time(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
         if(args.length == 1) {
             super.respond(String.format("<B><b>Local Time: <N> %s", getTimewithZone("America/New_York",0)));
             return;

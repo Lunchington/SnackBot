@@ -16,7 +16,7 @@ public class EightBall extends Command {
     public EightBall(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent, discordEvent, args); }
     @Override
 
-    public void run() {
+    public void processCommand() {
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>USAGE:<N> %s <QUESTION>", args[0]));

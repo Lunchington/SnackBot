@@ -1,14 +1,11 @@
 package com.brokeassgeeks.snackbot;
 
+import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Utils.MessageUtils;
-import com.brokeassgeeks.snackbot.Utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import org.pircbotx.Colors;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-
-import java.util.HashMap;
 
 public abstract class Command implements Runnable{
     protected String[] args;
@@ -63,6 +60,21 @@ public abstract class Command implements Runnable{
     public boolean isFromDiscord() {
         return discordEvent != null;
     }
+
+    public Boolean isAdminCommand() {
+        return false;
+    }
+
+    public abstract void processCommand();
+
+    @Override
+    public void run() {
+        if (isAdminCommand() && AdminUtils.isAdmin(this))
+                processCommand();
+        else
+            processCommand();
+    }
+
 
 
 }

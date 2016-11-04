@@ -32,7 +32,7 @@ public class Mojang extends Command {
 
 
     @Override
-    public void run() {
+    public void processCommand() {
         queryMojang();
         super.respond(getStatus());
     }

@@ -15,7 +15,7 @@ public class Online extends Command {
     public Online(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
         if (!(ircEvent instanceof MessageEvent)  && !isFromDiscord())
             return;
 

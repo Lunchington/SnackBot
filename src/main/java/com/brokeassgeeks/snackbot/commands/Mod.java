@@ -16,7 +16,7 @@ public class Mod extends Command {
     public Mod(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
         if (args.length <= 2) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <MOD>" , args[0]));
             return;

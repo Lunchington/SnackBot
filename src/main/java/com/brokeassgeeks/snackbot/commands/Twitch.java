@@ -25,7 +25,7 @@ public class Twitch extends Command {
         load();
     }
     @Override
-    public void run() {
+    public void processCommand() {
         if (streamers.size() == 0) {
             super.respond("<B><b>NO Streamers added!<N>");
             return;

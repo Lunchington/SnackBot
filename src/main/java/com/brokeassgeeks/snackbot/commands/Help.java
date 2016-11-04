@@ -13,7 +13,7 @@ public class Help extends Command {
     public Help(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
         if (isFromDiscord()) {
             return;
         }

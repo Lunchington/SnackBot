@@ -1,6 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -10,11 +9,7 @@ public class ServerAdmin extends Command {
     public ServerAdmin(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
-        if (!AdminUtils.isAdmin(this)){
-            return;
-        }
-
+    public void processCommand() {
         if (args.length < 4 ) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <OPTION> <SETTING>" ,args[0]));
             return;
@@ -29,9 +24,8 @@ public class ServerAdmin extends Command {
         else {
             super.respond("<B><b>ERROR IN SETTINGS<N>");
         }
-
-
-
-
     }
+
+    @Override
+    public Boolean isAdminCommand() { return true;}
 }

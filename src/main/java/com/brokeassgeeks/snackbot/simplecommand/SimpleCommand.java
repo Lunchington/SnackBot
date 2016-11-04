@@ -15,7 +15,7 @@ public class SimpleCommand extends Command {
     }
 
     @Override
-    public void run() {
+    public void processCommand() {
             if (commandData.isPrivateMessage())
                 super.respondUser(commandData.getOutput());
             else

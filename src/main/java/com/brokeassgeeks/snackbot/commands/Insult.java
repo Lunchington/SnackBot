@@ -26,7 +26,7 @@ public class Insult extends Command {
     }
 
     @Override
-    public void run() {
+    public void processCommand() {
 
         String message =  "<B><b>%s<N> you, %s";
         String out = String.format(message, sender, getRandomInsult());

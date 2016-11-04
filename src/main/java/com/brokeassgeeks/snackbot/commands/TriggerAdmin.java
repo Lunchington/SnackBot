@@ -1,7 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.CommandData;
 import com.brokeassgeeks.snackbot.CommandManager;
@@ -18,10 +16,7 @@ public class TriggerAdmin extends Command {
         sc = CommandManager.getInstance().getCommandData();
     }
     @Override
-    public void run() {
-        if (!AdminUtils.isAdmin(this) ) {
-            return;
-        }
+    public void processCommand() {
 
         if (args[0].equalsIgnoreCase("getcommand")) {
             if (args.length < 2) {

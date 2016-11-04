@@ -2,18 +2,15 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import org.omg.SendingContext.RunTime;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.Arrays;
+
 
 
 public class Console extends Command {
@@ -23,11 +20,7 @@ public class Console extends Command {
     }
 
     @Override
-    public void run() {
-
-        if (!AdminUtils.isAdmin(this) ) {
-            return;
-        }
+    public void processCommand() {
 
         if (args.length <= 2) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <COMMAND>", args[0]));

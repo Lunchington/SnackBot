@@ -14,7 +14,7 @@ public class Fortune extends Command {
     public Fortune(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
 
         try {
             String s = Utils.chooseRandomLine(new File("data/fun/fortunes.txt"));

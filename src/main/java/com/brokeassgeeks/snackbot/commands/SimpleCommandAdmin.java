@@ -1,6 +1,5 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Utils.AdminUtils;
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.CommandData;
 import com.brokeassgeeks.snackbot.CommandManager;
@@ -18,13 +17,10 @@ public class SimpleCommandAdmin extends Command {
         sc = CommandManager.getInstance().getCommandData();
     }
 
-    @Override
-    public void run() {
-        if (!AdminUtils.isAdmin(this)) {
-            return;
-        }
 
-        if (args.length == 2 && args[1].equalsIgnoreCase("list")) {
+    @Override
+    public void processCommand() {
+         if (args.length == 2 && args[1].equalsIgnoreCase("list")) {
 
             for (CommandData s : sc) {
                 if (s.isSimple())

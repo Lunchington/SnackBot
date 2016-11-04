@@ -19,11 +19,9 @@ public class Log extends Command {
     public Log(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
         String serverDir = Config.MC_SERVER_DIR;
-        if (!AdminUtils.isAdmin(this)){
-            return;
-        }
+
         if (args.length < 2 ) {
             super.respond(String.format("<B><b>USAGE:<N> %s <SERVER> <TYPE>" ,args[0]));
             return;

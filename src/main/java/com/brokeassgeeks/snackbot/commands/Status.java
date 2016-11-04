@@ -12,7 +12,7 @@ public class Status extends Command {
     public Status(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
+    public void processCommand() {
 
         if (args.length == 1) {
             super.respond(String.format("<B><b>Server Status:<N> %s", getServerStatus()));

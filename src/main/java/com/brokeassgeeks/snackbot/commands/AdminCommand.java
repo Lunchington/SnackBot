@@ -11,11 +11,7 @@ public class AdminCommand extends Command {
     public AdminCommand(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
 
     @Override
-    public void run() {
-
-        if (!AdminUtils.isAdmin(this) ) {
-            return;
-        }
+    public void processCommand() {
 
         if (args.length < 3) {
             super.respond(String.format("<B><b>USAGE:<N> %s add <USER>",args[0]));

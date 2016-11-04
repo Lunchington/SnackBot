@@ -10,7 +10,7 @@ public class Tell extends Command {
 
     public Tell(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
     @Override
-    public void run() {
+    public void processCommand() {
         if (isFromDiscord()) {
             return;
         }
