@@ -27,13 +27,13 @@ public class Seen extends Command {
 
         String target = args[1];
 
-        if (sender.equalsIgnoreCase(target)) {
-            super.respond(String.format("<B><b>%s<N> you need too look in the mirror.", sender));
+        if (getSender().equalsIgnoreCase(target)) {
+            super.respond(String.format("<B><b>%s<N> you need too look in the mirror.", getSender()));
             return;
         }
 
         if (target.equalsIgnoreCase(ircEvent.getBot().getNick())) {
-            super.respond(String.format("<B><b>%s<N> of course I am here.", sender));
+            super.respond(String.format("<B><b>%s<N> of course I am here.", getSender()));
             return;
         }
 

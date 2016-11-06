@@ -1,21 +1,9 @@
 package com.brokeassgeeks.snackbot.Utils;
 
-import com.brokeassgeeks.snackbot.Configuration.Config;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.pircbotx.Colors;
 
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.*;

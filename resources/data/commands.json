@@ -231,5 +231,25 @@
     "privateMessage": false,
     "simple": false,
     "output": ""
+  },
+  {
+    "name": "Stop",
+    "enabled": true,
+    "triggers": [
+      "stop"
+    ],
+    "privateMessage": false,
+    "simple": false,
+    "output": ""
+  },
+  {
+    "name": "Start",
+    "enabled": true,
+    "triggers": [
+      "start"
+    ],
+    "privateMessage": false,
+    "simple": false,
+    "output": ""
   }
 ]

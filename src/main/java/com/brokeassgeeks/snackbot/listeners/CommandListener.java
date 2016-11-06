@@ -80,7 +80,6 @@ public class CommandListener extends ListenerAdapter {
                         GenericMessageEvent.class, MessageReceivedEvent.class, String[].class).newInstance(ircEvent, discordEvent, args);
 
                 logger.info("Executing Command: " + command.getClass().getName());
-                command.setSender(sender);
                 threadPool.submit(command);
             }
         } else {

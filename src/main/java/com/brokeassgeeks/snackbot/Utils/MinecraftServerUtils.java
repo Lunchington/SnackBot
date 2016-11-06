@@ -12,7 +12,7 @@ import java.io.*;
 
 
 public final class MinecraftServerUtils {
-    private MinecraftServerUtils() {}
+
     public static final Logger logger = (Logger) LoggerFactory.getLogger(MinecraftServerUtils.class);
 
     public static void updateServerActivity(MinecraftServer[] servers, String name, String sender, long time) {
@@ -76,33 +76,24 @@ public final class MinecraftServerUtils {
     public static boolean setValue(String server, String setting, String value) {
         MinecraftServer servers[] = SnackBot.getServers();
         MinecraftServer s = getServerbyName(servers,server);
-        boolean isSet = false;
 
-        if (s == null)
-            return false;
+        if (s != null) {
+            switch (setting.toLowerCase()) {
+                case "pack":
+                    s.setPack(value);
+                    break;
+                case "host":
+                    s.setHost(value);
+                    break;
+                case "port":
+                    s.setHost(value);
+                case "version":
+                    s.setVersion(value);
+            }
 
-        if (setting.equalsIgnoreCase("pack")) {
-            isSet = true;
-            s.setPack(value);
-        }
-
-        if (setting.equalsIgnoreCase("version")) {
-            isSet = true;
-            s.setVersion(value);
-        }
-
-        if (setting.equalsIgnoreCase("host")) {
-            isSet = true;
-            s.setHost(value);
-        }
-        if (setting.equalsIgnoreCase("port")) {
-            isSet = true;
-            s.setPort(Integer.parseInt(value));
-        }
-
-        if (isSet)
             writeServerJson(servers);
+        }
 
-        return isSet;
+        return s != null;
     }
 }

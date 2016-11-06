@@ -22,26 +22,26 @@ public class Tell extends Command {
 
         String target = args[1];
 
-        if (sender.equalsIgnoreCase(target)) {
-            super.respond(String.format("<B><b>%s<N> talking to yourself again?", sender));
+        if (getSender().equalsIgnoreCase(target)) {
+            super.respond(String.format("<B><b>%s<N> talking to yourself again?", getSender()));
             return;
         }
 
         if (target.equalsIgnoreCase(ircEvent.getBot().getNick())) {
-            super.respond(String.format("<B><b>%s<N>you can just tell me directly.", sender));
+            super.respond(String.format("<B><b>%s<N>you can just tell me directly.", getSender()));
             return;
         }
 
 
         if (ircEvent.getBot().getUserChannelDao().containsUser(target)) {
-            super.respond( String.format("<B><b>%s<N> why dont you tell <B><b>%s yourself!", sender,target));
+            super.respond( String.format("<B><b>%s<N> why dont you tell <B><b>%s yourself!", getSender(),target));
             return;
         }
 
 
         String tellMsg[] = ircEvent.getMessage().split(" ", 3);
-        SnackBot.getSeenDataBase().addTell(target,String.format("<B><b>%s, %s <N>said: %s",target, sender,tellMsg[2]));
-        super.respond(String.format("<B><b>%s <N>I will let <B><b>%s<N> know when i see them" ,sender,args[1]));
+        SnackBot.getSeenDataBase().addTell(target,String.format("<B><b>%s, %s <N>said: %s",target, getSender(),tellMsg[2]));
+        super.respond(String.format("<B><b>%s <N>I will let <B><b>%s<N> know when i see them" ,getSender(),args[1]));
 
 
     }

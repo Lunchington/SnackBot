@@ -20,7 +20,7 @@ public class Lart extends Command{
             return;
         }
 
-        String target = sender;
+        String target = getSender();
         String s="";
 
         try {
@@ -39,7 +39,7 @@ public class Lart extends Command{
         }
 
         if (target.equalsIgnoreCase(ircEvent.getBot().getNick()))
-            target = sender;
+            target = getSender();
 
         ((MessageEvent)ircEvent).getChannel().send().action(MessageUtils.replaceTags(replaceNick(s,target)));
     }

@@ -5,29 +5,18 @@ import com.brokeassgeeks.snackbot.Utils.MessageUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 public abstract class Command implements Runnable{
     protected String[] args;
     @Getter protected GenericMessageEvent ircEvent;
     @Getter protected MessageReceivedEvent discordEvent;
-    @Getter@Setter protected String sender;
-    @Getter@Setter protected String message;
-
 
     public Command(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) {
         this.ircEvent = ircEvent;
         this.discordEvent = discordEvent;
         this.args = args;
-
-        setDefaultSender();
-    }
-
-    private void setDefaultSender() {
-        if (isFromDiscord())
-            this.sender =  discordEvent.getAuthor().getUsername();
-        else
-            this.sender =  ircEvent.getUser().getNick();
     }
 
 
@@ -36,6 +25,13 @@ public abstract class Command implements Runnable{
             respondDiscord(message);
         else
             respondIRC(message);
+    }
+
+    public void action(String message) {
+        if(isFromDiscord())
+            discordEvent.getTextChannel().sendMessage(String.format("*%s %s*",getSender(),MessageUtils.replaceTagsDiscord(getMessage())));
+        else
+            ((MessageEvent)ircEvent).getChannel().send().action(MessageUtils.replaceTags(getMessage()));
     }
 
     private void respondIRC(String message) {
@@ -75,6 +71,26 @@ public abstract class Command implements Runnable{
             processCommand();
     }
 
+    protected String getSender() {
+        if (isFromDiscord())
+            return discordEvent.getAuthorNick();
+        else
+            return ircEvent.getUser().getNick();
+    }
+
+    protected String getChannel() {
+        if (isFromDiscord())
+            return discordEvent.getTextChannel().getName();
+        else
+            return ((MessageEvent) ircEvent).getChannel().getName();
+    }
+
+    protected String getMessage() {
+        if(isFromDiscord())
+            return discordEvent.getMessage().getContent();
+        else
+            return ircEvent.getMessage();
+    }
 
 
 }

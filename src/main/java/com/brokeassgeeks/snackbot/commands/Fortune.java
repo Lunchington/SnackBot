@@ -19,7 +19,7 @@ public class Fortune extends Command {
         try {
             String s = Utils.chooseRandomLine(new File("data/fun/fortunes.txt"));
 
-            super.respond(String.format("<B><b>%s,<N> %s",sender, s));
+            super.respond(String.format("<B><b>%s,<N> %s",getSender(), s));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

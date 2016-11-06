@@ -29,7 +29,7 @@ public class Insult extends Command {
     public void processCommand() {
 
         String message =  "<B><b>%s<N> you, %s";
-        String out = String.format(message, sender, getRandomInsult());
+        String out = String.format(message, getSender(), getRandomInsult());
 
         if (args.length == 1) {
             super.respond(out);
