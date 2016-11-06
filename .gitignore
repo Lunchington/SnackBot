@@ -17,7 +17,7 @@ build/
 gradle/
 gradlew
 gradlew.bat
-bot.config
+resources/*.config
 
 # Mac
 .DS_Store
