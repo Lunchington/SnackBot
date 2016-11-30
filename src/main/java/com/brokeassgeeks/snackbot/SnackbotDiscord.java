@@ -25,14 +25,13 @@ public class SnackbotDiscord implements EventListener {
         if (!event.isPrivate() && !event.getAuthor().isBot())
         {
             String mirror = DiscordBouncer.getMirror(event.getTextChannel().getName());
-            if ( mirror != null) {
-                if (SnackBot.getBot().getUserChannelDao().containsChannel(mirror)) {
-
-                    if(event.getMessage().getContent().startsWith(Config.CATCH_CHAR))
-                        SnackBot.getCommandListener().onDiscord(event);
-                    else
+            if(event.getMessage().getContent().startsWith(Config.CATCH_CHAR))
+                SnackBot.getCommandListener().onDiscord(event);
+            else {
+                if (mirror != null) {
+                    if (SnackBot.getBot().getUserChannelDao().containsChannel(mirror)) {
                         SnackBot.getBot().getUserChannelDao().getChannel(mirror).send().message("<" + event.getAuthorName() + "> " + event.getMessage().getContent());
-
+                    }
                 }
             }
         }

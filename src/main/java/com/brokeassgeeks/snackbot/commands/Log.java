@@ -68,4 +68,8 @@ public class Log extends Command {
         }
         return lastModifiedFile;
     }
+
+    @Override
+    public Boolean isAdminCommand() { return true;}
+
 }

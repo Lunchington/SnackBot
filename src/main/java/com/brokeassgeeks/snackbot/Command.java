@@ -65,8 +65,11 @@ public abstract class Command implements Runnable{
 
     @Override
     public void run() {
-        if (isAdminCommand() && AdminUtils.isAdmin(this))
-                processCommand();
+        if (isAdminCommand()) {
+             if(AdminUtils.isAdmin(this)) {
+                 processCommand();
+             }
+        }
         else
             processCommand();
     }
