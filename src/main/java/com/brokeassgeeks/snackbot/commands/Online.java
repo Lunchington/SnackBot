@@ -16,8 +16,7 @@ public class Online extends Command {
 
     @Override
     public void processCommand() {
-        if (!(ircEvent instanceof MessageEvent)  && !isFromDiscord())
-            return;
+
 
         String out;
         String serverPlayers;
@@ -52,14 +51,10 @@ public class Online extends Command {
                 out = String.format("<B><r>%s is down!<N>", s.getName());
             }
 
-            if (!isFromDiscord())
-                super.respond(out);
-            else
-                DiscordOut += MessageUtils.replaceTagsDiscord(out) +"\n";
+            super.respond(out);
+
         }
-        if (isFromDiscord()) {
-            super.respond(DiscordOut);
-        }
+
 
     }
 }
