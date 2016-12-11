@@ -18,7 +18,7 @@ public class Online extends Command {
     public void processCommand() {
 
 
-        String out;
+        String out ="";
         String serverPlayers;
         String DiscordOut = "";
 
@@ -34,8 +34,8 @@ public class Online extends Command {
                 e.printStackTrace();
             }
 
-            if (response != null) {
-                out = String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getPack(), s.getVersion());
+            if (s.hostAvailabilityCheck()) {
+                out += String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getPack(), s.getVersion());
                 out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
 
                if (response.getOnlinePlayers() > 0) {
@@ -44,16 +44,16 @@ public class Online extends Command {
                     }
                 }
                 if (!Utils.isEmpty(serverPlayers)) {
-                    out += String.format("<B><b>Users Online: <N><g>%s<N>", serverPlayers);
+                    out += String.format("\r\n        <B><b>Users Online: <N><g>%s<N>", serverPlayers);
                 }
 
             } else {
-                out = String.format("<B><r>%s is down!<N>", s.getName());
+                out += String.format("<B><r>%s is down!<N>", s.getName());
             }
-
-            super.respond(out);
+        out += "\r\n\r\n";
 
         }
+        super.respond(out);
 
 
     }
