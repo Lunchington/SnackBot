@@ -1,6 +1,7 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.DataManager;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.MessageUtils;
 import com.brokeassgeeks.snackbot.Utils.Utils;
@@ -22,7 +23,7 @@ public class Online extends Command {
         String serverPlayers;
         String DiscordOut = "";
 
-        for (MinecraftServer s : SnackBot.getServers()) {
+        for (MinecraftServer s : DataManager.getInstance().getServers()) {
             serverPlayers ="";
 
             IStatusResponse response = null;

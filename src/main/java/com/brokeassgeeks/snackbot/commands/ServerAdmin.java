@@ -1,6 +1,6 @@
 package com.brokeassgeeks.snackbot.commands;
 
-import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.DataManager;
 import com.brokeassgeeks.snackbot.Command;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -18,7 +18,7 @@ public class ServerAdmin extends Command {
         String a = String.join(" ", args);
         String msg[] = a.split(" ", 4);
 
-        if(MinecraftServerUtils.setValue(msg[1],msg[2],msg[3])) {
+        if(DataManager.getInstance().setValue(msg[1],msg[2],msg[3])) {
             super.respond(String.format("<B><b>%s<N> set to <B><b>%s<N> for <B><b>%s<N>",msg[2],msg[3],msg[1]));
         }
         else {

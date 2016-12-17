@@ -1,7 +1,6 @@
 package com.brokeassgeeks.snackbot.listeners;
 
-import com.brokeassgeeks.snackbot.SnackBot;
-import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
+import com.brokeassgeeks.snackbot.DataManager;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -35,7 +34,7 @@ public class ServerActivityListener extends ListenerAdapter {
             }
 
             if(update)
-                MinecraftServerUtils.updateServerActivity(SnackBot.getServers(),bot, sender, System.currentTimeMillis());
+                DataManager.getInstance().updateServerActivity(bot,sender,System.currentTimeMillis());
         }
     }
 }

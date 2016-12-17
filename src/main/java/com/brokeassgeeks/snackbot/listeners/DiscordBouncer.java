@@ -6,6 +6,7 @@ import com.brokeassgeeks.snackbot.SnackBot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.dv8tion.jda.entities.TextChannel;
+import org.pircbotx.Channel;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -72,9 +73,8 @@ public class DiscordBouncer extends ListenerAdapter {
     @Override
     public void onQuit(QuitEvent event) {
         String msg = String.format("%s quit (%s)",event.getUser().getNick(), event.getReason());
-
-        //for (TextChannel t:  SnackBot.getJda().getTextChannels())
-        //    t.sendMessage(msg);
+        for (Channel c : event.getUser().getChannels())
+            sendMessagetoMirror(c.getName(),msg);
     }
 
 

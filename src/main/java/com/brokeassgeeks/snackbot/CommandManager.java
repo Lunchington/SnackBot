@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import lombok.Getter;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -14,10 +13,9 @@ import java.util.List;
 
 public class CommandManager {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(CommandManager.class);
-
-    private List<CommandData> commandData;
     private static CommandManager instance;
 
+    private List<CommandData> commandData;
 
     public static CommandManager getInstance() {
         if (instance == null) {
@@ -30,8 +28,6 @@ public class CommandManager {
         commandData = new ArrayList<>();
         commandData = load();
     }
-
-
 
     private List<CommandData> load() {
         try {
@@ -95,10 +91,10 @@ public class CommandManager {
         return null;
     }
 
-
-
     public void writeReload(List<CommandData> sc) {
         write(sc);
         reload();
     }
+
+
 }

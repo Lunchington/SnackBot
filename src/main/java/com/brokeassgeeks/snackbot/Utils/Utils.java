@@ -1,5 +1,6 @@
 package com.brokeassgeeks.snackbot.Utils;
 
+import com.brokeassgeeks.snackbot.DataManager;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 
@@ -45,7 +46,7 @@ public final class Utils {
 
     public static boolean isServer(String sender) {
 
-        for (MinecraftServer s : SnackBot.getServers())
+        for (MinecraftServer s : DataManager.getInstance().getServers())
         {
             if ((sender.equalsIgnoreCase(s.getName())) || sender.toLowerCase().startsWith("tom")) {
 

@@ -1,12 +1,16 @@
 package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
+import com.brokeassgeeks.snackbot.DataManager;
 import com.brokeassgeeks.snackbot.SnackBot;
 import com.brokeassgeeks.snackbot.Utils.TimeDifference;
 import com.brokeassgeeks.snackbot.Utils.Utils;
+import com.brokeassgeeks.snackbot.mcserver.LastActivity;
 import com.brokeassgeeks.snackbot.mcserver.MinecraftServer;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+
+import javax.xml.crypto.Data;
 
 public class Status extends Command {
     public Status(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
@@ -19,9 +23,11 @@ public class Status extends Command {
             return;
         }
 
-        MinecraftServer server = getServer(args[1]);
-        String user = server.getLastactivity().getUser();
-        long time = server.getLastactivity().getTime();
+        MinecraftServer server = DataManager.getInstance().getServerbyName(args[1]);
+        LastActivity l = DataManager.getInstance().getLastActivity(server);
+
+        String user = l.getUser();
+        long time = l.getTime();
         long now = System.currentTimeMillis();
 
         String out=String.format("<B><b>There is no activity for %s",server.getName());
@@ -36,18 +42,12 @@ public class Status extends Command {
     private String getServerStatus() {
         String out = "";
 
-        for (MinecraftServer s : SnackBot.getServers()) {
+        for (MinecraftServer s : DataManager.getInstance().getServers()){
             out += String.format("<B><b>%s<N> - %s %s: %s <N>",s.getName(),s.getPack(),s.getVersion(),(s.hostAvailabilityCheck() ? "<g>Up! " : "<r>Down! "));
         }
         return out;
     }
 
-    private MinecraftServer getServer(String string) {
-        for (MinecraftServer s : SnackBot.getServers()) {
-            if (s.getName().equalsIgnoreCase(string))
-                return s;
-        }
-        return null;
-    }
+
 
 }

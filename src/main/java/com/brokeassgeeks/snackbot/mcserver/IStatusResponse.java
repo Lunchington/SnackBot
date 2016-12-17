@@ -1,7 +1,5 @@
 package com.brokeassgeeks.snackbot.mcserver;
 
-import com.brokeassgeeks.snackbot.Mods;
-
 import java.util.List;
 
 public interface IStatusResponse {

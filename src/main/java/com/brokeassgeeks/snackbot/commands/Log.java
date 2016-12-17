@@ -2,8 +2,6 @@ package com.brokeassgeeks.snackbot.commands;
 
 import com.brokeassgeeks.snackbot.Command;
 import com.brokeassgeeks.snackbot.Configuration.Config;
-import com.brokeassgeeks.snackbot.Utils.AdminUtils;
-import com.brokeassgeeks.snackbot.Utils.MinecraftServerUtils;
 import com.brokeassgeeks.snackbot.Utils.Pastebin;
 import com.brokeassgeeks.snackbot.Utils.Utils;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -11,9 +9,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Log extends Command {
     public Log(GenericMessageEvent ircEvent, MessageReceivedEvent discordEvent, String[] args) { super(ircEvent,discordEvent, args);  }
