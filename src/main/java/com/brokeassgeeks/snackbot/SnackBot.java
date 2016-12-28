@@ -53,7 +53,7 @@ public class SnackBot {
         bot = new PircBotX(configuration);
 
         jda = new JDABuilder().setBotToken(Config.DISCORD_TOKEN).addListener(new SnackbotDiscord()).buildBlocking();
-        //bot.startBot();
+        bot.startBot();
 
     }
 

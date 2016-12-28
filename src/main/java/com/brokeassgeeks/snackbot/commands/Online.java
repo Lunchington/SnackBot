@@ -37,7 +37,10 @@ public class Online extends Command {
 
             if (s.hostAvailabilityCheck()) {
                 out += String.format("<B><b>%s<N> - %s %s: ", s.getName(), s.getPack(), s.getVersion());
-                out += String.format("<B><b>Num Mods:<N> %s ", response.modCount());
+
+                if (response.modCount() > 0) {
+                    out += String.format("<B><b>Num Mods:<N> %s (+%s libraries)", response.modCountActual(), response.modCount()  -  response.modCountActual() );
+                }
 
                if (response.getOnlinePlayers() > 0) {
                     for (Player player : response.getOnlinePlayersName()) {

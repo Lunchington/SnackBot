@@ -41,6 +41,19 @@ public class StatusResponse implements IStatusResponse{
     }
 
     @Override
+    public Integer modCountActual() {
+        if (modinfo == null)
+            return 0;
+
+        int i = 0;
+        for (Mods.ModInfo m: modinfo.getModList() ) {
+            if (!m.getModid().toLowerCase().contains("lib"))
+                i++;
+        }
+        return i;
+    }
+
+    @Override
     public Mods.ModInfo getMod(String name) {
         for (Mods.ModInfo s: modinfo.getModList()) {
             if (s.getModid().equalsIgnoreCase(name))

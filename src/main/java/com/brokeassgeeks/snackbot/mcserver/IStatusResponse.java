@@ -11,8 +11,11 @@ public interface IStatusResponse {
 
     List<Player> getOnlinePlayersName();
 
-    public Integer modCount();
+    Integer modCount();
+    Integer modCountActual();
 
     Mods.ModInfo getMod(String arg);
-    public String getModList();
+
+    String getModList();
+
 }

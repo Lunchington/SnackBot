@@ -47,7 +47,9 @@ public class Twitch extends Command {
                 System.out.println(response);
 
                 if (response != null && isChannelLive(response)) {
-                    livestreamers.add(String.format("<B><b>%s<N> - %s", s, response.getStream().getChannel().getUrl()));
+                    String status = response.getStream().getChannel().getStatus();
+                    String url = response.getStream().getChannel().getUrl();
+                    livestreamers.add(String.format("<B><b>%s<N> - %s - %s", s, status, url));
                 }
             }
 

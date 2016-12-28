@@ -33,7 +33,7 @@ public class Start extends Command {
     }
 
     private void sendStart(String server) {
-        String command = String.format("mark2 start %s/%s ", Config.MC_SERVER_DIR,server);
+        String command = String.format("sudo -u mcservers mark2 start %s/%s ", Config.MC_SERVER_DIR,server);
 
         try {
             Runtime.getRuntime().exec(command);
