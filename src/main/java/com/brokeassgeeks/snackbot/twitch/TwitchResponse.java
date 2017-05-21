@@ -11,7 +11,7 @@ public class TwitchResponse {
     private TwitchStream stream;
 
     @Data
-    private class TwitchStream {
+    public class TwitchStream {
         private long _id;
         private String game;
         private int viewers;
@@ -26,7 +26,7 @@ public class TwitchResponse {
     }
 
     @Data
-    private class TwitchChannel {
+    public class TwitchChannel {
         private boolean mature;
         private boolean partner;
         private String status;

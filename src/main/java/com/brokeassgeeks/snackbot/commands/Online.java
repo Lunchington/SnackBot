@@ -54,10 +54,14 @@ public class Online extends Command {
             } else {
                 out += String.format("<B><r>%s is down!<N>", s.getName());
             }
-        out += "\r\n\r\n";
+            if (isFromDiscord())
+                 out += "\r\n\r\n";
 
         }
-        super.respond(out);
+        if (!isFromDiscord())
+            super.respond(DiscordOut);
+        else
+            super.respond(out);
 
 
     }

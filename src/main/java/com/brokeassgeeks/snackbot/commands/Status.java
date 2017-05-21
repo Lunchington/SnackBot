@@ -17,13 +17,20 @@ public class Status extends Command {
 
     @Override
     public void processCommand() {
+        String output  ="";
 
-        if (args.length == 1) {
-            super.respond(String.format("<B><b>Server Status:<N> %s", getServerStatus()));
+        if (args.length > 1) {
+            super.respond(String.format("<B><b>Server Status:<N> %s", getServerStatus(args[1])));
             return;
         }
+        for (MinecraftServer s : DataManager.getInstance().getServers()) {
+            output += String.format("%s \r\n", getServerStatus(s.getName()));
+        }
+        super.respond(output);
+    }
 
-        MinecraftServer server = DataManager.getInstance().getServerbyName(args[1]);
+    private String getServerStatus(String s) {
+        MinecraftServer server = DataManager.getInstance().getServerbyName(s);
         LastActivity l = DataManager.getInstance().getLastActivity(server);
 
         String user = l.getUser();
@@ -35,15 +42,6 @@ public class Status extends Command {
         if (time != 0) {
             TimeDifference diff = new TimeDifference(Utils.getTime(now), Utils.getTime(time));
             out =  String.format("<B>%s:<N> Last activity was <B><b>%s<N> by <B><b>%s<B>",server.getName(),diff.getDifferenceString(),user);
-        }
-        super.respond(out);
-    }
-
-    private String getServerStatus() {
-        String out = "";
-
-        for (MinecraftServer s : DataManager.getInstance().getServers()){
-            out += String.format("<B><b>%s<N> - %s %s: %s <N>",s.getName(),s.getPack(),s.getVersion(),(s.hostAvailabilityCheck() ? "<g>Up! " : "<r>Down! "));
         }
         return out;
     }
